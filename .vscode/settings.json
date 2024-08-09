@@ -14,5 +14,6 @@
             "username": "TerraSol",
             "password": "BDTS2k24."
         }
-    ]
+    ],
+    "editor.wordBasedSuggestions": "matchingDocuments"
 }
