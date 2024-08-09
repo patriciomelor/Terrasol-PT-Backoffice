@@ -12,6 +12,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: Change to backoffice directory
+      run: cd backoffice
+
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
       with:
