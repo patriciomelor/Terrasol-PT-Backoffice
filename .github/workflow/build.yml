@@ -1,10 +1,9 @@
-name: Laravel
-
+name: TS-Build
 on:
   push:
-    branches: [ main ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ main ]
+    branches: [ "main" ]
 
 jobs:
   build:
@@ -12,6 +11,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2'
+        extensions: mbstring, pdo_mysql
+        coverage: none
 
     - name: Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
@@ -25,19 +31,22 @@ jobs:
     - name: Directory Permissions
       run: chmod -R 777 storage bootstrap/cache
       
-    - name: Create Database
-      run: |
-        mkdir -p database
-        touch database/database.sqlite
-      
     - name: Execute migrations
       env:
-        DB_CONNECTION: sqlite
-        DB_DATABASE: database/database.sqlite
+        DB_CONNECTION: mysql
+        DB_HOST: 174.138.108.156
+        DB_PORT: 3306
+        DB_DATABASE: terrasol_dev
+        DB_USERNAME: TerraSol
+        DB_PASSWORD: BDTS2k24.
       run: php artisan migrate
       
     - name: Execute tests
       env:
-        DB_CONNECTION: sqlite
-        DB_DATABASE: database/database.sqlite
+        DB_CONNECTION: mysql
+        DB_HOST: 174.138.108.156
+        DB_PORT: 3306
+        DB_DATABASE: terrasol_dev
+        DB_USERNAME: TerraSol
+        DB_PASSWORD: BDTS2k24.
       run: vendor/bin/phpunit
