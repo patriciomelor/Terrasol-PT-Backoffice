@@ -1,0 +1,18 @@
+{
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "previewLimit": 50,
+            "server": "174.138.108.156",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "Terrasol",
+            "database": "terrasol_dev",
+            "username": "TerraSol",
+            "password": "BDTS2k24."
+        }
+    ]
+}
