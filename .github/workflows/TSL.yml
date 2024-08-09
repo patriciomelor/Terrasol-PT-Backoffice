@@ -1,3 +1,5 @@
+name: TS-Build
+
 on:
   push:
     branches: [ "main" ]
@@ -11,9 +13,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Change to backoffice directory
-      run: cd backoffice
-
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
       with:
@@ -22,16 +21,16 @@ jobs:
         coverage: none
 
     - name: Copy .env
-      run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+      run: php -r "file_exists('backoffice/.env') || copy('backoffice/.env.example', 'backoffice/.env');"
       
     - name: Install Dependencies
-      run: composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
+      run: cd backoffice && composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
       
     - name: Generate key
-      run: php artisan key:generate
+      run: cd backoffice && php artisan key:generate
       
     - name: Directory Permissions
-      run: chmod -R 777 storage bootstrap/cache
+      run: chmod -R 777 backoffice/storage backoffice/bootstrap/cache
       
     - name: Execute migrations
       env:
@@ -41,7 +40,7 @@ jobs:
         DB_DATABASE: terrasol_dev
         DB_USERNAME: TerraSol
         DB_PASSWORD: BDTS2k24.
-      run: php artisan migrate
+      run: cd backoffice && php artisan migrate
       
     - name: Execute tests
       env:
@@ -51,4 +50,4 @@ jobs:
         DB_DATABASE: terrasol_dev
         DB_USERNAME: TerraSol
         DB_PASSWORD: BDTS2k24.
-      run: vendor/bin/phpunit
+      run: cd backoffice && vendor/bin/phpunit
