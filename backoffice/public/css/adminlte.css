@@ -53010,3 +53010,12 @@ a.text-muted:hover {
   border-color: #4b545c !important;
 }
 /*# sourceMappingURL=adminlte.css.map */
+
+.BackGradient{
+
+  height: 100vh;
+  background: linear-gradient(to bottom right,#088A4B,#0B3B17);
+
+  
+  
+    }
