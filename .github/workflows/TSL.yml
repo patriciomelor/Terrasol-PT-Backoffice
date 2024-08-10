@@ -24,12 +24,12 @@ jobs:
       
     - name: Install Dependencies
       run: |
-        ./backoffice
+        /backoffice
         composer install --no-ansi --no-interaction --no-progress --prefer-dist
       
     - name: Generate key
       run: |
-        cd backoffice
+        /backoffice
         php artisan key:generate
       
     - name: Directory Permissions
@@ -44,7 +44,7 @@ jobs:
         DB_USERNAME: ${{ secrets.DB_USERNAME }}
         DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
       run: |
-        cd backoffice
+        /backoffice
         php artisan migrate --force
       
     - name: Execute tests
@@ -56,5 +56,5 @@ jobs:
         DB_USERNAME: ${{ secrets.DB_USERNAME }}
         DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
       run: |
-        cd backoffice
+        /backoffice
         vendor/bin/phpunit
