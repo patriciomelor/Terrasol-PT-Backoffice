@@ -24,7 +24,7 @@ jobs:
       
     - name: Install Dependencies
       run: |
-        cd backoffice
+        ./backoffice
         composer install --no-ansi --no-interaction --no-progress --prefer-dist
       
     - name: Generate key
