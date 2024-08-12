@@ -13,6 +13,12 @@
             "database": "terrasol_dev",
             "username": "TerraSol",
             "password": "BDTS2k24."
+        },
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "database": "${workspaceFolder:Terrasol-PT-Backoffice}/backoffice/database/database.sqlite",
+            "name": "sql"
         }
     ],
     "editor.wordBasedSuggestions": "matchingDocuments"

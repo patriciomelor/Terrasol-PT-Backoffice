@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;  
 
 class User extends Authenticatable
 {
@@ -17,6 +18,7 @@ class User extends Authenticatable
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
+    use HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -75,6 +77,23 @@ class User extends Authenticatable
 
     public function assignRole($role)
     {
+        if (!is_numeric($role)) {
+            $role = Role::where('name', $role)->firstOrFail()->id;
+        }
         $this->roles()->sync([$role]);
     }
+
+    public function syncRoles($roles)
+    {
+        if (is_array($roles)) {
+            $roles = array_map(function ($role) {
+                return is_numeric($role) ? $role : Role::where('name', $role)->firstOrFail()->id;
+            }, $roles);
+        } else {
+            $roles = is_numeric($roles) ? $roles : Role::where('name', $roles)->firstOrFail()->id;
+        }
+        $this->roles()->sync($roles);
+    }
+    
+    
 }

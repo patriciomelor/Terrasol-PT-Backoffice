@@ -18,5 +18,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
 });
-Route::get('/profile/edit', [ProfileController::class, 'editProfile'])->name('profile.edit');
-Route::post('/profile/update', [ProfileController::class, 'updateProfile'])->name('profile.update');
+Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+Route::resource('users', ProfileController::class);
+Route::patch('users/{user}/toggle-active', [ProfileController::class, 'toggleActive'])->name('users.toggleActive');
