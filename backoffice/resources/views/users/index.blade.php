@@ -25,11 +25,13 @@
             <a href="{{ route('users.create') }}" class="btn btn-primary">Crear Usuario</a>
           </div>
     <div class="card-body">
-    <table id="users-table" class="table table-striped table-success table-hover">
+    <table id="users-table" class="table table-striped table-primary table-hover">
         <thead>
             <tr>
                 <th>Nombre</th>
                 <th>Email</th>
+                <th>Usuario</th>
+                <th>Rol</th>
                 <th>Activo</th>
                 <th>Acciones</th>
             </tr>
@@ -39,6 +41,8 @@
             <tr>
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
+                <td>{{ $user->user_login }}</td>
+                <td>{{ $user->role->name ?? 'Sin rol' }}</td>
                 <td>{{ $user->is_active ? 'Sí' : 'No' }}</td>
                 <td>
                     <a href="{{ route('users.edit', $user) }}" class="btn btn-warning">Editar</a>

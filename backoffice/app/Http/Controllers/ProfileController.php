@@ -11,6 +11,7 @@ class ProfileController extends Controller
     public function index()
     {
         $users = User::all();
+        $users = User::with('role')->get(); // Cargar los roles junto con los usuarios
         return view('users.index', compact('users'));
     }
 

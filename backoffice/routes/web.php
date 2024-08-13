@@ -26,3 +26,7 @@ Route::patch('users/{user}/toggle-active', [ProfileController::class, 'toggleAct
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/check-roles', function () {
+    $roles = \App\Models\Role::all();
+    dd($roles);
+});
