@@ -4,22 +4,25 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class AddGuardNameToRolesTable extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up()
     {
-        Schema::table('roles', function (Blueprint $table) {
-            $table->string('guard_name')->default('web');
-        });
+        // Check if the column already exists before attempting to add it
+        if (!Schema::hasColumn('roles', 'guard_name')) {
+            Schema::table('roles', function (Blueprint $table) {
+                $table->string('guard_name')->default('web');
+            });
+        }
     }
-    
+
     public function down()
     {
         Schema::table('roles', function (Blueprint $table) {
-            $table->dropColumn('guard_name');
+            // Only drop the column if it exists
+            if (Schema::hasColumn('roles', 'guard_name')) {
+                $table->dropColumn('guard_name');
+            }
         });
     }
-};
+}
