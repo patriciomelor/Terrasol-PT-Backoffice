@@ -37,9 +37,6 @@ jobs:
       run: chmod -R 777 backoffice/storage backoffice/bootstrap/cache
       
     - name: Wait for MySQL to be ready
-      run: sleep 10
-
-    - name: Wait for MySQL to be ready
       run: |
         until mysqladmin ping -h ${{ secrets.DB_HOST }} --silent; do
           sleep 1
