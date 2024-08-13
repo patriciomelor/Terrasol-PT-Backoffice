@@ -39,11 +39,11 @@ jobs:
     - name: Execute migrations
       env:
         DB_CONNECTION: mysql
-        DB_HOST: 174.138.108.156
-        DB_PORT: 3306
-        DB_DATABASE: terrasol_dev
-        DB_USERNAME: TerraSol
-        DB_PASSWORD: BDTS2k24.
+        DB_HOST: ${{ secrets.DB_HOST }}
+        DB_PORT: ${{ secrets.DB_PORT }}
+        DB_DATABASE: ${{ secrets.DB_DATABASE }}
+        DB_USERNAME: ${{ secrets.DB_USERNAME }}
+        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
       run: |
         cd backoffice
         php artisan migrate
@@ -51,11 +51,11 @@ jobs:
     - name: Execute tests
       env:
         DB_CONNECTION: mysql
-        DB_HOST: 174.138.108.156
-        DB_PORT: 3306
-        DB_DATABASE: terrasol_dev
-        DB_USERNAME: TerraSol
-        DB_PASSWORD: BDTS2k24.
+        DB_HOST: ${{ secrets.DB_HOST }}
+        DB_PORT: ${{ secrets.DB_PORT }}
+        DB_DATABASE: ${{ secrets.DB_DATABASE }}
+        DB_USERNAME: ${{ secrets.DB_USERNAME }}
+        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
       run: |
         cd backoffice
         vendor/bin/phpunit
