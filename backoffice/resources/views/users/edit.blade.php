@@ -23,37 +23,69 @@
         <div class="card">
         <div class="card-body">
             <h1>Editar Usuario</h1>
-            <form class="form-group"action="{{ route('users.update', $user) }}" method="POST">
-                @csrf
-                @method('PUT')
-                <div class="form-group">
-                    <label for="name">Nombre</label>
-                    <input type="text" class="form-control" id="name" name="name" value="{{ $user->name }}" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" value="{{ $user->email }}" required>
-                </div>
-                <div class="form-group">
-                    <label for="password">Contraseña</label>
-                    <input type="password" class="form-control" id="password" name="password">
-                </div>
-                <div class="form-group">
-                    <label for="role">Rol de Usuario</label>
-                    <select name="role" id="role" class="form-control">
-                        @foreach($roles as $role)
-                            <option value="{{ $role->id }}" {{ $user->role_id == $role->id ? 'selected' : '' }}>
-                                {{ $role->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="form-group form-check">
-                    <input type="checkbox" class="form-check-input" id="is_active" name="is_active" {{ $user->is_active ? 'checked' : '' }}>
-                    <label class="form-check-label" for="is_active">Activo</label>
-                </div>
-                <button type="submit" class="btn btn-primary">Actualizar</button>
-            </form>
+            <form method="POST" action="{{ route('users.update', $user->id) }}">
+        @csrf
+        @method('PATCH')
+
+        <div class="form-group">
+            <label for="name">Nombre:</label>
+            <input type="text" name="name" id="name" class="form-control" value="{{ old('name', $user->name) }}" required>
+            @error('name')
+                <span class="text-danger">{{ $message }}</span>
+            @enderror
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email" class="form-control" value="{{ old('email', $user->email) }}" required>
+            @error('email')
+                <span class="text-danger">{{ $message }}</span>
+            @enderror
+        </div>
+
+        <div class="form-group">
+            <label for="user_login">Nombre de Usuario:</label>
+            <input type="text" name="user_login" id="user_login" class="form-control" value="{{ old('user_login', $user->user_login) }}" required>
+            @error('user_login')
+                <span class="text-danger">{{ $message }}</span>
+            @enderror
+        </div>
+
+        <div class="form-group">
+            <label for="password">Contraseña:</label>
+            <input type="password" name="password" id="password" class="form-control">
+            @error('password')
+                <span class="text-danger">{{ $message }}</span>
+            @enderror
+        </div>
+
+        <div class="form-group">
+            <label for="password_confirmation">Confirmar Contraseña:</label>
+            <input type="password" name="password_confirmation" id="password_confirmation" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="role">Rol:</label>
+            <select name="role" id="role" class="form-control" required>
+                @foreach($roles as $role)
+                    <option value="{{ $role->id }}" {{ $role->id == old('role', $user->role_id) ? 'selected' : '' }}>
+                        {{ $role->name }}
+                    </option>
+                @endforeach
+            </select>
+            @error('role')
+                <span class="text-danger">{{ $message }}</span>
+            @enderror
+        </div>
+
+        <div class="form-group">
+            <input type="checkbox" name="is_active" id="is_active" {{ old('is_active', $user->is_active) ? 'checked' : '' }}>
+            <label for="is_active">Activo</label>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Actualizar Usuario</button>
+    </form>
+
             </div>
     </div>
     </div>

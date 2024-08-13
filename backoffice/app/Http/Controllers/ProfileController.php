@@ -2,7 +2,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Role;
 use App\Models\User;
@@ -27,21 +26,25 @@ class ProfileController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
-            'role' => 'required|exists:roles,id'
+            'user_login' => 'required|string|max:255|unique:users',
+            'role' => 'required|exists:roles,id',
+            // Añadir otras validaciones aquí si es necesario
         ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-            'is_active' => $request->has('is_active'),
-        ]);
+        try {
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'user_login' => $request->user_login,
+                'is_active' => $request->has('is_active'),
+                'role_id' => $request->role,
+            ]);
 
-        // Asignar rol directamente
-        $user->role_id = $request->role;
-        $user->save();
-
-        return redirect()->route('users.index')->with('success', 'Usuario creado correctamente.');
+            return redirect()->route('users.index')->with('success', 'Usuario creado correctamente.');
+        } catch (\Exception $e) {
+            return redirect()->route('users.create')->with('error', 'Error al crear el usuario: ' . $e->getMessage());
+        }
     }
 
     public function edit(User $user)
@@ -56,7 +59,8 @@ class ProfileController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
             'password' => 'nullable|string|min:8|confirmed',
-            'role' => 'required|exists:roles,id'
+            'role' => 'required|exists:roles,id',
+            'user_login' => 'required|string|max:255|unique:users,user_login,' . $user->id,
         ]);
     
         try {
@@ -64,7 +68,7 @@ class ProfileController extends Controller
             $user->email = $request->email;
     
             if ($request->filled('password')) {
-                $user->password = bcrypt($request->password);
+                $user->password = Hash::make($request->password);
             }
     
             if ($request->hasFile('avatar')) {
@@ -74,13 +78,15 @@ class ProfileController extends Controller
     
             $user->role_id = $request->role;
             $user->is_active = $request->has('is_active');
+            $user->user_login = $request->user_login;
             $user->save();
     
             return redirect()->route('users.index')->with('success', 'Usuario actualizado correctamente.');
         } catch (\Exception $e) {
-            return redirect()->route('users.edit', $user->id)->with('error', 'Error al actualizar el usuario.');
+            return redirect()->route('users.edit', $user->id)->with('error', 'Error al actualizar el usuario: ' . $e->getMessage());
         }
     }
+    
 
     public function destroy(User $user)
     {

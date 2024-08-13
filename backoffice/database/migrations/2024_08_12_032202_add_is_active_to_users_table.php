@@ -8,15 +8,23 @@ class AddIsActiveToUsersTable extends Migration
 {
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->boolean('is_active')->default(true);
-        });
+        if (!Schema::hasColumn('users', 'is_active')) {
+            Schema::table('users', function (Blueprint $table) {
+                $table->tinyInteger('is_active')->default(1);
+            });
+        }
     }
 
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('is_active');
         });
     }
+
 }
