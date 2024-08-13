@@ -126,12 +126,13 @@
             </a>
        
           </li>
-          <li class="nav-header">EXAMPLES</li>
+          <li class="nav-header">SITIO
+          </li>
           <li class="nav-item">
-            <a href="../calendar.html" class="nav-link">
-              <i class="nav-icon far fa-calendar-alt"></i>
+            <a href="{{ route('articles.index') }}" class="nav-link">
+              <i class="nav-icon far fa-pencil"></i>
               <p>
-                Calendar
+                Publicaciones
                 <span class="badge badge-info right">2</span>
               </p>
             </a>
