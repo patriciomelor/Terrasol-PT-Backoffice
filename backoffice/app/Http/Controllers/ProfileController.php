@@ -1,11 +1,10 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Spatie\Permission\Models\Role;
+use App\Models\Role;
 use App\Models\User;
 
 class ProfileController extends Controller
@@ -38,7 +37,9 @@ class ProfileController extends Controller
             'is_active' => $request->has('is_active'),
         ]);
 
-        $user->assignRole($request->role);
+        // Asignar rol directamente
+        $user->role_id = $request->role;
+        $user->save();
 
         return redirect()->route('users.index')->with('success', 'Usuario creado correctamente.');
     }
@@ -57,25 +58,28 @@ class ProfileController extends Controller
             'password' => 'nullable|string|min:8|confirmed',
             'role' => 'required|exists:roles,id'
         ]);
-
-        $user->name = $request->name;
-        $user->email = $request->email;
-
-        if ($request->filled('password')) {
-            $user->password = bcrypt($request->password);
+    
+        try {
+            $user->name = $request->name;
+            $user->email = $request->email;
+    
+            if ($request->filled('password')) {
+                $user->password = bcrypt($request->password);
+            }
+    
+            if ($request->hasFile('avatar')) {
+                $path = $request->file('avatar')->store('avatars', 'public');
+                $user->profile_photo_path = $path;
+            }
+    
+            $user->role_id = $request->role;
+            $user->is_active = $request->has('is_active');
+            $user->save();
+    
+            return redirect()->route('users.index')->with('success', 'Usuario actualizado correctamente.');
+        } catch (\Exception $e) {
+            return redirect()->route('users.edit', $user->id)->with('error', 'Error al actualizar el usuario.');
         }
-
-        if ($request->hasFile('avatar')) {
-            $path = $request->file('avatar')->store('avatars', 'public');
-            $user->profile_photo_path = $path;
-        }
-
-        $user->syncRoles($request->role);
-
-        $user->is_active = $request->has('is_active');
-        $user->save();
-
-        return redirect()->route('users.index')->with('success', 'Usuario actualizado correctamente.');
     }
 
     public function destroy(User $user)
