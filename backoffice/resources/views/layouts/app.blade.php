@@ -26,6 +26,7 @@
 
 </head>
 <body class="login-page BackGradient" id="BackGradient">
+
 <div id="app"class="login-box">
     <div class="card card-outline card-primary">
             @yield('content')     

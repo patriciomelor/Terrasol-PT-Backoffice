@@ -2,21 +2,22 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Fortify\TwoFactorAuthenticatable;
-use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
     use HasApiTokens;
     use HasFactory;
-    use HasProfilePhoto;
     use Notifiable;
-    use TwoFactorAuthenticatable;
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -27,6 +28,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'user_login',
     ];
 
     /**
@@ -68,13 +70,25 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class, 'role_user', 'user_id', 'role_id');
     }
 
-    public function hasRole($role)
-    {
-        return $this->roles()->where('name', $role)->exists();
-    }
-
     public function assignRole($role)
     {
+        if (!is_numeric($role)) {
+            $role = Role::where('name', $role)->firstOrFail()->id;
+        }
         $this->roles()->sync([$role]);
     }
+
+    public function syncRoles($roles)
+    {
+        if (is_array($roles)) {
+            $roles = array_map(function ($role) {
+                return is_numeric($role) ? $role : Role::where('name', $role)->firstOrFail()->id;
+            }, $roles);
+        } else {
+            $roles = is_numeric($roles) ? $roles : Role::where('name', $roles)->firstOrFail()->id;
+        }
+        $this->roles()->sync($roles);
+    }
+    
+    
 }

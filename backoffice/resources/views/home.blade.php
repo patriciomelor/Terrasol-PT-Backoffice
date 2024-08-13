@@ -83,5 +83,5 @@
 
         <!-- /.row -->
       </div><!--/. container-fluid -->
-    </section>
+</section>
 @endsection
