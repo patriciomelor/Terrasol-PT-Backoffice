@@ -9,7 +9,7 @@ return new class extends Migration
     public function up()
 {
     Schema::table('users', function (Blueprint $table) {
-        $table->string('user_login')->unique()->after('email');
+        $table->string('user_login')->default('default_value')->change();
     });
 }
 

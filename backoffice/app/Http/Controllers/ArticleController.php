@@ -63,9 +63,12 @@ class ArticleController extends Controller
     public function show($id)
     {
         $article = Article::findOrFail($id);
+        if (is_string($article->photos)) {
+            $article->photos = json_decode($article->photos, true);
+        }
         return view('articles.show', compact('article'));
     }
-
+    
     
     public function edit($id)
     {
