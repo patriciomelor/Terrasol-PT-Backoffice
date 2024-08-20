@@ -28,6 +28,7 @@
                         <table id="settings-table" class="table table-striped table-primary table-hover">
                             <thead>
                                 <tr>
+                                    <th>Nombre del Campo</th>
                                     <th>Clave</th>
                                     <th>Valor</th>
                                     <th>Acciones</th>
@@ -36,6 +37,7 @@
                             <tbody>
                                 @foreach($settings as $setting)
                                 <tr>
+                                    <td>{{ $setting->name ?? ucfirst(str_replace('_', ' ', $setting->key)) }}</td>
                                     <td>{{ $setting->key }}</td>
                                     <td>{{ $setting->value }}</td>
                                     <td>
