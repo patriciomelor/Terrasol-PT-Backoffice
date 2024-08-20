@@ -4,8 +4,6 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\ArticleController;
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -19,6 +17,8 @@ Route::get('/', function () {
     return view('auth.login');
 });
 //register
+use App\Http\Controllers\Auth\RegisterController;
+
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
 //profile
@@ -33,6 +33,7 @@ Route::get('/check-roles', function () {
     dd($roles);
 });
 //articulos
+use App\Http\Controllers\ArticleController;
 // Ruta para listar todos los artículos
 Route::get('articles', [ArticleController::class, 'index'])->name('articles.index');
 // Ruta para mostrar el formulario de creación de artículos
@@ -41,3 +42,11 @@ Route::get('articles/create', [ArticleController::class, 'create'])->name('artic
 Route::post('articles', [ArticleController::class, 'store'])->name('articles.store');
 // Ruta para mostrar un artículo específico
 Route::get('articles/{id}', [ArticleController::class, 'show'])->name('articles.show');
+
+//roles
+use App\Http\Controllers\RoleController;
+Route::resource('roles', RoleController::class);
+
+//settings
+use App\Http\Controllers\SettingController;
+Route::resource('settings', SettingController::class);

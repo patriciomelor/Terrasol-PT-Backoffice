@@ -11,7 +11,7 @@ class ProfileController extends Controller
     public function index()
     {
         $users = User::all();
-        $users = User::with('role')->get(); // Cargar los roles junto con los usuarios
+        $users = User::with('role','updatedBy')->get(); // Cargar los roles junto con los usuarios
         return view('users.index', compact('users'));
     }
 
@@ -80,6 +80,7 @@ class ProfileController extends Controller
             $user->role_id = $request->role;
             $user->is_active = $request->has('is_active');
             $user->user_login = $request->user_login;
+            $user->updated_by = auth()->id(); // Aquí se guarda el ID del usuario que realiza la modificación
             $user->save();
     
             return redirect()->route('users.index')->with('success', 'Usuario actualizado correctamente.');
@@ -87,6 +88,7 @@ class ProfileController extends Controller
             return redirect()->route('users.edit', $user->id)->with('error', 'Error al actualizar el usuario: ' . $e->getMessage());
         }
     }
+    
     
 
     public function destroy(User $user)

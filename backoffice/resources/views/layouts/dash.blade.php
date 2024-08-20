@@ -117,6 +117,8 @@
             </a>
        
           </li>
+          <li class="nav-header">Config. Usuarios
+          </li>
           <li class="nav-item">
             <a href="{{ route('users.index') }}" class="nav-link">
               <i class="nav-icon fas fa-user"></i>
@@ -126,11 +128,20 @@
             </a>
        
           </li>
+          <li class="nav-item">
+            <a href="{{ route('roles.index') }}" class="nav-link">
+              <i class="nav-icon fas fa-lock"></i>
+              <p>
+                Roles
+              </p>
+            </a>
+       
+          </li>
           <li class="nav-header">SITIO
           </li>
           <li class="nav-item">
             <a href="{{ route('articles.index') }}" class="nav-link">
-              <i class="nav-icon far fa-pencil"></i>
+              <i class="nav-icon far fa-edit"></i>
               <p>
                 Publicaciones
                 <span class="badge badge-info right">2</span>
@@ -145,7 +156,16 @@
               </p>
             </a>
           </li>
-     
+          <li class="nav-header">Settings
+          </li>
+          <li class="nav-item">
+            <a href="{{ url('/settings') }}" class="nav-link">
+              <i class="nav-icon fa-solid fa-gear"></i>
+              <p>
+                Config. Web
+              </p>
+            </a>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

@@ -85,6 +85,8 @@
 
         <button type="submit" class="btn btn-primary">Actualizar Usuario</button>
     </form>
+ 
+<p>Última modificación realizada por: {{ $user->updatedBy->name ?? 'N/A' }}</p>
 
             </div>
     </div>

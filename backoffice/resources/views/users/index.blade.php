@@ -33,6 +33,7 @@
                 <th>Usuario</th>
                 <th>Rol</th>
                 <th>Activo</th>
+                <th>Última Modificación</th> <!-- Nueva columna -->
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -44,6 +45,7 @@
                 <td>{{ $user->user_login }}</td>
                 <td>{{ $user->role->name ?? 'Sin rol' }}</td>
                 <td>{{ $user->is_active ? 'Sí' : 'No' }}</td>
+                <td>{{ $user->updatedBy->name ?? 'N/A' }}</td> <!-- Mostrar el nombre del usuario que realizó la última modificación -->
                 <td>
                     <a href="{{ route('users.edit', $user) }}" class="btn btn-warning">Editar</a>
                     <form action="{{ route('users.destroy', $user) }}" method="POST" style="display:inline;">
