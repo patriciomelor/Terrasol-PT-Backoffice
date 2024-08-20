@@ -7,7 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Role extends Model
 {
-    protected $fillable = ['name'];
+    protected $fillable = [
+        'name',
+        'guard_name',
+        'created_by', // Agrega este campo
+    ];
 
     public function users()
     {
@@ -16,7 +20,12 @@ class Role extends Model
     }
     public function permissions()
     {
-        return $this->belongsToMany(Permission::class, 'role_permissions');
+        return $this->belongsToMany(Permission::class);
+
+    }
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'created_by');
     }
 }
 

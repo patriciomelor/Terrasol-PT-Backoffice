@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Role;
 use App\Models\Permission;
+use Illuminate\Support\Facades\Auth; // Asegúrate de importar el facade Auth
 
 class RoleController extends Controller
 {
@@ -15,6 +16,12 @@ class RoleController extends Controller
         return view('roles.index', compact('roles', 'permissions'));
     }
 
+    public function create()
+    {
+        $permissions = Permission::all();
+        return view('roles.create', compact('permissions'));
+    }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -23,7 +30,13 @@ class RoleController extends Controller
             'permissions.*' => 'exists:permissions,id',
         ]);
 
-        $role = Role::create(['name' => $request->name]);
+        // Guardar el rol con el ID del usuario actual
+        $role = Role::create([
+            'name' => $request->name,
+            'guard_name' => 'web', // Ajusta según sea necesario
+            'created_by' => Auth::id(), // Guardar el ID del usuario actual
+        ]);
+
         $role->permissions()->sync($request->permissions);
 
         return redirect()->route('roles.index')->with('success', 'Rol creado correctamente.');
@@ -43,7 +56,11 @@ class RoleController extends Controller
             'permissions.*' => 'exists:permissions,id',
         ]);
 
-        $role->update(['name' => $request->name]);
+        $role->update([
+            'name' => $request->name,
+            'guard_name' => 'web', // Ajusta según sea necesario
+        ]);
+
         $role->permissions()->sync($request->permissions);
 
         return redirect()->route('roles.index')->with('success', 'Rol actualizado correctamente.');
