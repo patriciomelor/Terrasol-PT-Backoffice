@@ -3,7 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use App\Http\Controllers\ProfileController;
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -13,6 +13,16 @@ Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEm
 Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
 Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
 //rutas personalizadas
+Auth::routes(['verify' => true]);
+Route::get('/send-test-email', function () {
+    \Illuminate\Support\Facades\Mail::raw('This is a test email', function ($message) {
+        $message->to('patriciomelor@gmail.com')
+                ->subject('Test Email');
+    });
+
+    return 'Email sent!';
+});
+
 Route::get('/', function () {
     return view('auth.login');
 });
@@ -22,6 +32,7 @@ use App\Http\Controllers\Auth\RegisterController;
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
 //profile
+use App\Http\Controllers\ProfileController;
 Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
 Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 Route::resource('users', ProfileController::class);
@@ -50,3 +61,7 @@ Route::resource('roles', RoleController::class);
 //settings
 use App\Http\Controllers\SettingController;
 Route::resource('settings', SettingController::class);
+//character
+use App\Http\Controllers\CharacteristicController;
+
+Route::resource('characteristics', CharacteristicController::class);

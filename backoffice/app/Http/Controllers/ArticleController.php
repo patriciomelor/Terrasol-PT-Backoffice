@@ -3,6 +3,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Article; // Importa el modelo correcto
+use App\Models\Feature; // Importa el modelo Feature
+use App\Models\Characteristic; 
 
 class ArticleController extends Controller
 {
@@ -13,52 +15,56 @@ class ArticleController extends Controller
             // Decodifica las rutas de las fotos si están en formato JSON
             $article->photos = json_decode($article->photos, true);
         }
+        
         return view('articles.index', compact('articles')); // Pasar $articles a la vista
     }
     public function create()
     {
-        return view('articles.create');
+        $features = Feature::all(); // Obtener todas las características
+        $characteristics = Characteristic::all();
+        return view('articles.create', compact('characteristics'));
     }
-
+    
     public function store(Request $request)
     {
         $request->validate([
             'title' => 'required|string|max:255',
-            'description' => 'required|string|max:255',
+            'description' => 'required|string',
             'content' => 'required|string',
-            'square_meters' => 'nullable|integer',
-            'constructed_meters' => 'nullable|integer',
+            'square_meters' => 'required|numeric',
+            'photos.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'constructed_meters' => 'nullable|numeric',
             'region' => 'nullable|string',
             'city' => 'nullable|string',
             'street' => 'nullable|string',
-            'sale_or_rent' => 'nullable|string',
-            'photos' => 'nullable|array',
-            'photos.*' => 'nullable|image',
+            'sale_or_rent' => 'required|in:sale,rent',
+            'characteristics' => 'nullable|array',
+            'characteristics.*' => 'boolean',
         ]);
     
-        $article = new Article();
-        $article->title = $request->title;
-        $article->description = $request->description;
-        $article->content = $request->content;
-        $article->square_meters = $request->square_meters;
-        $article->constructed_meters = $request->constructed_meters;
-        $article->region = $request->region;
-        $article->city = $request->city;
-        $article->street = $request->street;
-        $article->sale_or_rent = $request->sale_or_rent;
-        
+        $article = new Article($request->except('photos', 'characteristics'));
+    
         if ($request->hasFile('photos')) {
             $photos = [];
             foreach ($request->file('photos') as $photo) {
-                $photos[] = $photo->store('photos');
+                $path = $photo->store('photos');
+                $photos[] = $path;
             }
             $article->photos = json_encode($photos);
         }
     
         $article->save();
     
+        if ($request->has('characteristics')) {
+            foreach ($request->characteristics as $id => $value) {
+                $article->characteristics()->attach($id, ['value' => $value]);
+            }
+        }
+    
         return redirect()->route('articles.index')->with('success', 'Artículo creado con éxito.');
     }
+    
+    
     
     public function show($id)
     {

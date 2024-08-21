@@ -17,4 +17,14 @@ class Article extends Model
         'sale_or_rent',
         'photos',
     ];
+    public function features()
+    {
+        return $this->belongsToMany(Feature::class)->withPivot('value');
+    }
+    public function characteristics()
+    {
+        return $this->belongsToMany(Characteristic::class)
+                    ->withPivot('icon'); // Asegúrate de que el pivot tenga el campo 'icon'
+    }
+
 }
