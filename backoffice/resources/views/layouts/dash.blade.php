@@ -22,6 +22,17 @@
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 
+    <!-- FontAwesome CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+    <!-- FontAwesome Icon Picker CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/fontawesome-iconpicker/3.2.0/css/fontawesome-iconpicker.min.css" rel="stylesheet">
+      <!-- Other head content -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+      
+    <!-- FontAwesome Icon Picker JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fontawesome-iconpicker/3.2.0/js/fontawesome-iconpicker.min.js"></script>
+
   </head>
 <body class="sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
 <div class="wrapper">
@@ -152,10 +163,10 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="../gallery.html" class="nav-link">
-              <i class="nav-icon far fa-image"></i>
+            <a href="{{ route('characteristics.index') }}" class="nav-link">
+              <i class="nav-icon fa-regular fa-lightbulb"></i>
               <p>
-                Gallery
+              Servicios y Características
               </p>
             </a>
           </li>
@@ -237,5 +248,6 @@ google.maps.event.addDomListener(window, 'load', initAutocomplete);
     });
     });
 </script>
+
 </body>
 </html>

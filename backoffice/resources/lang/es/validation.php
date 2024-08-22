@@ -15,4 +15,8 @@ return [
         'email' => 'correo electrónico',
         'password' => 'contraseña',
     ],
+    'custom' => [
+    'exists' => 'El elemento seleccionado es inválido.',
+    ],
+
 ];
