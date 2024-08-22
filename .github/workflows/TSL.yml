@@ -21,7 +21,7 @@ jobs:
 
     - name: Deploy to Droplet
       run: |
-        ssh -o StrictHostKeyChecking=no username@${{ secrets.DROPLET_HOST }} << 'EOF'
+        ssh -o StrictHostKeyChecking=no root@${{ secrets.DROPLET_HOST }} << 'EOF'
           cd /path/to/your/project
           git pull origin main
           composer install --no-interaction --prefer-dist --optimize-autoloader
