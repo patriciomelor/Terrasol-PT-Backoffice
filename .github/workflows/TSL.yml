@@ -69,7 +69,8 @@ jobs:
         chmod 600 /tmp/private_key
         ssh -i /tmp/private_key -o StrictHostKeyChecking=no root@$DROPLET_IP << 'EOF'
           cd /var/www/html/terrasol/backoffice
-          git stash
+          git add .
+          git commit -m "Deploy desde droplet" 
           git pull origin main
           composer install --no-ansi --no-interaction --no-progress --prefer-dist
           php artisan migrate --force
