@@ -7,68 +7,27 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-    - name: Setup PHP
-      uses: shivammathur/setup-php@v2
+    - name: Set up SSH
+      uses: webfactory/ssh-agent@v0.5.3
       with:
-        php-version: '8.2'
-        extensions: mbstring, pdo_mysql
-        coverage: none
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-    - name: Copy .env
-      run: php -r "file_exists('backoffice/.env') || copy('backoffice/.env.example', 'backoffice/.env');"
-      
-    - name: Install Dependencies
+    - name: Deploy to Droplet
       run: |
-        cd backoffice
-        composer install --no-ansi --no-interaction --no-progress --prefer-dist
-      
-    - name: Generate key
-      run: |
-        cd backoffice
-        php artisan key:generate
-      
-    - name: Directory Permissions
-      run: chmod -R 777 backoffice/storage backoffice/bootstrap/cache
- 
-    - name: Test MySQL connection
-      run: |
-        mysql -h ${{ secrets.DB_HOST }} -P ${{ secrets.DB_PORT }} -u ${{ secrets.DB_USERNAME }} -p${{ secrets.DB_PASSWORD }} -e "SHOW DATABASES;"  
-  
-    - name: Wait for MySQL to be ready
-      run: |
-          for i in {1..60}; do
-            mysqladmin ping -h ${{ secrets.DB_HOST }} --silent && break
-            echo "Waiting for MySQL..."
-            sleep 5
-          done
-
-    - name: Execute migrations
-      env:
-        DB_CONNECTION: mysql
-        DB_HOST: ${{ secrets.DB_HOST }}
-        DB_PORT: ${{ secrets.DB_PORT }}
-        DB_DATABASE: ${{ secrets.DB_DATABASE }}
-        DB_USERNAME: ${{ secrets.DB_USERNAME }}
-        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-      run: |
-        cd backoffice
-        php artisan migrate
-      
-    # - name: Execute tests
-    #   if: env.SKIP_TESTS != 'true'
-    #   env:
-    #     DB_CONNECTION: mysql
-    #     DB_HOST: ${{ secrets.DB_HOST }}
-    #     DB_PORT: ${{ secrets.DB_PORT }}
-    #     DB_DATABASE: ${{ secrets.DB_DATABASE }}
-    #     DB_USERNAME: ${{ secrets.DB_USERNAME }}
-    #     DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-    #   run: |
-    #     cd backoffice
-    #     vendor/bin/phpunit
+        ssh -o StrictHostKeyChecking=no username@${{ secrets.DROPLET_HOST }} << 'EOF'
+          cd /path/to/your/project
+          git pull origin main
+          composer install --no-interaction --prefer-dist --optimize-autoloader
+          php artisan migrate --force
+          php artisan config:cache
+          php artisan route:cache
+          php artisan view:cache
+          sudo systemctl restart nginx
+        EOF
