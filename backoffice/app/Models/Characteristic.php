@@ -7,12 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Characteristic extends Model
 {
-    use HasFactory;
-    protected $fillable = ['name', 'icon'];
-
+    // Characteristic.php
     public function articles()
     {
-        return $this->belongsToMany(Article::class)
-                    ->withPivot('icon'); // Asegúrate de que el pivot tenga el campo 'icon'
+        return $this->belongsToMany(Article::class);
     }
 }

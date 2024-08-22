@@ -51,8 +51,16 @@ Route::get('articles', [ArticleController::class, 'index'])->name('articles.inde
 Route::get('articles/create', [ArticleController::class, 'create'])->name('articles.create');
 // Ruta para almacenar un nuevo artículo
 Route::post('articles', [ArticleController::class, 'store'])->name('articles.store');
+
 // Ruta para mostrar un artículo específico
 Route::get('articles/{id}', [ArticleController::class, 'show'])->name('articles.show');
+//Ruta para editar:
+Route::get('/articles/{article}/edit', [ArticleController::class, 'edit'])->name('articles.edit');
+//ruta para update
+Route::put('/articles/{article}', [ArticleController::class, 'update'])->name('articles.update');
+//ruta eliminat
+Route::delete('/articles/{article}', [ArticleController::class, 'destroy'])->name('articles.destroy');
+
 
 //roles
 use App\Http\Controllers\RoleController;
