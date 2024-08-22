@@ -48,17 +48,17 @@ jobs:
             sleep 5
           done
 
-    - name: Execute migrations
-      env:
-        DB_CONNECTION: mysql
-        DB_HOST: ${{ secrets.PRODUCTION_DB_HOST }}
-        DB_PORT: ${{ secrets.PRODUCTION_DB_PORT }}
-        DB_DATABASE: ${{ secrets.PRODUCTION_DB_DATABASE }}
-        DB_USERNAME: ${{ secrets.PRODUCTION_DB_USERNAME }}
-        DB_PASSWORD: ${{ secrets.PRODUCTION_DB_PASSWORD }}
-      run: |
-        cd backoffice
-        php artisan migrate
+    # - name: Execute migrations
+    #   env:
+    #     DB_CONNECTION: mysql
+    #     DB_HOST: ${{ secrets.PRODUCTION_DB_HOST }}
+    #     DB_PORT: ${{ secrets.PRODUCTION_DB_PORT }}
+    #     DB_DATABASE: ${{ secrets.PRODUCTION_DB_DATABASE }}
+    #     DB_USERNAME: ${{ secrets.PRODUCTION_DB_USERNAME }}
+    #     DB_PASSWORD: ${{ secrets.PRODUCTION_DB_PASSWORD }}
+    #   run: |
+    #     cd backoffice
+    #     php artisan migrate
 
     - name: Deploy to Droplet
       env:
