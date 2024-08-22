@@ -62,8 +62,8 @@ jobs:
 
     - name: Deploy to Droplet
       env:
-        SSH_PRIVATE_KEY: ${{ secrets.DROPLET_SSH_PRIVATE_KEY }}
-        DROPLET_IP: ${{ secrets.DROPLET_IP }}
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        DROPLET_IP: ${{ secrets.DROPLET_HOST }}
       run: |
         echo "$SSH_PRIVATE_KEY" > /tmp/private_key
         chmod 600 /tmp/private_key
