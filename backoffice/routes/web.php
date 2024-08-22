@@ -14,14 +14,7 @@ Route::get('password/reset/{token}', [ResetPasswordController::class, 'showReset
 Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
 //rutas personalizadas
 Auth::routes(['verify' => true]);
-Route::get('/send-test-email', function () {
-    \Illuminate\Support\Facades\Mail::raw('This is a test email', function ($message) {
-        $message->to('patriciomelor@gmail.com')
-                ->subject('Test Email');
-    });
 
-    return 'Email sent!';
-});
 
 Route::get('/', function () {
     return view('auth.login');
@@ -38,11 +31,7 @@ Route::post('/profile/update', [ProfileController::class, 'update'])->name('prof
 Route::resource('users', ProfileController::class);
 Route::patch('users/{user}/toggle-active', [ProfileController::class, 'toggleActive'])->name('users.toggleActive');
 Auth::routes();
-//role
-Route::get('/check-roles', function () {
-    $roles = \App\Models\Role::all();
-    dd($roles);
-});
+
 //articulos
 use App\Http\Controllers\ArticleController;
 // Ruta para listar todos los artículos
