@@ -67,6 +67,7 @@ class ArticleController extends Controller
         $characteristics = $article->characteristics;
         // Obtener las características disponibles
         $features = Feature::all();
+        $characteristics = Characteristic::all();
 
         return view('articles.show', compact('article', 'characteristics', 'features'));
     }

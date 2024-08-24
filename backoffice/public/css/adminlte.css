@@ -53019,3 +53019,20 @@ a.text-muted:hover {
   
   
     }
+    .characteristics-container {
+    display: flex;
+    flex-wrap: wrap;  /* Permite que los elementos se envuelvan a la siguiente línea si no caben */
+}
+
+.form-check-inline {
+    margin-right: 15px;  /* Espacio entre los elementos */
+}
+
+.form-check-input {
+    margin-right: 5px;  /* Espacio entre el checkbox y el ícono/texto */
+}
+
+.form-check-label {
+    display: flex;
+    align-items: center;
+}

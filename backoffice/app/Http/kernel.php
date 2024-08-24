@@ -13,6 +13,7 @@ class Kernel extends HttpKernel
      */
     protected $middleware = [
         // Otros middlewares globales
+        \App\Http\Middleware\HandleInertiaRequests::class,
     ];
 
     /**
@@ -24,6 +25,8 @@ class Kernel extends HttpKernel
         'web' => [
             // Otros middlewares
             \App\Http\Middleware\RedirectIfAuthenticated::class,
+            \App\Http\Middleware\UpdateLastLogin::class,
+
         ],
 
         'api' => [

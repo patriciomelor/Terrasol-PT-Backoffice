@@ -61,56 +61,43 @@
 
                 <div class="col-12 col-sm-6">
                     <h3 class="my-3">Editar Titulo:</h3>
-                    <input type="text" name="title" value="{{ old('title', $article->title) }}" class="form-control">
+                    <input type="text" name="title" value="{{ old('title', $article->title) }}" class="form-control" autofocus>
                     <p>Editar Descripción</p>
-                    <input type="text" name="description" value="{{ old('title', $article->description) }}" class="form-control">
+                    <input type="textarea" name="description" value="{{ old('description', $article->description) }}" class="form-control" autofocus>
                     <hr>
 
                     <h4 class="mt-3">Editar Metros cuadrados</h4>
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                        <label class="btn btn-default text-center">
-                        <input type="number" class="form-control col-md-5"name="description" value="{{ old('title', $article->square_meters) }}" class="form-control">
-                        </label>
+                        <input type="number" class="form-control" autofocus name="description" value="{{ old('square_meters', $article->square_meters) }}" class="form-control" autofocus>
                     </div>
 
                     <h4 class="mt-3">Metros construidos:</h4>
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                        <label class="btn btn-default text-center">
-                            <input type="radio" name="color_option" id="color_option_b1" autocomplete="off">
-                            <span class="text-l">{{ $article->constructed_meters }}</span>
-                        </label>
+                    <input type="number" class="form-control" autofocus value="{{ old('constructed_meters',$article->constructed_meters)}}">      
                     </div>
 
                     <h4 class="mt-3">Región:</h4>
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                        <label class="btn btn-default text-center">
-                            <input type="radio" name="color_option" id="color_option_b1" autocomplete="off">
-                            <span class="text-m">{{ $article->region }}</span>
-                        </label>
+                            <input type="text" class="form-control" autofocus name="region-input" id="region-input" value="{{ old('region',$article->region)}}">
                     </div>
 
                     <h4 class="mt-3">Ciudad:</h4>
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                        <label class="btn btn-default text-center">
-                            <input type="radio" name="color_option" id="color_option_b1" autocomplete="off">
-                            <span class="text-m">{{ $article->city }}</span>
-                        </label>
+                            <input type="text" class="form-control" autofocus id="ciudad-input" name="ciudad-input"value="{{ old('city',$article->city)}}" disabled>
                     </div>
 
                     <h4 class="mt-3">Calle:</h4>
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                        <label class="btn btn-default text-center">
-                            <input type="radio" name="color_option" id="color_option_b1" autocomplete="off">
-                            <span class="text-m">{{ $article->street }}</span>
+                            <input type="text" class="form-control" autofocus id="calle-input" name="calle-input"value="{{ old('street',$article->street)}}" disabled>
                         </label>
                     </div>
 
                     <h4 class="mt-3">Venta o Arriendo:</h4>
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                        <label class="btn btn-default text-center">
-                            <input type="radio" name="color_option" id="color_option_b1" autocomplete="off">
-                            <span class="text-m">{{ $article->sale_or_rent }}</span>
-                        </label>
+                             <select name="sale_or_rent" id="sale_or_rent" class="form-control">
+                                <option value="sale">Venta</option>
+                                <option value="rent">Arriendo</option>
+                            </select>
                     </div>
 
                     <div class="form-group">
@@ -125,14 +112,19 @@
                             </div>
                         @endforeach
                     </div>
+                    
                     <button type="submit" class="btn btn-primary">Guardar</button>
                     </form>
                 </div>
             </div>
+          
         </div>
         <!-- /.card-body -->
     </div>
     <!-- /.card -->
 </section>
 <!-- /.content -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRuDch_iRINkMpRTc-m5EFIhpZ8CdeqBs&libraries=places"></script>
+
+
 @endsection
