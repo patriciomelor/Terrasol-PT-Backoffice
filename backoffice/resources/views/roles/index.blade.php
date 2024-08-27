@@ -22,7 +22,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <a href="{{ route('roles.create') }}" class="btn btn-primary">Crear Rol</a>
+                        <a href="{{ route('roles.create') }}" class="btn btn-info">Crear Rol</a>
                     </div>
                     <div class="card-body">
                         <table id="roles-table" class="table table-striped table-primary table-hover">
@@ -43,11 +43,11 @@
                                         @endforeach
                                     </td>
                                     <td>
-                                        <a href="{{ route('roles.edit', $role) }}" class="btn btn-warning">Editar</a>
+                                        <a href="{{ route('roles.edit', $role) }}" class="btn btn-outline-success"><i class="fas fa-edit"></i></a>
                                         <form action="{{ route('roles.destroy', $role) }}" method="POST" style="display:inline;">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                                            <button type="submit" class="btn btn-outline-danger"><i class="fas fa-trash"></i></button>
                                         </form>
                                     </td>
                                 </tr>

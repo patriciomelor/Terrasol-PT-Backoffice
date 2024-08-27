@@ -71,3 +71,21 @@ $(document).ready(function() {
 
     google.maps.event.addDomListener(window, 'load', initAutocomplete);
 });
+// Mostrar loader al hacer una petición o al cambiar de página
+$(document).ready(function () {
+    $(document).on('ajaxStart', function () {
+        $("#loader").show();
+    }).on('ajaxStop', function () {
+        $("#loader").hide();
+    });
+
+    // Mostrar loader al enviar formularios
+    $('form').on('submit', function () {
+        $("#loader").show();
+    });
+
+    // Ocultar loader cuando la página esté completamente cargada
+    $(window).on('load', function () {
+        $("#loader").fadeOut('slow');
+    });
+});

@@ -53036,3 +53036,11 @@ a.text-muted:hover {
     display: flex;
     align-items: center;
 }
+/* Loader Spinner */
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+  border-width: 0.3rem;
+  color: #007bff; /* Color del loader */
+  
+}

@@ -22,7 +22,7 @@
       <div class="col-12">
         <div class="card">
           <div class="card-header">
-            <a href="{{ route('articles.create') }}" class="btn btn-primary mb-3">Agregar Nueva Parcela</a>
+            <a href="{{ route('articles.create') }}" class="btn btn-info mb-3">Agregar Nueva Parcela</a>
           </div>
           <div class="card-body">
             <table id="users-table" class="table table-striped table-primary table-hover">
@@ -45,13 +45,13 @@
                             <td>{{ $article->square_meters }}</td>
                             <td>
                                 <a href="{{ route('articles.show', $article->id) }}" class="btn btn-info btn-sm">Ver</a>
-                                <a href="{{ route('articles.edit', $article->id) }}" class="btn btn-warning btn-sm">Editar</a>
+                                <a href="{{ route('articles.edit', $article->id) }}" class="btn btn-outline-warning btn-sm"><i class="fas fa-edit"></i></a>
                                 
                                 <!-- Formulario para eliminar -->
                                 <form action="{{ route('articles.destroy', $article->id) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas eliminar este artículo?');">Eliminar</button>
+                                    <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas eliminar este artículo?');"><i class="fas fa-trash"></i></button>
                                 </form>
                             </td>
                         </tr>

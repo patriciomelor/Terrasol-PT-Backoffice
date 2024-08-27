@@ -83,7 +83,7 @@
             <label for="is_active">Activo</label>
         </div>
 
-        <button type="submit" class="btn btn-primary">Actualizar Usuario</button>
+        <button type="submit" class="btn btn-info">Actualizar Usuario</button>
     </form>
  
 <p>Última modificación realizada por: {{ $user->updatedBy->name ?? 'N/A' }}</p>

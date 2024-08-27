@@ -80,7 +80,7 @@
             <label for="is_active">Activo</label>
         </div>
 
-        <button type="submit" class="btn btn-primary">Crear Usuario</button>
+        <button type="submit" class="btn btn-info">Crear Usuario</button>
     </form>
                 </div>
     </div>

@@ -79,13 +79,13 @@
                         </li>
                         <li class="user-body">
                             <div class="row">
-                              @if(Auth::check())
+                                @if (Auth::check())
                                     <div>
                                         Última vez conectado:
                                         {{ auth()->user()->last_login_at ? auth()->user()->last_login_at->format('d M Y H:i') : 'Nunca' }}
                                     </div>
-                              @endif
-     
+                                @endif
+
                             </div>
                             <!-- /.row -->
                         </li>
@@ -236,6 +236,13 @@
             <!-- /.sidebar -->
         </aside>
         <div class="content-wrapper" style="min-height: 1715.02px;">
+            <!-- Loader HTML -->
+            <div id="loader" style="display:none; position: fixed; z-index: 1000; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+
             @if (session('success'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     {{ session('success') }}
@@ -250,15 +257,17 @@
                 </div>
             @endif
 
-            @yield('content')
+            @yield('content')  
         </div>
     </div>
     <!-- AdminLTE JS -->
-    <script  src="{{ asset('js/adminlte.min.js') }}"></script>
-    <script  src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/adminlte.min.js') }}"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
     <!-- JavaScript -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRuDch_iRINkMpRTc-m5EFIhpZ8CdeqBs&libraries=places"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRuDch_iRINkMpRTc-m5EFIhpZ8CdeqBs&libraries=places">
+    </script>
+    
