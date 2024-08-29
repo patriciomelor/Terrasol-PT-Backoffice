@@ -39,5 +39,11 @@ class HomeController extends Controller
         $user = User::find($id);
         return view('user.show', ['user' => $user]);
     }
+    public function home()
+    {
+        $users = User::with('role', 'updatedBy')->get();
+        $currentUser = auth()->user();  // Obtener el usuario autenticado
+
+        return view('home', compact('currentUser')); }
 
 }

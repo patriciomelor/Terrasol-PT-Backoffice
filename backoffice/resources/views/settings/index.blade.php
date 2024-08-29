@@ -41,11 +41,11 @@
                                     <td>{{ $setting->key }}</td>
                                     <td>{{ $setting->value }}</td>
                                     <td>
-                                        <a href="{{ route('settings.edit', $setting) }}" class="btn btn-outline-success"><i class="fas fa-edit"></i></a>
+                                        <a href="{{ route('settings.edit', $setting) }}" class="btn btn-warning"><i class="fas fa-edit" style="color: white"></i></a>
                                         <form action="{{ route('settings.destroy', $setting) }}" method="POST" style="display:inline;">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-outline-danger"><i class="fas fa-trash"></i></button>
+                                            <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button>
                                         </form>
                                     </td>
                                 </tr>

@@ -1,15 +1,6 @@
 @extends('layouts.dash')
 
 @section('content')
-@if($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
 
 <!-- Content Header (Page header) -->
 <section class="content-header">
@@ -33,7 +24,7 @@
     <!-- Default box -->
     <div class="card card-solid">
         <div class="card-body">
-        <form action="{{ route('articles.update', $article->id) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('articles.update', $article->id) }}" method="PUT" enctype="multipart/form-data">
         @csrf
         @method('PUT')            
             <div class="row">
@@ -83,12 +74,12 @@
 
                     <h4 class="mt-3">Ciudad:</h4>
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                            <input type="text" class="form-control" autofocus id="ciudad-input" name="ciudad-input"value="{{ old('city',$article->city)}}" disabled>
+                            <input type="text" class="form-control" autofocus id="ciudad-input" name="ciudad-input"value="{{ old('city',$article->city)}}" >
                     </div>
 
                     <h4 class="mt-3">Calle:</h4>
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                            <input type="text" class="form-control" autofocus id="calle-input" name="calle-input"value="{{ old('street',$article->street)}}" disabled>
+                            <input type="text" class="form-control" autofocus id="calle-input" name="calle-input"value="{{ old('street',$article->street)}}" >
                         </label>
                     </div>
 
