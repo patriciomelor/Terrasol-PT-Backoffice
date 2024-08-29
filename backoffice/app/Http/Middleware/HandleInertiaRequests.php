@@ -34,9 +34,9 @@ class HandleInertiaRequests extends Middleware
      *
      * @return array<string, mixed>
      */
-    public function handle(Request $request, Closure $next)
-    {
-        view()->share('currentUser', auth()->user());
-        return $next($request);
-    }
+    // public function handle(Request $request, Closure $next)
+    // {
+    //     view()->share('currentUser', auth()->user());
+    //     return $next($request);
+    // }
 }

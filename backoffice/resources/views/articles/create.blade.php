@@ -109,7 +109,7 @@
                                 <div class="form-group col-md-6 float-right">
                                     <label for="city">Ciudad:</label>
                                     <input type="text" name="city" id="city" class="form-control" 
-                                      disabled  autofocus>
+                                        autofocus>
                                     @error('city')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -120,7 +120,7 @@
                                 <div class="form-group col-md-6 float-left">
                                     <label for="street">Calle:</label>
                                     <input type="text" name="street" id="street" class="form-control" 
-                                       disabled autofocus>
+                                        autofocus>
                                     @error('street')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -164,6 +164,5 @@
             </div>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 @endsection

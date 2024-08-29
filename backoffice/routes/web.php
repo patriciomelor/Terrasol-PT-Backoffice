@@ -6,6 +6,7 @@ use Inertia\Inertia;
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/cache-test', [TestController::class, 'cacheTest']);
 
 //Rutas pass
 Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');

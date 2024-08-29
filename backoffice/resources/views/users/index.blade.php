@@ -25,7 +25,7 @@
                             <a href="{{ route('users.create') }}" class="btn btn-info">Crear Usuario</a>
                         </div>
                         <div class="card-body">
-                            <table id="users-table" class="table table-striped table-light table-hover">
+                            <table id="users-table" class="table table-striped table-light  table-hover table-bordered">
                                 <thead>
                                     <tr>
                                         <th>Nombre</th>
@@ -40,21 +40,21 @@
                                 <tbody>
                                     @foreach ($users as $user)
                                         <tr>
-                                            <td>{{ $user->name }}</td>
-                                            <td>{{ $user->email }}</td>
-                                            <td>{{ $user->user_login }}</td>
-                                            <td>{{ $user->role->name ?? 'Sin rol' }}</td>
-                                            <td>{{ $user->is_active ? 'Sí' : 'No' }}</td>
-                                            <td>{{ $user->updatedBy->name ?? 'N/A' }}</td>
+                                            <td style="text-align: center;vertical-align: middle;">{{ $user->name }}</td>
+                                            <td style="text-align: center;vertical-align: middle;">{{ $user->email }}</td>
+                                            <td style="text-align: center;vertical-align: middle;">{{ $user->user_login }}</td>
+                                            <td style="text-align: center;vertical-align: middle;">{{ $user->role->name ?? 'Sin rol' }}</td>
+                                            <td style="text-align: center;vertical-align: middle;"> {{ $user->is_active ? 'Sí' : 'No' }}</td>
+                                            <td style="text-align: center;vertical-align: middle;">{{ $user->updatedBy->name ?? 'N/A' }}</td>
                                             <!-- Mostrar el nombre del usuario que realizó la última modificación -->
-                                            <td>
+                                            <td style="text-align: center;vertical-align: middle;">
                                                 <a href="{{ route('users.edit', $user) }}"
-                                                    class="btn btn-outline-success"><i class="fas fa-edit"></i></a>
+                                                    class="btn btn-warning"><i class="fas fa-edit" style="color: white"></i></a>
                                                 <form action="{{ route('users.destroy', $user) }}" method="POST"
                                                     style="display:inline;">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-outline-danger"><i class="fas fa-trash"></i></button>
+                                                    <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button>
                                                 </form>
                                                 <form action="{{ route('users.toggleActive', $user) }}" method="POST" style="display:inline;">
                                                   @csrf

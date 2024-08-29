@@ -33,7 +33,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="permissions">Permisos</label>
-                                <select name="permissions[]" class="form-control" multiple>
+                                <select name="permissions[]" class="form-control" id="select2" multiple>
                                     @foreach($permissions as $permission)
                                         <option value="{{ $permission->id }}" {{ isset($role) && $role->permissions->contains($permission->id) ? 'selected' : '' }}>
                                             {{ $permission->name }}
@@ -41,6 +41,7 @@
                                     @endforeach
                                 </select>
                             </div>
+                            
                             <button type="submit" class="btn btn-info">{{ isset($role) ? 'Actualizar' : 'Crear' }}</button>
                         </form>
                     </div>
@@ -49,4 +50,6 @@
         </div>
     </div>
 </div>
+
+
 @endsection

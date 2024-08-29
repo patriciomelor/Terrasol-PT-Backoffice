@@ -27,10 +27,6 @@ class Role extends Model
     {
         return $this->belongsTo(User::class, 'created_by');
     }
-}
-
-class Permission extends Model
-{
     public function roles()
     {
         return $this->belongsToMany(Role::class, 'role_permissions');

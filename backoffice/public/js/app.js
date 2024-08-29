@@ -1,11 +1,3 @@
-setTimeout(function() {
-    let alert = document.querySelector('.alert');
-    if (alert) {
-        alert.classList.remove('show');
-        alert.classList.add('hide');
-    }
-}, 5000); // 5000 ms = 5 segundos
-
 $(document).ready(function() {
     setTimeout(function() {
         let alert = document.querySelector('.alert');
