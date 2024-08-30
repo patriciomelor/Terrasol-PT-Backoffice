@@ -41,7 +41,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <button type="submit" class="btn btn-primary">{{ isset($role) ? 'Actualizar' : 'Crear' }}</button>
+                            <button type="submit" class="btn btn-info">{{ isset($role) ? 'Actualizar' : 'Crear' }}</button>
                         </form>
                     </div>
                 </div>

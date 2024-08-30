@@ -169,5 +169,8 @@ return [
         ],
 
     ],
+    'options' => [
+    PDO::ATTR_TIMEOUT => 60, // Aumenta el tiempo de espera a 30 segundos
+],
 
 ];

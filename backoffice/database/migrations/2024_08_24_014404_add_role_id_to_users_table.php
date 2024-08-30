@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,10 +13,9 @@ class AddRoleIdToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->unsignedBigInteger('role_id')->nullable()->after('is_active');
-            
-            // Si tienes una tabla de roles y quieres establecer una clave foránea
-            $table->foreign('role_id')->references('id')->on('roles')->onDelete('set null');
+            $table->unsignedBigInteger('role_id')->nullable()->after('email');
+            // Asegúrate de agregar un índice si es necesario
+            // $table->foreign('role_id')->references('id')->on('roles')->onDelete('set null');
         });
     }
 
@@ -29,7 +27,6 @@ class AddRoleIdToUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropForeign(['role_id']);
             $table->dropColumn('role_id');
         });
     }

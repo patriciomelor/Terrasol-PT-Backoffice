@@ -92,7 +92,7 @@
 
 
                             <!-- Agrega más campos según sea necesario -->
-                            <button type="submit" class="btn btn-primary">{{ isset($setting) ? 'Actualizar' : 'Crear' }}</button>
+                            <button type="submit" class="btn btn-info">{{ isset($setting) ? 'Actualizar' : 'Crear' }}</button>
                         </form>
                     </div>
                 </div>

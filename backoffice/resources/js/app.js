@@ -1,39 +1,111 @@
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
+setTimeout(function () {
+    let alert = document.querySelector('.alert');
+    if (alert) {
+        alert.classList.remove('show');
+        alert.classList.add('hide');
+    }
+}, 5000); // 5000 ms = 5 segundos
 
-import './bootstrap';
-import { createApp } from 'vue';
+$(document).ready(function () {
+    setTimeout(function () {
+        let alert = document.querySelector('.alert');
+        if (alert) {
+            alert.classList.remove('show');
+            alert.classList.add('hide');
+        }
+    }, 5000); // 5000 ms = 5 segundos
 
-/**
- * Next, we will create a fresh Vue application instance. You may then begin
- * registering components with the application instance so they are ready
- * to use in your application's views. An example is included for you.
- */
+    // Inicializar Summernote
+    $('.summernote').summernote({
+        height: 200
+    });
 
-const app = createApp({});
+    $('#description').summernote({
+        height: 200
+    });
 
-import ExampleComponent from './components/ExampleComponent.vue';
-app.component('example-component', ExampleComponent);
+    $('#content').summernote({
+        height: 200
+    });
 
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
+    // Inicializar Google Maps Autocomplete street
 
-// Object.entries(import.meta.glob('./**/*.vue', { eager: true })).forEach(([path, definition]) => {
-//     app.component(path.split('/').pop().replace(/\.\w+$/, ''), definition.default);
-// });
-
-/**
- * Finally, we will attach the application instance to a HTML element with
- * an "id" attribute of "app". This element is included with the "auth"
- * scaffolding. Otherwise, you will need to add an element yourself.
- */
-
-app.mount('#app');
+    function initAutocomplete() {
+        const regionInput = document.getElementById('region');
+        const ciudadInput = document.getElementById('city');
+        const calleInput = document.getElementById('street');
+    
+        // Inicialmente deshabilitamos los inputs de ciudad y calle
+        ciudadInput.disabled = true;
+        calleInput.disabled = true;
+    
+        // Configuración para la búsqueda de regiones
+        const regionAutocomplete = new google.maps.places.Autocomplete(regionInput, {
+            types: ['(regions)'],
+            componentRestrictions: { country: 'cl' }
+        });
+    
+        let selectedCityPlaceId = null;
+    
+        // Manejo de la selección de la región
+        regionAutocomplete.addListener('place_changed', function () {
+            const place = regionAutocomplete.getPlace();
+            if (place.geometry) {
+                // Habilitar el input de ciudad después de seleccionar la región
+                ciudadInput.disabled = false;
+    
+                // Configuración para la búsqueda de ciudades dentro de la región seleccionada
+                const cityAutocomplete = new google.maps.places.Autocomplete(ciudadInput, {
+                    types: ['(cities)'],
+                    componentRestrictions: { country: 'cl' }
+                });
+    
+                cityAutocomplete.addListener('place_changed', function () {
+                    const place = cityAutocomplete.getPlace();
+                    if (place.geometry) {
+                        selectedCityPlaceId = place.place_id;
+                        calleInput.disabled = false; // Habilitar el input de calle después de seleccionar la ciudad
+                        loadStreets(selectedCityPlaceId);
+                    }
+                });
+    
+                const service = new google.maps.places.PlacesService(document.createElement('div'));
+                service.getDetails({ placeId: place.place_id }, function (place, status) {
+                    if (status === google.maps.places.PlacesServiceStatus.OK) {
+                        const bounds = new google.maps.LatLngBounds();
+                        bounds.union(place.geometry.viewport);
+                        cityAutocomplete.setBounds(bounds);
+                    }
+                });
+            }
+        });
+    
+        // Función para cargar calles dentro de la ciudad seleccionada
+        function loadStreets(cityPlaceId) {
+            const streetAutocomplete = new google.maps.places.Autocomplete(calleInput, {
+                types: ['address'],
+                componentRestrictions: { country: 'cl' }
+            });
+    
+            streetAutocomplete.addListener('place_changed', function () {
+                const place = streetAutocomplete.getPlace();
+                if (place.geometry) {
+                    console.log('Selected Street:', place.address_components[0].long_name);
+                }
+            });
+    
+            const service = new google.maps.places.PlacesService(document.createElement('div'));
+            service.getDetails({ placeId: cityPlaceId }, function (place, status) {
+                if (status === google.maps.places.PlacesServiceStatus.OK) {
+                    const bounds = new google.maps.LatLngBounds();
+                    bounds.union(place.geometry.viewport);
+                    streetAutocomplete.setBounds(bounds);
+                }
+            });
+        }
+    }
+    
+    // Iniciar el script cuando la ventana cargue
+    google.maps.event.addDomListener(window, 'load', initAutocomplete);
+    
+});

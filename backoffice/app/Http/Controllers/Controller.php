@@ -12,8 +12,16 @@ use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role as SpatieRole; // Alias para la clase Role de Spatie
 use App\Models\Role as AppRole; // Alias para la clase Role de tu proyecto
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cache;
 
 class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
+    public function cacheTest()
+    {
+        Cache::store('database')->put('key', 'value', 60);
+        $value = Cache::store('database')->get('key');
+
+        return response()->json(['value' => $value]);
+    }
 }

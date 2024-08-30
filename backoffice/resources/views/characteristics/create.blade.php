@@ -41,7 +41,7 @@
                     <i id="icon-preview" class="{{ old('icon') ?? 'fas fa-question' }}" style="font-size: 24px;"></i>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Guardar</button>
+                <button type="submit" class="btn btn-info">Guardar</button>
             </form>
                 </div>
              </div>
@@ -50,13 +50,15 @@
 </div>
     <!-- Modal de Selección de Íconos -->
     <div class="modal fade" id="iconPickerModal" tabindex="-1" aria-labelledby="iconPickerModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="iconPickerModalLabel">Seleccionar Ícono</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
+<!-- Modal de Selección de Íconos -->
+<div class="modal fade" id="iconPickerModal" tabindex="-1" aria-labelledby="iconPickerModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="iconPickerModalLabel">Seleccionar Ícono</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
                 <div class="row">
                     @foreach ([
                         'fa-home', 'fa-car', 'fa-bed', 'fa-warehouse', 'fa-wifi', 'fa-water', 'fa-sun',
@@ -72,33 +74,34 @@
                     @endforeach
                 </div>
             </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
+</div>
 @endsection
 
 @section('scripts')
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var iconPickerModal = new bootstrap.Modal(document.getElementById('iconPickerModal'));
+            document.addEventListener('DOMContentLoaded', function () {
+                var iconPickerModal = new bootstrap.Modal(document.getElementById('iconPickerModal'));
 
-            document.getElementById('selectIcon').addEventListener('click', function () {
-                iconPickerModal.show();
-            });
+                document.getElementById('selectIcon').addEventListener('click', function () {
+                    iconPickerModal.show();
+                });
 
-            document.querySelectorAll('#iconPickerModal .modal-body i').forEach(function (iconElement) {
-                iconElement.addEventListener('click', function () {
-                    var iconClass = this.getAttribute('data-icon');
-                    document.getElementById('icon').value = iconClass;
-                    document.getElementById('icon-preview').className = 'fas ' + iconClass;
-                    iconPickerModal.hide();
+                document.querySelectorAll('#iconPickerModal .modal-body i').forEach(function (iconElement) {
+                    iconElement.addEventListener('click', function () {
+                        var iconClass = this.getAttribute('data-icon');
+                        document.getElementById('icon').value = iconClass;
+                        document.getElementById('icon-preview').className = 'fas ' + iconClass;
+                        iconPickerModal.hide();
+                    });
                 });
             });
-        });
+
     </script>
 @endsection

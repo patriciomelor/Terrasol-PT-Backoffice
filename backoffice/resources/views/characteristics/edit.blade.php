@@ -41,7 +41,7 @@
                     <i id="icon-preview" class="{{ old('icon') ?? 'fas fa-question' }}" style="font-size: 24px;"></i>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Guardar</button>
+                <button type="submit" class="btn btn-info">Guardar</button>
             </form>
                 </div>
              </div>

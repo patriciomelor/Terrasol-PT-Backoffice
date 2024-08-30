@@ -22,7 +22,7 @@
       <div class="col-12">
         <div class="card">
           <div class="card-header">
-          <a href="{{ route('characteristics.create') }}" class="btn btn-primary">Agregar Característica</a>
+          <a href="{{ route('characteristics.create') }}" class="btn btn-info">Agregar Característica</a>
   </div>
     <div class="card-body">
    
@@ -45,11 +45,11 @@
 
                     </td>
                     <td>
-                        <a href="{{ route('characteristics.edit', $characteristic->id) }}" class="btn btn-warning">Editar</a>
+                        <a href="{{ route('characteristics.edit', $characteristic->id) }}" class="btn btn-warning"><i class="fas fa-edit" style="color:white"></i></a>
                         <form action="{{ route('characteristics.destroy', $characteristic->id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                            <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button>
                         </form>
                     </td>
                 </tr>

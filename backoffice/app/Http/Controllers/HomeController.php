@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+
 
 class HomeController extends Controller
 {
@@ -13,7 +16,10 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            view()->share('currentUser', auth()->user());
+            return $next($request);
+        });
     }
 
     /**
@@ -23,13 +29,21 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
-    }
+        $users = User::with('role', 'updatedBy')->get();
+        $currentUser = auth()->user();  // Obtener el usuario autenticado
+
+        return view('layouts.dash', compact('currentUser')); }
 
     public function show($id)
     {
         $user = User::find($id);
         return view('user.show', ['user' => $user]);
     }
+    public function home()
+    {
+        $users = User::with('role', 'updatedBy')->get();
+        $currentUser = auth()->user();  // Obtener el usuario autenticado
+
+        return view('home', compact('currentUser')); }
 
 }

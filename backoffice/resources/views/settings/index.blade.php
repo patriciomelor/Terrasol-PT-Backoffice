@@ -22,7 +22,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <a href="{{ route('settings.create') }}" class="btn btn-primary">Crear Configuración</a>
+                        <a href="{{ route('settings.create') }}" class="btn btn-info">Crear Configuración</a>
                     </div>
                     <div class="card-body">
                         <table id="settings-table" class="table table-striped table-primary table-hover">
@@ -41,11 +41,11 @@
                                     <td>{{ $setting->key }}</td>
                                     <td>{{ $setting->value }}</td>
                                     <td>
-                                        <a href="{{ route('settings.edit', $setting) }}" class="btn btn-warning">Editar</a>
+                                        <a href="{{ route('settings.edit', $setting) }}" class="btn btn-warning"><i class="fas fa-edit" style="color: white"></i></a>
                                         <form action="{{ route('settings.destroy', $setting) }}" method="POST" style="display:inline;">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                                            <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button>
                                         </form>
                                     </td>
                                 </tr>

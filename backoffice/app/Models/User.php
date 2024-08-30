@@ -1,15 +1,19 @@
 <?php
 
 namespace App\Models;
-
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Hash; // Asegúrate de que este `use` esté presente
 
 class User extends Authenticatable
 {
+    use HasFactory;
     use HasApiTokens;
     use Notifiable;
+    // En app/Models/User.php
+    protected $dates = ['created_at', 'updated_at', 'last_login_at'];
 
     public function role()
     {
@@ -26,6 +30,7 @@ class User extends Authenticatable
         'email',
         'password',
         'user_login',
+        'role_id',
     ];
 
     /**
@@ -39,6 +44,11 @@ class User extends Authenticatable
         'two_factor_recovery_codes',
         'two_factor_secret',
     ];
+
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = Hash::make($value);
+    }
 
 
 
