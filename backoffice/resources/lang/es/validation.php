@@ -16,7 +16,8 @@ return [
         'password' => 'contraseña',
     ],
     'custom' => [
-    'exists' => 'El elemento seleccionado es inválido.',
+    'exists' => 'El campo :attribute seleccionado no es válido.',
+
     ],
 
 ];
