@@ -81,3 +81,21 @@ $(document).ready(function () {
         $("#loader").fadeOut('slow');
     });
 });
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    var iconPickerModal = new bootstrap.Modal(document.getElementById('iconPickerModal'));
+
+    document.getElementById('selectIcon').addEventListener('click', function () {
+        iconPickerModal.show();
+    });
+
+    document.querySelectorAll('#iconPickerModal .modal-body i').forEach(function (iconElement) {
+        iconElement.addEventListener('click', function () {
+            var iconClass = this.getAttribute('data-icon');
+            document.getElementById('icon').value = iconClass;
+            document.getElementById('icon-preview').className = 'fas ' + iconClass;
+            iconPickerModal.hide();
+        });
+    });
+});

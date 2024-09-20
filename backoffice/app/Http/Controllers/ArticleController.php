@@ -81,8 +81,6 @@ class ArticleController extends Controller
     
         return redirect()->route('articles.index')->with('success', 'Artículo creado exitosamente.');
     }
-    
-    
         
     public function show($id)
     {
@@ -111,7 +109,7 @@ class ArticleController extends Controller
     {
         $request->validate([
             'title' => 'required|string',
-            'cover_photo' => 'required|image',
+            'cover_photo' => 'nullable|image',
             'photos.*' => 'nullable|image',
             'description' => 'required|string',
             'square_meters' => 'required|numeric',
@@ -122,51 +120,33 @@ class ArticleController extends Controller
             'sale_or_rent' => 'required|in:sale,rent',
             'characteristics' => 'nullable|array',
             'characteristics.*' => 'exists:characteristics,id',
-            
         ], [
             'characteristics.*.exists' => 'Algunas de las características seleccionadas no son válidas.',
         ]);
-        
-        // Actualiza los campos
-        $article->title = $request->input('title');
-        $article->description = $request->input('description');
-        $article->square_meters = $request->input('square_meters');
-        $article->constructed_meters = $request->input('constructed_meters');
-        $article->region = $request->input('region');
-        $article->city = $request->input('city');
-        $article->street = $request->input('street');
-        $article->sale_or_rent = $request->input('sale_or_rent');
-        
-        // Manejo de la foto de portada
-        if ($request->hasFile('cover_photo')) {
-            $coverPhotoPath = $request->file('cover_photo')->store('cover_photos', 'public');
-            $article->cover_photo = $coverPhotoPath;
-        }
     
-        // Manejo de fotos adicionales
-        if ($request->hasFile('photos')) {
-            $photos = [];
-            foreach ($request->file('photos') as $photo) {
-                $photos[] = $photo->store('photos', 'public');
-            }
-            $article->photos = json_encode($photos);
-        }
-    
+        // Actualizar el artículo
+        $article->update($request->only([
+            'title', 'description', 'square_meters', 
+            'constructed_meters', 'region', 'city', 'street', 'sale_or_rent'
+        ]));
         // Guarda el artículo
         $article->save();
-    
-        // Asocia las características seleccionadas (si existen)
+        
+        // Sincronizar características (agregar o eliminar según las seleccionadas)
         if ($request->has('characteristics')) {
             $article->characteristics()->sync($request->input('characteristics'));
         } else {
             $article->characteristics()->detach();
         }
-    
+        
+      
+
+        // Redirigir a index después de la actualización
         return redirect()->route('articles.index')->with('success', 'Artículo actualizado exitosamente.');
     }
     
     
-
+    
     public function destroy($id)
     {
         $article = Article::findOrFail($id);

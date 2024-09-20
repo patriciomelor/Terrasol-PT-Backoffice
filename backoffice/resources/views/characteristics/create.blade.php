@@ -15,7 +15,8 @@
           </div>
         </div>
       </div><!-- /.container-fluid -->
-    </section>
+</section>
+
 <div class="content">
   <div class="container-fluid">
     <div class="row">
@@ -43,13 +44,13 @@
 
                 <button type="submit" class="btn btn-info">Guardar</button>
             </form>
-                </div>
-             </div>
-         </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
-    <!-- Modal de Selección de Íconos -->
-    <div class="modal fade" id="iconPickerModal" tabindex="-1" aria-labelledby="iconPickerModalLabel" aria-hidden="true">
+
 <!-- Modal de Selección de Íconos -->
 <div class="modal fade" id="iconPickerModal" tabindex="-1" aria-labelledby="iconPickerModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -80,28 +81,26 @@
         </div>
     </div>
 </div>
+
 @endsection
 
 @section('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
-    <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                var iconPickerModal = new bootstrap.Modal(document.getElementById('iconPickerModal'));
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var iconPickerModal = new bootstrap.Modal(document.getElementById('iconPickerModal'));
 
-                document.getElementById('selectIcon').addEventListener('click', function () {
-                    iconPickerModal.show();
-                });
+        document.getElementById('selectIcon').addEventListener('click', function () {
+            iconPickerModal.show();
+        });
 
-                document.querySelectorAll('#iconPickerModal .modal-body i').forEach(function (iconElement) {
-                    iconElement.addEventListener('click', function () {
-                        var iconClass = this.getAttribute('data-icon');
-                        document.getElementById('icon').value = iconClass;
-                        document.getElementById('icon-preview').className = 'fas ' + iconClass;
-                        iconPickerModal.hide();
-                    });
-                });
+        document.querySelectorAll('#iconPickerModal .modal-body i').forEach(function (iconElement) {
+            iconElement.addEventListener('click', function () {
+                var iconClass = this.getAttribute('data-icon');
+                document.getElementById('icon').value = iconClass;
+                document.getElementById('icon-preview').className = 'fas ' + iconClass;
+                iconPickerModal.hide();
             });
-
-    </script>
+        });
+    });
+</script>
 @endsection
