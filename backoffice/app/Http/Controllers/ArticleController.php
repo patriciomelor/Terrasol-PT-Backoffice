@@ -28,12 +28,12 @@ class ArticleController extends Controller
 
     public function store(Request $request)
     {
+        // Validación de los campos
         $request->validate([
             'title' => 'required|string',
             'cover_photo' => 'required|image',
             'photos.*' => 'nullable|image',
             'description' => 'required|string',
-            'content' => 'required|string',
             'square_meters' => 'required|numeric',
             'constructed_meters' => 'nullable|numeric',
             'region' => 'nullable|string',
@@ -44,18 +44,43 @@ class ArticleController extends Controller
             'characteristics.*' => 'exists:characteristics,id',
         ]);
     
+        // Crea un nuevo artículo
         $article = new Article();
         $article->title = $request->input('title');
-        // Manejo de archivos y otros campos...
+        $article->description = $request->input('description');
+        $article->square_meters = $request->input('square_meters');
+        $article->constructed_meters = $request->input('constructed_meters');
+        $article->region = $request->input('region');
+        $article->city = $request->input('city');
+        $article->street = $request->input('street');
+        $article->sale_or_rent = $request->input('sale_or_rent');
+    
+        // Manejo de las fotos adicionales (si existen)
+        if ($request->hasFile('photos')) {
+            $photos = [];
+            foreach ($request->file('photos') as $photo) {
+                $path = $photo->store('photos', 'public');
+                $photos[] = $path;
+            }
+            $article->photos = json_encode($photos);
+        }
+    
+        // Manejo de la foto de portada
+        if ($request->hasFile('cover_photo')) {
+            $coverPhotoPath = $request->file('cover_photo')->store('cover_photos', 'public');
+            $article->cover_photo = $coverPhotoPath;
+        }
+    
+        // Guarda el artículo
         $article->save();
     
+        // Asocia las características seleccionadas (si existen)
         if ($request->has('characteristics')) {
             $article->characteristics()->sync($request->input('characteristics'));
         }
     
         return redirect()->route('articles.index')->with('success', 'Artículo creado exitosamente.');
     }
-    
         
     public function show($id)
     {
@@ -87,7 +112,6 @@ class ArticleController extends Controller
             'cover_photo' => 'nullable|image',
             'photos.*' => 'nullable|image',
             'description' => 'required|string',
-            'content' => 'required|string',
             'square_meters' => 'required|numeric',
             'constructed_meters' => 'nullable|numeric',
             'region' => 'nullable|string',
@@ -96,22 +120,33 @@ class ArticleController extends Controller
             'sale_or_rent' => 'required|in:sale,rent',
             'characteristics' => 'nullable|array',
             'characteristics.*' => 'exists:characteristics,id',
+        ], [
+            'characteristics.*.exists' => 'Algunas de las características seleccionadas no son válidas.',
         ]);
     
-        $article->title = $request->input('title');
-        // Manejo de archivos y otros campos...
+        // Actualizar el artículo
+        $article->update($request->only([
+            'title', 'description', 'square_meters', 
+            'constructed_meters', 'region', 'city', 'street', 'sale_or_rent'
+        ]));
+        // Guarda el artículo
         $article->save();
-    
+        
+        // Sincronizar características (agregar o eliminar según las seleccionadas)
         if ($request->has('characteristics')) {
             $article->characteristics()->sync($request->input('characteristics'));
         } else {
             $article->characteristics()->detach();
         }
-    
+        
+      
+
+        // Redirigir a index después de la actualización
         return redirect()->route('articles.index')->with('success', 'Artículo actualizado exitosamente.');
     }
     
-
+    
+    
     public function destroy($id)
     {
         $article = Article::findOrFail($id);

@@ -1,64 +1,56 @@
 <?php
 
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SettingController;
+use App\Http\Controllers\CharacteristicController;
+use App\Http\Controllers\HomeController;
 
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'home'])->name('home');
-
-//Rutas pass
-Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
-Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
-Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
-Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
-//rutas personalizadas
+// Rutas de autenticación
 Auth::routes(['verify' => true]);
 
+// Home
+Route::get('/home', [HomeController::class, 'home'])->name('home');
 
+// Página de inicio
 Route::get('/', function () {
     return view('auth.login');
 });
-//register
-use App\Http\Controllers\Auth\RegisterController;
 
+// Rutas de recuperación de contraseñas
+Route::prefix('password')->group(function () {
+    Route::get('reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+    Route::post('email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+    Route::get('reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+    Route::post('reset', [ResetPasswordController::class, 'reset'])->name('password.update');
+});
+
+// Rutas de registro
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
-//profile
-use App\Http\Controllers\ProfileController;
-Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+
+// Rutas del perfil de usuario
+Route::prefix('profile')->group(function () {
+    Route::get('/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::post('/update', [ProfileController::class, 'update'])->name('profile.update');
+    Route::patch('/users/{user}/toggle-active', [ProfileController::class, 'toggleActive'])->name('users.toggleActive');
+});
 Route::resource('users', ProfileController::class);
-Route::patch('users/{user}/toggle-active', [ProfileController::class, 'toggleActive'])->name('users.toggleActive');
-Auth::routes();
 
-//articulos
-use App\Http\Controllers\ArticleController;
-// Ruta para listar todos los artículos
-Route::get('articles', [ArticleController::class, 'index'])->name('articles.index');
-// Ruta para mostrar el formulario de creación de artículos
-Route::get('articles/create', [ArticleController::class, 'create'])->name('articles.create');
-// Ruta para almacenar un nuevo artículo
-Route::post('articles', [ArticleController::class, 'store'])->name('articles.store');
-
-// Ruta para mostrar un artículo específico
+// Rutas para artículos
+Route::resource('articles', ArticleController::class)->except(['show', 'edit']);
 Route::get('articles/{id}', [ArticleController::class, 'show'])->name('articles.show');
-//Ruta para editar:
-Route::get('/articles/{article}/edit', [ArticleController::class, 'edit'])->name('articles.edit');
-//ruta para update
-Route::put('/articles/{article}', [ArticleController::class, 'update'])->name('articles.update');
-//ruta eliminat
-Route::delete('/articles/{article}', [ArticleController::class, 'destroy'])->name('articles.destroy');
+Route::get('articles/{article}/edit', [ArticleController::class, 'edit'])->name('articles.edit');
 
-
-//roles
-use App\Http\Controllers\RoleController;
+// Rutas para roles
 Route::resource('roles', RoleController::class);
 
-//settings
-use App\Http\Controllers\SettingController;
+// Rutas para configuraciones del sitio
 Route::resource('settings', SettingController::class);
-//character
-use App\Http\Controllers\CharacteristicController;
 
+// Rutas para características
 Route::resource('characteristics', CharacteristicController::class);
+

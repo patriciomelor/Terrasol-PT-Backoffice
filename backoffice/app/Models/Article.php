@@ -26,6 +26,7 @@ class Article extends Model
     
         public function characteristics()
         {
-                return $this->belongsToMany(Characteristic::class);
+            return $this->belongsToMany(Characteristic::class);
         }
+        
 }

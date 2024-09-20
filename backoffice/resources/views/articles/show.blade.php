@@ -37,25 +37,34 @@
             <div class="row">
                 <div class="col-12 col-sm-6">
                     <h3 class="d-inline-block d-sm-none">{{ $article->title }}</h3>
-                    <div class="col-12">
-                        <img src="{{ asset('storage/' . $article->cover_photo) }}" alt="Portada del Artículo">
+                      <!-- Imagen principal -->
+                      <div class="col-12">
+                        <img id="main-image" src="{{ asset('storage/' . $article->cover_photo) }}" width="100%"
+                            alt="Portada del Artículo">
                     </div>
+
+                    <!-- Miniaturas -->
                     <div class="col-12 product-image-thumbs">
-                        <div>
-                            @if(is_array($article->photos))
-                                @foreach ($article->photos as $photo)
-                                    <img src="{{ asset('storage/' . $photo) }}" alt="Foto del Artículo" style="width: 150px; height: auto;">
-                                @endforeach
-                            @elseif($article->photos)
-                                @foreach (json_decode($article->photos) as $photo)
-                                    <img src="{{ asset('storage/' . $photo) }}" alt="Foto del Artículo" style="width: 150px; height: auto;">
-                                @endforeach
-                            @else
-                                <p>No hay fotos disponibles.</p>
-                            @endif
-                        </div>
+                        @if (is_array($article->photos))
+                            @foreach ($article->photos as $photo)
+                                <div class="product-image-thumb">
+                                    <img src="{{ asset('storage/' . $photo) }}" class="thumb-img"
+                                        style="width: 150px; height: auto;" alt="Foto del Artículo">
+                                </div>
+                            @endforeach
+                        @elseif($article->photos)
+                            @foreach (json_decode($article->photos) as $photo)
+                                <div class="product-image-thumb">
+                                    <img src="{{ asset('storage/' . $photo) }}" class="thumb-img"
+                                        style="width: 150px; height: auto;" alt="Foto del Artículo">
+                                </div>
+                            @endforeach
+                        @else
+                            <p>No hay fotos disponibles.</p>
+                        @endif
                     </div>
                 </div>
+
 
                 <div class="col-12 col-sm-6">
                     <h3 class="my-3">{{ $article->title }}</h3>
@@ -130,14 +139,7 @@
                 </div>
             </div>
             <div class="row mt-4">
-            <nav class="w-100">
-              <div class="nav nav-tabs" id="product-tab" role="tablist">
-                <a class="nav-item nav-link active" id="product-desc-tab" data-toggle="tab" href="#product-desc" role="tab" aria-controls="product-desc" aria-selected="true">Contenido</a>
-             </div>
-            </nav>
-            <div class="tab-content p-3" id="nav-tabContent">
-              <div class="tab-pane fade show active" id="product-desc" role="tabpanel" aria-labelledby="product-desc-tab"> {{ $article->content }}</div>
-             </div>
+       
           </div>
         </div>
         <!-- /.card-body -->
@@ -145,4 +147,15 @@
     <!-- /.card -->
 </section>
 <!-- /.content -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Al hacer clic en una miniatura, cambiar la imagen principal
+        document.querySelectorAll('.thumb-img').forEach(function(thumb) {
+            thumb.addEventListener('click', function() {
+                var mainImage = document.getElementById('main-image');
+                mainImage.src = this.src; // Cambiar la imagen principal
+            });
+        });
+    });
+</script>
 @endsection
