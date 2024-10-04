@@ -1,34 +1,31 @@
 @extends('layouts.app')
 
 @section('content')
+   
 
-                <div class="card-header text-center">
-                    <a href="#" class="h1"><b>{{ __('Login') }}</b></a>
-                </div>
-                <div class="card-body">
-                    <p class="login-box-msg">Complete los datos para ingresar</p>
-                    <form method="POST" action="{{ route('login') }}">
+            <!-- Login Form -->
+            <div class="d-flex col-12 col-lg-4 align-items-center authentication-bg p-sm-12 p-6">
+                <div class="w-px-400 mx-auto mt-12 pt-5">
+                    <h4 class="mb-1">Bienvenido a Terrasol! 👋</h4>
+                    <p class="mb-6">Porfavor, Ingresa tus credenciales</p>
+
+                    <form id="formAuthentication" class="mb-6" method="POST" action="{{ route('login') }}">
                         @csrf
-                        <div class="input-group mb-3">
-                            <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" required autofocus placeholder="{{ __('Email Address') }}">
-                            <div class="input-group-append">
-                                <div class="input-group-text">
-                                    <span class="fas fa-envelope"></span>
-                                </div>
-                            </div>
+                        <div class="mb-6 fv-plugins-icon-container">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" placeholder="Enter your email" required autofocus>
                             @error('email')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
-                            @enderror  
+                            @enderror
                         </div>
 
-                        <div class="input-group mb-3">
-                            <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" required placeholder="{{ __('Password') }}">
-                            <div class="input-group-append">
-                                <div class="input-group-text">
-                                    <span class="fas fa-lock"></span>
-                                </div>
+                        <div class="mb-6 form-password-toggle fv-plugins-icon-container">
+                            <label for="password" class="form-label">Password</label>
+                            <div class="input-group input-group-merge has-validation">
+                                <input type="password" id="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="············" required>
+                                <span class="input-group-text cursor-pointer"><i class="ti ti-eye-off"></i></span>
                             </div>
                             @error('password')
                                 <span class="invalid-feedback" role="alert">
@@ -37,29 +34,28 @@
                             @enderror
                         </div>
 
-                        <div class="row mb-3">
-                            <div class="col-8 text-right">
-                                <div class="icheck-primary">
-                                    <input type="checkbox" id="remember" class="form-check-input" {{ old('remember') ? 'checked' : '' }}>
-                                    <label for="remember">
-                                        {{ __('Recuérdame') }}
-                                    </label>
+                        <div class="my-8">
+                            <div class="d-flex justify-content-between">
+                                <div class="form-check mb-0 ms-2">
+                                    <input class="form-check-input" type="checkbox" name="remember" id="remember-me" {{ old('remember') ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="remember-me">Remember Me</label>
                                 </div>
-                            </div>
-                            <div class="col-4">
-                                <button type="submit" class="btn btn-info btn-block">{{ __('Ingresar') }}</button>
+                                <a href="{{ route('password.request') }}" class="mb-0">Forgot Password?</a>
                             </div>
                         </div>
+
+                        <button type="submit" class="btn btn-primary d-grid w-100 waves-effect waves-light">Sign in</button>
                     </form>
 
-                    <div class="mt-3 text-center">
-                        <p class="mb-1">
-                            <a href="{{ route('password.request') }}">{{ __('Olvidé la contraseña?') }}</a>
-                        </p>
-                        <p class="mb-0">
-                            <a href="{{ route('register') }}" class="text-center">{{ __('Registrarme') }}</a>
-                        </p>
-                    </div>
+                    <p class="text-center mt-3">
+                        <span>New on our platform?</span>
+                        <a href="{{ route('register') }}">
+                            <span>Create an account</span>
+                        </a>
+                    </p>
                 </div>
- 
+            </div>
+    
+
+   
 @endsection
