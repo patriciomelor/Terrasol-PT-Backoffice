@@ -28,7 +28,8 @@
         <link href="{{ asset('vendor/fonts/flag-icons.css') }}" rel="stylesheet">
     
         <!-- Core CSS -->
-        <link href="{{ asset('vendor/css/rtl/core.css') }}" rel="stylesheet">
+        {{-- <link href="{{ asset('vendor/css/rtl/core.css') }}" rel="stylesheet"> --}}
+        <link href="{{ asset('vendor/css/pages/page-auth.css') }}" rel="stylesheet">
         <link href="{{ asset('vendor/css/rtl/theme-default.css') }}" rel="stylesheet">
     
         <link href="{{ asset('css/demo.css') }}" rel="stylesheet">

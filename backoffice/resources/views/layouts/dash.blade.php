@@ -43,6 +43,7 @@
     <link href="{{ asset('vendor/libs/datatables-bs5/datatables.bootstrap5.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css') }}" rel="stylesheet">
+    <script src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
 
     <!-- Page CSS -->
     <link href="{{ asset('vendor/css/pages/cards-advance.css') }}" rel="stylesheet">
@@ -655,59 +656,60 @@
                             <a href="#" class="menu-horizontal-prev disabled"></a>
                             <div class="menu-horizontal-wrapper">
                                 <ul class="menu-inner pb-2 pb-xl-0" style="margin-left: 0px;">
-                          <!-- Dashboards -->
-                    <li class="menu-item active open">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons ti ti-smart-home"></i>
-                            <div data-i18n="Dashboards">Escritorio</div>
-                        </a>
-                    </li>
+                                    <!-- Dashboards -->
+                                    <li class="menu-item active open">
+                                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                                            <i class="menu-icon tf-icons ti ti-smart-home"></i>
+                                            <div data-i18n="Dashboards">Escritorio</div>
+                                        </a>
+                                    </li>
 
-                    <!-- Configuración de usuarios -->
-                    <li class="menu-header small text-uppercase">
-                        <span class="menu-header-text">Config. Usuarios</span>
-                    </li>
-                    <li class="menu-item">
-                        <a href="{{ route('users.index') }}" class="menu-link">
-                            <i class="menu-icon fas fa-user"></i>
-                            <div data-i18n="Usuarios">Usuarios</div>
-                        </a>
-                    </li>
-                    <li class="menu-item">
-                        <a href="{{ route('roles.index') }}" class="menu-link">
-                            <i class="menu-icon fas fa-lock"></i>
-                            <div data-i18n="Roles">Roles</div>
-                        </a>
-                    </li>
+                                    <!-- Configuración de usuarios -->
+                                    <li class="menu-header small text-uppercase">
+                                        <span class="menu-header-text">Config. Usuarios</span>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a href="{{ route('users.index') }}" class="menu-link">
+                                            <i class="menu-icon fas fa-user"></i>
+                                            <div data-i18n="Usuarios">Usuarios</div>
+                                        </a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a href="{{ route('roles.index') }}" class="menu-link">
+                                            <i class="menu-icon fas fa-lock"></i>
+                                            <div data-i18n="Roles">Roles</div>
+                                        </a>
+                                    </li>
 
-                    <!-- Sitio -->
-                    <li class="menu-header small text-uppercase">
-                        <span class="menu-header-text">SITIO</span>
-                    </li>
-                    <li class="menu-item">
-                        <a href="{{ route('articles.index') }}" class="menu-link">
-                            <i class="menu-icon far fa-edit"></i>
-                            <div data-i18n="Publicaciones">Publicaciones</div>
-                        </a>
-                    </li>
-                    <li class="menu-item">
-                        <a href="{{ route('characteristics.index') }}" class="menu-link">
-                            <i class="menu-icon fa-regular fa-lightbulb"></i>
-                            <div data-i18n="Servicios y Características">Servicios y Características</div>
-                        </a>
-                    </li>
+                                    <!-- Sitio -->
+                                    <li class="menu-header small text-uppercase">
+                                        <span class="menu-header-text">SITIO</span>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a href="{{ route('articles.index') }}" class="menu-link">
+                                            <i class="menu-icon far fa-edit"></i>
+                                            <div data-i18n="Publicaciones">Publicaciones</div>
+                                        </a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a href="{{ route('characteristics.index') }}" class="menu-link">
+                                            <i class="menu-icon fa-regular fa-lightbulb"></i>
+                                            <div data-i18n="Servicios y Características">Servicios y Características
+                                            </div>
+                                        </a>
+                                    </li>
 
-                    <!-- Configuración de la Web -->
-                    <li class="menu-header small text-uppercase">
-                        <span class="menu-header-text">Settings</span>
-                    </li>
-                    <li class="menu-item">
-                        <a href="{{ url('/settings') }}" class="menu-link">
-                            <i class="menu-icon fa-solid fa-gear"></i>
-                            <div data-i18n="Config. Web">Config. Web</div>
-                        </a>
-                    </li>
-                </ul>
+                                    <!-- Configuración de la Web -->
+                                    <li class="menu-header small text-uppercase">
+                                        <span class="menu-header-text">Settings</span>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a href="{{ url('/settings') }}" class="menu-link">
+                                            <i class="menu-icon fa-solid fa-gear"></i>
+                                            <div data-i18n="Config. Web">Config. Web</div>
+                                        </a>
+                                    </li>
+                                </ul>
                             </div><a href="#" class="menu-horizontal-next"></a>
                         </div>
                     </aside>
@@ -737,20 +739,28 @@
                         @endif
                         @yield('content')
                     </div>
-                     <!-- Footer -->
+                    <!-- Footer -->
                     <footer class="content-footer footer bg-footer-theme">
                         <div class="container-xxl">
-                            <div class="footer-container d-flex align-items-center justify-content-between py-4 flex-md-row flex-column">
+                            <div
+                                class="footer-container d-flex align-items-center justify-content-between py-4 flex-md-row flex-column">
                                 <div class="text-body">
                                     ©
-                                    <script>document.write(new Date().getFullYear());</script>, &copy; Terrasol - Todos los derechos reservados.
-                                    <a href="https://www.terrasol.cl" target="_blank" class="footer-link">TERRASOL</a>
+                                    <script>
+                                        document.write(new Date().getFullYear());
+                                    </script>, &copy; Terrasol - Todos los derechos reservados.
+                                    <a href="https://www.terrasol.cl" target="_blank"
+                                        class="footer-link">TERRASOL</a>
                                 </div>
                                 <div class="d-none d-lg-inline-block">
-                                    <a href="https://themeforest.net/licenses/standard" class="footer-link me-4" target="_blank">License</a>
-                                    <a href="https://1.envato.market/pixinvent_portfolio" target="_blank" class="footer-link me-4">More Themes</a>
-                                    <a href="https://demos.pixinvent.com/vuexy-html-admin-template/documentation/" target="_blank" class="footer-link me-4">Documentation</a>
-                                    <a href="https://pixinvent.ticksy.com/" target="_blank" class="footer-link d-none d-sm-inline-block">Support</a>
+                                    <a href="https://themeforest.net/licenses/standard" class="footer-link me-4"
+                                        target="_blank">License</a>
+                                    <a href="https://1.envato.market/pixinvent_portfolio" target="_blank"
+                                        class="footer-link me-4">More Themes</a>
+                                    <a href="https://demos.pixinvent.com/vuexy-html-admin-template/documentation/"
+                                        target="_blank" class="footer-link me-4">Documentation</a>
+                                    <a href="https://pixinvent.ticksy.com/" target="_blank"
+                                        class="footer-link d-none d-sm-inline-block">Support</a>
                                 </div>
                             </div>
                         </div>
@@ -760,10 +770,10 @@
                     <div class="content-backdrop fade"></div>
                 </div>
                 <!--/ Content wrapper -->
-                </div>
+            </div>
 
-                <!--/ Layout container -->
-      </div>
+            <!--/ Layout container -->
+        </div>
     </div>
     <!-- Overlay -->
     <div class="layout-overlay layout-menu-toggle"></div>
@@ -792,16 +802,31 @@
 
     <!-- Page JS -->
     <script src="{{ asset('js/dashboards-analytics.js') }}"></script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script>
+
+    <script src="{{ asset('js/tables-datatables-basic.js') }}"></script>
+    <script src="{{ asset('js/main.js') }}"></script>
+    <script src="{{ asset('vendor/libs/@form-validation/auto-focus.js') }}"></script>
+    <script src="{{ asset('vendor/libs/@form-validation/bootstrap5.js') }}"></script>
+    <script src="{{ asset('vendor/libs/@form-validation/popular.js') }}"></script>
+    <script src="{{ asset('vendor/libs/datatables-bs5/datatables-bootstrap5.js') }}"></script>
+
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
             // Obtener la URL actual sin el parámetro de consulta
             var currentUrl = window.location.href.split(/[?#]/)[0];
-    
+
             // Seleccionar todos los enlaces del menú
             var menuLinks = document.querySelectorAll('.menu-item a');
-    
+
             // Recorrer todos los enlaces del menú
-            menuLinks.forEach(function (link) {
+            menuLinks.forEach(function(link) {
                 // Comprobar si la URL del enlace coincide con la URL actual
                 if (link.href === currentUrl) {
                     // Agregar la clase "active" al padre del enlace
@@ -810,5 +835,21 @@
             });
         });
     </script>
-    
-   </body>
+    <script>
+        $(document).ready(function() {
+            $('#table').DataTable({
+                dom: '<"top"lBf>rt<"bottom"ip><"clear">',
+                buttons: [{
+                    text: 'Crear Usuario',
+                    className: 'btn btn-primary',
+                    action: function(e, dt, node, config) {
+                        window.location.href = '/users/create';
+                    }
+                }],
+                language: {
+                    url: "//cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json"
+                }
+            });
+        });
+    </script>
+</body>

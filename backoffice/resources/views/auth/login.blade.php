@@ -38,19 +38,19 @@
                             <div class="d-flex justify-content-between">
                                 <div class="form-check mb-0 ms-2">
                                     <input class="form-check-input" type="checkbox" name="remember" id="remember-me" {{ old('remember') ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="remember-me">Remember Me</label>
+                                    <label class="form-check-label" for="remember-me">Recuerdame!</label>
                                 </div>
-                                <a href="{{ route('password.request') }}" class="mb-0">Forgot Password?</a>
+                                <a href="{{ route('password.request') }}" class="mb-0">Olvido su contraseña?</a>
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary d-grid w-100 waves-effect waves-light">Sign in</button>
+                        <button type="submit" class="btn btn-primary d-grid w-100 waves-effect waves-light">Ingresar</button>
                     </form>
 
                     <p class="text-center mt-3">
-                        <span>New on our platform?</span>
+                        <span>Nuevo en la plataforma?</span>
                         <a href="{{ route('register') }}">
-                            <span>Create an account</span>
+                            <span>Crear Cuenta</span>
                         </a>
                     </p>
                 </div>
