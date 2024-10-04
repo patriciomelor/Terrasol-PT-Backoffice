@@ -1,20 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-@if (session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
-@endif
 
-@if (session('error'))
-    <div class="alert alert-danger">
-        {{ session('error') }}
-    </div>
-@endif
-                <div class="card-header">Registrar</div>
+         <!-- Login Form -->
+         <div class="d-flex col-12 col-lg-4 align-items-center authentication-bg p-sm-12 p-6">
+            <div class="w-px-400 mx-auto mt-12 pt-5">   <h4 class="mb-1">Bienvenido a Terrasol! 👋</h4>
+                <p class="mb-6">Registrate aqui abajo!</p>
 
-                <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
 
@@ -78,5 +70,6 @@
                         </div>
                     </form>
                 </div>
+            </div>
 
 @endsection
