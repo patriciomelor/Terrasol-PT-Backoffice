@@ -29,9 +29,12 @@
     <link href="{{ asset('vendor/fonts/flag-icons.css') }}" rel="stylesheet">
 
     <!-- Core CSS -->
-    <link href="{{ asset('vendor/css/rtl/core.css') }}" rel="stylesheet">
-    <link href="{{ asset('vendor/css/rtl/theme-default.css') }}" rel="stylesheet">
 
+            <link href="{{ asset('vendor/css/core.css') }}" rel="stylesheet">
+            <link href="{{ asset('vendor/css/theme-default.css') }}" rel="stylesheet">
+
+
+    </script>
     <link href="{{ asset('css/demo.css') }}" rel="stylesheet">
 
     <!-- Vendors CSS -->
@@ -43,7 +46,6 @@
     <link href="{{ asset('vendor/libs/datatables-bs5/datatables.bootstrap5.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css') }}" rel="stylesheet">
-    <script src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
 
     <!-- Page CSS -->
     <link href="{{ asset('vendor/css/pages/cards-advance.css') }}" rel="stylesheet">
@@ -100,463 +102,47 @@
                             <!-- Search -->
                             <li class="nav-item navbar-search-wrapper">
                                 <a class="nav-link btn btn-text-secondary btn-icon rounded-pill search-toggler waves-effect waves-light"
-                                    href="javascript:void(0);">
+                                    >
                                     <i class="ti ti-search ti-md"></i>
                                 </a>
                             </li>
                             <!-- /Search -->
 
-                            <!-- Language -->
-                            <li class="nav-item dropdown-language dropdown">
-                                <a class="nav-link btn btn-text-secondary btn-icon rounded-pill dropdown-toggle hide-arrow waves-effect waves-light"
-                                    href="javascript:void(0);" data-bs-toggle="dropdown">
-                                    <i class="ti ti-language rounded-circle ti-md"></i>
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-end">
-                                    <li>
-                                        <a class="dropdown-item waves-effect active" href="javascript:void(0);"
-                                            data-language="en" data-text-direction="ltr">
-                                            <span>English</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item waves-effect" href="javascript:void(0);"
-                                            data-language="fr" data-text-direction="ltr">
-                                            <span>French</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item waves-effect" href="javascript:void(0);"
-                                            data-language="ar" data-text-direction="rtl">
-                                            <span>Arabic</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item waves-effect" href="javascript:void(0);"
-                                            data-language="de" data-text-direction="ltr">
-                                            <span>German</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <!--/ Language -->
+
 
                             <!-- Style Switcher -->
                             <li class="nav-item dropdown-style-switcher dropdown">
                                 <a class="nav-link btn btn-text-secondary btn-icon rounded-pill dropdown-toggle hide-arrow waves-effect waves-light"
-                                    href="javascript:void(0);" data-bs-toggle="dropdown">
+                                    href="#" data-bs-toggle="dropdown">
                                     <i class="ti ti-md ti-sun"></i>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end dropdown-styles">
                                     <li>
-                                        <a class="dropdown-item waves-effect active" href="javascript:void(0);"
+                                        <a class="dropdown-item waves-effect active" 
                                             data-theme="light">
                                             <span class="align-middle"><i
                                                     class="ti ti-sun ti-md me-3"></i>Light</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item waves-effect" href="javascript:void(0);"
+                                        <a class="dropdown-item waves-effect" 
                                             data-theme="dark">
                                             <span class="align-middle"><i
                                                     class="ti ti-moon-stars ti-md me-3"></i>Dark</span>
                                         </a>
                                     </li>
-                                    <li>
-                                        <a class="dropdown-item waves-effect" href="javascript:void(0);"
-                                            data-theme="system">
-                                            <span class="align-middle"><i
-                                                    class="ti ti-device-desktop-analytics ti-md me-3"></i>System</span>
-                                        </a>
-                                    </li>
+
                                 </ul>
                             </li>
                             <!-- / Style Switcher-->
 
-                            <!-- Quick links  -->
-                            <li class="nav-item dropdown-shortcuts navbar-dropdown dropdown">
-                                <a class="nav-link btn btn-text-secondary btn-icon rounded-pill btn-icon dropdown-toggle hide-arrow waves-effect waves-light"
-                                    href="javascript:void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside"
-                                    aria-expanded="false">
-                                    <i class="ti ti-layout-grid-add ti-md"></i>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-end p-0">
-                                    <div class="dropdown-menu-header border-bottom">
-                                        <div class="dropdown-header d-flex align-items-center py-3">
-                                            <h6 class="mb-0 me-auto">Shortcuts</h6>
-                                            <a href="javascript:void(0)"
-                                                class="btn btn-text-secondary rounded-pill btn-icon dropdown-shortcuts-add waves-effect waves-light"
-                                                data-bs-toggle="tooltip" data-bs-placement="top"
-                                                aria-label="Add shortcuts" data-bs-original-title="Add shortcuts"><i
-                                                    class="ti ti-plus text-heading"></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="dropdown-shortcuts-list scrollable-container ps">
-                                        <div class="row row-bordered overflow-visible g-0">
-                                            <div class="dropdown-shortcuts-item col">
-                                                <span class="dropdown-shortcuts-icon rounded-circle mb-3">
-                                                    <i class="ti ti-calendar ti-26px text-heading"></i>
-                                                </span>
-                                                <a href="app-calendar.html" class="stretched-link">Calendar</a>
-                                                <small>Appointments</small>
-                                            </div>
-                                            <div class="dropdown-shortcuts-item col">
-                                                <span class="dropdown-shortcuts-icon rounded-circle mb-3">
-                                                    <i class="ti ti-file-dollar ti-26px text-heading"></i>
-                                                </span>
-                                                <a href="app-invoice-list.html" class="stretched-link">Invoice
-                                                    App</a>
-                                                <small>Manage Accounts</small>
-                                            </div>
-                                        </div>
-                                        <div class="row row-bordered overflow-visible g-0">
-                                            <div class="dropdown-shortcuts-item col">
-                                                <span class="dropdown-shortcuts-icon rounded-circle mb-3">
-                                                    <i class="ti ti-user ti-26px text-heading"></i>
-                                                </span>
-                                                <a href="app-user-list.html" class="stretched-link">User App</a>
-                                                <small>Manage Users</small>
-                                            </div>
-                                            <div class="dropdown-shortcuts-item col">
-                                                <span class="dropdown-shortcuts-icon rounded-circle mb-3">
-                                                    <i class="ti ti-users ti-26px text-heading"></i>
-                                                </span>
-                                                <a href="app-access-roles.html" class="stretched-link">Role
-                                                    Management</a>
-                                                <small>Permission</small>
-                                            </div>
-                                        </div>
-                                        <div class="row row-bordered overflow-visible g-0">
-                                            <div class="dropdown-shortcuts-item col">
-                                                <span class="dropdown-shortcuts-icon rounded-circle mb-3">
-                                                    <i class="ti ti-device-desktop-analytics ti-26px text-heading"></i>
-                                                </span>
-                                                <a href="index.html" class="stretched-link">Dashboard</a>
-                                                <small>User Dashboard</small>
-                                            </div>
-                                            <div class="dropdown-shortcuts-item col">
-                                                <span class="dropdown-shortcuts-icon rounded-circle mb-3">
-                                                    <i class="ti ti-settings ti-26px text-heading"></i>
-                                                </span>
-                                                <a href="pages-account-settings-account.html"
-                                                    class="stretched-link">Setting</a>
-                                                <small>Account Settings</small>
-                                            </div>
-                                        </div>
-                                        <div class="row row-bordered overflow-visible g-0">
-                                            <div class="dropdown-shortcuts-item col">
-                                                <span class="dropdown-shortcuts-icon rounded-circle mb-3">
-                                                    <i class="ti ti-help ti-26px text-heading"></i>
-                                                </span>
-                                                <a href="pages-faq.html" class="stretched-link">FAQs</a>
-                                                <small>FAQs &amp; Articles</small>
-                                            </div>
-                                            <div class="dropdown-shortcuts-item col">
-                                                <span class="dropdown-shortcuts-icon rounded-circle mb-3">
-                                                    <i class="ti ti-square ti-26px text-heading"></i>
-                                                </span>
-                                                <a href="modal-examples.html" class="stretched-link">Modals</a>
-                                                <small>Useful Popups</small>
-                                            </div>
-                                        </div>
-                                        <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
-                                            <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;">
-                                            </div>
-                                        </div>
-                                        <div class="ps__rail-y" style="top: 0px; right: 0px;">
-                                            <div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <!-- Quick links -->
-
-                            <!-- Notification -->
-                            <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-2">
-                                <a class="nav-link btn btn-text-secondary btn-icon rounded-pill dropdown-toggle hide-arrow waves-effect waves-light"
-                                    href="javascript:void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside"
-                                    aria-expanded="false">
-                                    <span class="position-relative">
-                                        <i class="ti ti-bell ti-md"></i>
-                                        <span
-                                            class="badge rounded-pill bg-danger badge-dot badge-notifications border"></span>
-                                    </span>
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-end p-0">
-                                    <li class="dropdown-menu-header border-bottom">
-                                        <div class="dropdown-header d-flex align-items-center py-3">
-                                            <h6 class="mb-0 me-auto">Notification</h6>
-                                            <div class="d-flex align-items-center h6 mb-0">
-                                                <span class="badge bg-label-primary me-2">8 New</span>
-                                                <a href="javascript:void(0)"
-                                                    class="btn btn-text-secondary rounded-pill btn-icon dropdown-notifications-all waves-effect waves-light"
-                                                    data-bs-toggle="tooltip" data-bs-placement="top"
-                                                    aria-label="Mark all as read"
-                                                    data-bs-original-title="Mark all as read"><i
-                                                        class="ti ti-mail-opened text-heading"></i></a>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="dropdown-notifications-list scrollable-container ps">
-                                        <ul class="list-group list-group-flush">
-                                            <li
-                                                class="list-group-item list-group-item-action dropdown-notifications-item waves-effect">
-                                                <div class="d-flex">
-                                                    <div class="flex-shrink-0 me-3">
-                                                        <div class="avatar">
-                                                            <img src="../../assets/img/avatars/1.png" alt=""
-                                                                class="rounded-circle">
-                                                        </div>
-                                                    </div>
-                                                    <div class="flex-grow-1">
-                                                        <h6 class="small mb-1">Congratulation Lettie 🎉</h6>
-                                                        <small class="mb-1 d-block text-body">Won the monthly best
-                                                            seller gold badge</small>
-                                                        <small class="text-muted">1h ago</small>
-                                                    </div>
-                                                    <div class="flex-shrink-0 dropdown-notifications-actions">
-                                                        <a href="javascript:void(0)"
-                                                            class="dropdown-notifications-read"><span
-                                                                class="badge badge-dot"></span></a>
-                                                        <a href="javascript:void(0)"
-                                                            class="dropdown-notifications-archive"><span
-                                                                class="ti ti-x"></span></a>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li
-                                                class="list-group-item list-group-item-action dropdown-notifications-item waves-effect">
-                                                <div class="d-flex">
-                                                    <div class="flex-shrink-0 me-3">
-                                                        <div class="avatar">
-                                                            <span
-                                                                class="avatar-initial rounded-circle bg-label-danger">CF</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="flex-grow-1">
-                                                        <h6 class="mb-1 small">Charles Franklin</h6>
-                                                        <small class="mb-1 d-block text-body">Accepted your
-                                                            connection</small>
-                                                        <small class="text-muted">12hr ago</small>
-                                                    </div>
-                                                    <div class="flex-shrink-0 dropdown-notifications-actions">
-                                                        <a href="javascript:void(0)"
-                                                            class="dropdown-notifications-read"><span
-                                                                class="badge badge-dot"></span></a>
-                                                        <a href="javascript:void(0)"
-                                                            class="dropdown-notifications-archive"><span
-                                                                class="ti ti-x"></span></a>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li
-                                                class="list-group-item list-group-item-action dropdown-notifications-item marked-as-read waves-effect">
-                                                <div class="d-flex">
-                                                    <div class="flex-shrink-0 me-3">
-                                                        <div class="avatar">
-                                                            <img src="../../assets/img/avatars/2.png" alt=""
-                                                                class="rounded-circle">
-                                                        </div>
-                                                    </div>
-                                                    <div class="flex-grow-1">
-                                                        <h6 class="mb-1 small">New Message ✉️</h6>
-                                                        <small class="mb-1 d-block text-body">You have new message
-                                                            from Natalie</small>
-                                                        <small class="text-muted">1h ago</small>
-                                                    </div>
-                                                    <div class="flex-shrink-0 dropdown-notifications-actions">
-                                                        <a href="javascript:void(0)"
-                                                            class="dropdown-notifications-read"><span
-                                                                class="badge badge-dot"></span></a>
-                                                        <a href="javascript:void(0)"
-                                                            class="dropdown-notifications-archive"><span
-                                                                class="ti ti-x"></span></a>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li
-                                                class="list-group-item list-group-item-action dropdown-notifications-item waves-effect">
-                                                <div class="d-flex">
-                                                    <div class="flex-shrink-0 me-3">
-                                                        <div class="avatar">
-                                                            <span
-                                                                class="avatar-initial rounded-circle bg-label-success"><i
-                                                                    class="ti ti-shopping-cart"></i></span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="flex-grow-1">
-                                                        <h6 class="mb-1 small">Whoo! You have new order 🛒</h6>
-                                                        <small class="mb-1 d-block text-body">ACME Inc. made new
-                                                            order $1,154</small>
-                                                        <small class="text-muted">1 day ago</small>
-                                                    </div>
-                                                    <div class="flex-shrink-0 dropdown-notifications-actions">
-                                                        <a href="javascript:void(0)"
-                                                            class="dropdown-notifications-read"><span
-                                                                class="badge badge-dot"></span></a>
-                                                        <a href="javascript:void(0)"
-                                                            class="dropdown-notifications-archive"><span
-                                                                class="ti ti-x"></span></a>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li
-                                                class="list-group-item list-group-item-action dropdown-notifications-item marked-as-read waves-effect">
-                                                <div class="d-flex">
-                                                    <div class="flex-shrink-0 me-3">
-                                                        <div class="avatar">
-                                                            <img src="../../assets/img/avatars/9.png" alt=""
-                                                                class="rounded-circle">
-                                                        </div>
-                                                    </div>
-                                                    <div class="flex-grow-1">
-                                                        <h6 class="mb-1 small">Application has been approved 🚀
-                                                        </h6>
-                                                        <small class="mb-1 d-block text-body">Your ABC project
-                                                            application has been approved.</small>
-                                                        <small class="text-muted">2 days ago</small>
-                                                    </div>
-                                                    <div class="flex-shrink-0 dropdown-notifications-actions">
-                                                        <a href="javascript:void(0)"
-                                                            class="dropdown-notifications-read"><span
-                                                                class="badge badge-dot"></span></a>
-                                                        <a href="javascript:void(0)"
-                                                            class="dropdown-notifications-archive"><span
-                                                                class="ti ti-x"></span></a>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li
-                                                class="list-group-item list-group-item-action dropdown-notifications-item marked-as-read waves-effect">
-                                                <div class="d-flex">
-                                                    <div class="flex-shrink-0 me-3">
-                                                        <div class="avatar">
-                                                            <span
-                                                                class="avatar-initial rounded-circle bg-label-success"><i
-                                                                    class="ti ti-chart-pie"></i></span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="flex-grow-1">
-                                                        <h6 class="mb-1 small">Monthly report is generated</h6>
-                                                        <small class="mb-1 d-block text-body">July monthly
-                                                            financial report is generated </small>
-                                                        <small class="text-muted">3 days ago</small>
-                                                    </div>
-                                                    <div class="flex-shrink-0 dropdown-notifications-actions">
-                                                        <a href="javascript:void(0)"
-                                                            class="dropdown-notifications-read"><span
-                                                                class="badge badge-dot"></span></a>
-                                                        <a href="javascript:void(0)"
-                                                            class="dropdown-notifications-archive"><span
-                                                                class="ti ti-x"></span></a>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li
-                                                class="list-group-item list-group-item-action dropdown-notifications-item marked-as-read waves-effect">
-                                                <div class="d-flex">
-                                                    <div class="flex-shrink-0 me-3">
-                                                        <div class="avatar">
-                                                            <img src="../../assets/img/avatars/5.png" alt=""
-                                                                class="rounded-circle">
-                                                        </div>
-                                                    </div>
-                                                    <div class="flex-grow-1">
-                                                        <h6 class="mb-1 small">Send connection request</h6>
-                                                        <small class="mb-1 d-block text-body">Peter sent you
-                                                            connection request</small>
-                                                        <small class="text-muted">4 days ago</small>
-                                                    </div>
-                                                    <div class="flex-shrink-0 dropdown-notifications-actions">
-                                                        <a href="javascript:void(0)"
-                                                            class="dropdown-notifications-read"><span
-                                                                class="badge badge-dot"></span></a>
-                                                        <a href="javascript:void(0)"
-                                                            class="dropdown-notifications-archive"><span
-                                                                class="ti ti-x"></span></a>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li
-                                                class="list-group-item list-group-item-action dropdown-notifications-item waves-effect">
-                                                <div class="d-flex">
-                                                    <div class="flex-shrink-0 me-3">
-                                                        <div class="avatar">
-                                                            <img src="../../assets/img/avatars/6.png" alt=""
-                                                                class="rounded-circle">
-                                                        </div>
-                                                    </div>
-                                                    <div class="flex-grow-1">
-                                                        <h6 class="mb-1 small">New message from Jane</h6>
-                                                        <small class="mb-1 d-block text-body">Your have new
-                                                            message from Jane</small>
-                                                        <small class="text-muted">5 days ago</small>
-                                                    </div>
-                                                    <div class="flex-shrink-0 dropdown-notifications-actions">
-                                                        <a href="javascript:void(0)"
-                                                            class="dropdown-notifications-read"><span
-                                                                class="badge badge-dot"></span></a>
-                                                        <a href="javascript:void(0)"
-                                                            class="dropdown-notifications-archive"><span
-                                                                class="ti ti-x"></span></a>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li
-                                                class="list-group-item list-group-item-action dropdown-notifications-item marked-as-read waves-effect">
-                                                <div class="d-flex">
-                                                    <div class="flex-shrink-0 me-3">
-                                                        <div class="avatar">
-                                                            <span
-                                                                class="avatar-initial rounded-circle bg-label-warning"><i
-                                                                    class="ti ti-alert-triangle"></i></span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="flex-grow-1">
-                                                        <h6 class="mb-1 small">CPU is running high</h6>
-                                                        <small class="mb-1 d-block text-body">CPU Utilization
-                                                            Percent is currently at 88.63%,</small>
-                                                        <small class="text-muted">5 days ago</small>
-                                                    </div>
-                                                    <div class="flex-shrink-0 dropdown-notifications-actions">
-                                                        <a href="javascript:void(0)"
-                                                            class="dropdown-notifications-read"><span
-                                                                class="badge badge-dot"></span></a>
-                                                        <a href="javascript:void(0)"
-                                                            class="dropdown-notifications-archive"><span
-                                                                class="ti ti-x"></span></a>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                        <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
-                                            <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;">
-                                            </div>
-                                        </div>
-                                        <div class="ps__rail-y" style="top: 0px; right: 0px;">
-                                            <div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;">
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="border-top">
-                                        <div class="d-grid p-4">
-                                            <a class="btn btn-primary btn-sm d-flex waves-effect waves-light"
-                                                href="javascript:void(0);">
-                                                <small class="align-middle">View all notifications</small>
-                                            </a>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </li>
-                            <!--/ Notification -->
 
                             <!-- User -->
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                                 <a class="nav-link dropdown-toggle hide-arrow p-0" href="javascript:void(0);"
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                     <div class="avatar avatar-online">
-                                        <img src="../../assets/img/avatars/1.png" alt=""
+                                        <img src="{{ asset('img/avatars/1.png') }}" alt=""
                                             class="rounded-circle">
                                     </div>
                                 </a>
@@ -704,7 +290,7 @@
                                         <span class="menu-header-text">Settings</span>
                                     </li>
                                     <li class="menu-item">
-                                        <a href="{{ url('/settings') }}" class="menu-link">
+                                        <a href="{{ route('settings.index') }}" class="menu-link">
                                             <i class="menu-icon fa-solid fa-gear"></i>
                                             <div data-i18n="Config. Web">Config. Web</div>
                                         </a>
@@ -803,13 +389,6 @@
     <!-- Page JS -->
     <script src="{{ asset('js/dashboards-analytics.js') }}"></script>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script>
-
     <script src="{{ asset('js/tables-datatables-basic.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
     <script src="{{ asset('vendor/libs/@form-validation/auto-focus.js') }}"></script>
@@ -818,38 +397,7 @@
     <script src="{{ asset('vendor/libs/datatables-bs5/datatables-bootstrap5.js') }}"></script>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // Obtener la URL actual sin el parámetro de consulta
-            var currentUrl = window.location.href.split(/[?#]/)[0];
 
-            // Seleccionar todos los enlaces del menú
-            var menuLinks = document.querySelectorAll('.menu-item a');
+    </script>
 
-            // Recorrer todos los enlaces del menú
-            menuLinks.forEach(function(link) {
-                // Comprobar si la URL del enlace coincide con la URL actual
-                if (link.href === currentUrl) {
-                    // Agregar la clase "active" al padre del enlace
-                    link.closest('.menu-item').classList.add('active');
-                }
-            });
-        });
-    </script>
-    <script>
-        $(document).ready(function() {
-            $('#table').DataTable({
-                dom: '<"top"lBf>rt<"bottom"ip><"clear">',
-                buttons: [{
-                    text: 'Crear Usuario',
-                    className: 'btn btn-primary',
-                    action: function(e, dt, node, config) {
-                        window.location.href = '/users/create';
-                    }
-                }],
-                language: {
-                    url: "//cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json"
-                }
-            });
-        });
-    </script>
 </body>

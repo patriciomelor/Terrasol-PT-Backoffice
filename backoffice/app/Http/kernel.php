@@ -41,6 +41,8 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        // Otros middlewares de ruta
+        'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
+        // Otros middlewares
     ];
+    
 }

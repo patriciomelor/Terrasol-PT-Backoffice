@@ -667,3 +667,19 @@ if (typeof $ !== 'undefined') {
     }
   });
 }
+document.addEventListener("DOMContentLoaded", function() {
+  // Obtener la URL actual sin el parámetro de consulta
+  var currentUrl = window.location.href.split(/[?#]/)[0];
+
+  // Seleccionar todos los enlaces del menú
+  var menuLinks = document.querySelectorAll('.menu-item a');
+
+  // Recorrer todos los enlaces del menú
+  menuLinks.forEach(function(link) {
+      // Comprobar si la URL del enlace coincide con la URL actual
+      if (link.href === currentUrl) {
+          // Agregar la clase "active" al padre del enlace
+          link.closest('.menu-item').classList.add('active');
+      }
+  });
+});
