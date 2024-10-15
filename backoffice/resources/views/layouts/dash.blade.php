@@ -397,7 +397,38 @@
     <script src="{{ asset('vendor/libs/datatables-bs5/datatables-bootstrap5.js') }}"></script>
 
     <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Obtener la URL actual sin el parámetro de consulta
+            var currentUrl = window.location.href.split(/[?#]/)[0];
 
+            // Seleccionar todos los enlaces del menú
+            var menuLinks = document.querySelectorAll('.menu-item a');
+
+            // Recorrer todos los enlaces del menú
+            menuLinks.forEach(function(link) {
+                // Comprobar si la URL del enlace coincide con la URL actual
+                if (link.href === currentUrl) {
+                    // Agregar la clase "active" al padre del enlace
+                    link.closest('.menu-item').classList.add('active');
+                }
+            });
+        });
     </script>
-
+    <script>
+        $(document).ready(function() {
+            $('#table').DataTable({
+                dom: '<"top"lBf>rt<"bottom"ip><"clear">',
+                buttons: [{
+                    text: 'Crear Usuario',
+                    className: 'btn btn-primary',
+                    action: function(e, dt, node, config) {
+                        window.location.href = '/users/create';
+                    }
+                }],
+                language: {
+                    url: "//cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json"
+                }
+            });
+        });
+    </script>
 </body>

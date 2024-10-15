@@ -1,28 +1,11 @@
 @extends('layouts.dash')
 
 @section('content')
-<section class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>Servicios y Característica</h1>
-          </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Servicios y Característica</li>
-            </ol>
-          </div>
-        </div>
-      </div><!-- /.container-fluid -->
-    </section>
-<div class="content">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-12">
+
         <div class="card">
-          <div class="card-header">
-          <a href="{{ route('characteristics.create') }}" class="btn btn-info">Agregar Característica</a>
+          <div class="card-header border-bottom">
+          <h3 class="card-title mb-4">Característica</h3>
+          <a href="{{ route('characteristics.create') }}"  class="btn rounded-pill btn-label-info waves-effect"><i class=" fa-solid fa-pen-to-square ti-xs me-2"></i>Agregar Característica</a>
   </div>
     <div class="card-body">
    
