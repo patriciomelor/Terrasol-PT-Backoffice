@@ -1,108 +1,81 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Article;
 use App\Models\Feature;
 use App\Models\Characteristic;
+use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
 {
     public function index()
     {
         $articles = Article::all();
-        foreach ($articles as $article) {
-            $article->photos = json_decode($article->photos, true);
-        }
-
+    
+        // Convertir imágenes a Base64 si es necesario
+        $articles->transform(function ($article) {
+            if ($article->cover_photo) {
+                $article->cover_photo = base64_encode(Storage::get($article->cover_photo));
+            }
+    
+            if ($article->photos) {
+                $photosArray = json_decode($article->photos, true);
+                $article->photos = array_map(function ($photoPath) {
+                    return base64_encode(Storage::get($photoPath));
+                }, $photosArray);
+            }
+    
+            return $article;
+        });
+    
         return view('articles.index', compact('articles'));
     }
-
-    public function create()
-    {
-        $features = Feature::all();
-        $characteristics = Characteristic::all();
-        return view('articles.create', compact('features', 'characteristics'));
-    }
-
+    
+    
     public function store(Request $request)
     {
-        // Validación de los campos
         $request->validate([
             'title' => 'required|string',
             'cover_photo' => 'required|image',
             'photos.*' => 'nullable|image',
             'description' => 'required|string',
-            'square_meters' => 'required|numeric',
-            'constructed_meters' => 'nullable|numeric',
-            'region' => 'nullable|string',
-            'city' => 'nullable|string',
-            'street' => 'nullable|string',
-            'sale_or_rent' => 'required|in:sale,rent',
-            'characteristics' => 'nullable|array',
-            'characteristics.*' => 'exists:characteristics,id',
+            // otros campos...
         ]);
     
-        // Crea un nuevo artículo
         $article = new Article();
         $article->title = $request->input('title');
         $article->description = $request->input('description');
-        $article->square_meters = $request->input('square_meters');
-        $article->constructed_meters = $request->input('constructed_meters');
-        $article->region = $request->input('region');
-        $article->city = $request->input('city');
-        $article->street = $request->input('street');
-        $article->sale_or_rent = $request->input('sale_or_rent');
+        // otros atributos...
     
-        // Manejo de las fotos adicionales (si existen)
+        // Foto de portada
+        if ($request->hasFile('cover_photo')) {
+            $article->cover_photo = base64_encode(file_get_contents($request->file('cover_photo')));
+        }
+    
+        // Fotos adicionales
         if ($request->hasFile('photos')) {
             $photos = [];
             foreach ($request->file('photos') as $photo) {
-                $path = $photo->store('photos', 'public');
-                $photos[] = $path;
+                $photos[] = base64_encode(file_get_contents($photo));
             }
             $article->photos = json_encode($photos);
         }
     
-        // Manejo de la foto de portada
-        if ($request->hasFile('cover_photo')) {
-            $coverPhotoPath = $request->file('cover_photo')->store('cover_photos', 'public');
-            $article->cover_photo = $coverPhotoPath;
-        }
-    
-        // Guarda el artículo
         $article->save();
     
-        // Asocia las características seleccionadas (si existen)
-        if ($request->has('characteristics')) {
-            $article->characteristics()->sync($request->input('characteristics'));
-        }
-    
-        return redirect()->route('articles.index')->with('success', 'Artículo creado exitosamente.');
+        return response()->json(['message' => 'Artículo creado exitosamente.']);
     }
-        
+    
+
     public function show($id)
     {
         $article = Article::findOrFail($id);
         if (is_string($article->photos)) {
             $article->photos = json_decode($article->photos, true);
         }
-        // Obtener las características asociadas al artículo
-        $characteristics = $article->characteristics;
-        // Obtener las características disponibles
-        $features = Feature::all();
-        $characteristics = Characteristic::all();
 
-        return view('articles.show', compact('article', 'characteristics', 'features'));
-    }
-
-    public function edit($id)
-    {
-        $article = Article::findOrFail($id);
-        $features = Feature::all();
-        $characteristics = Characteristic::all();
-        return view('articles.edit', compact('article', 'features', 'characteristics'));
+        return response()->json(['data' => $article]);
     }
 
     public function update(Request $request, Article $article)
@@ -120,38 +93,42 @@ class ArticleController extends Controller
             'sale_or_rent' => 'required|in:sale,rent',
             'characteristics' => 'nullable|array',
             'characteristics.*' => 'exists:characteristics,id',
-        ], [
-            'characteristics.*.exists' => 'Algunas de las características seleccionadas no son válidas.',
         ]);
-    
-        // Actualizar el artículo
+
         $article->update($request->only([
-            'title', 'description', 'square_meters', 
+            'title', 'description', 'square_meters',
             'constructed_meters', 'region', 'city', 'street', 'sale_or_rent'
         ]));
-        // Guarda el artículo
-        $article->save();
-        
-        // Sincronizar características (agregar o eliminar según las seleccionadas)
+
         if ($request->has('characteristics')) {
             $article->characteristics()->sync($request->input('characteristics'));
         } else {
             $article->characteristics()->detach();
         }
-        
-      
 
-        // Redirigir a index después de la actualización
-        return redirect()->route('articles.index')->with('success', 'Artículo actualizado exitosamente.');
+        return response()->json(['message' => 'Artículo actualizado exitosamente.', 'data' => $article]);
     }
-    
-    
-    
+
     public function destroy($id)
     {
         $article = Article::findOrFail($id);
         $article->delete();
 
-        return redirect()->route('articles.index')->with('success', 'Artículo eliminado con éxito.');
+        return response()->json(['message' => 'Artículo eliminado con éxito.']);
     }
+    public function apiIndex()
+    {
+        $articles = Article::with('characteristics')->get();
+
+        foreach ($articles as $article) {
+            // Decodificar las fotos si están en formato JSON
+            $article->photos = is_string($article->photos) ? json_decode($article->photos, true) : $article->photos;
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $articles,
+        ], 200);
+    }
+
 }
