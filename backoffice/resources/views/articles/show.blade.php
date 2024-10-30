@@ -18,12 +18,7 @@
             <div class="col-sm-6">
                 <h1>Detalle Parcela</h1>
             </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">Detalle parcela</li>
-                </ol>
-            </div>
+
         </div>
     </div><!-- /.container-fluid -->
 </section>
@@ -37,32 +32,30 @@
             <div class="row">
                 <div class="col-12 col-sm-6">
                     <h3 class="d-inline-block d-sm-none">{{ $article->title }}</h3>
-                      <!-- Imagen principal -->
-                      <div class="col-12">
-                        <img id="main-image" src="{{ asset('storage/' . $article->cover_photo) }}" width="100%"
-                            alt="Portada del Artículo">
+                    <!-- Imagen principal -->
+                    <div class="col-12">
+                        <img id="main-image" src="data:image/jpeg;base64,{{ $article->cover_photo }}" width="100%" alt="Portada del Artículo">
                     </div>
 
                     <!-- Miniaturas -->
-                    <div class="col-12 product-image-thumbs">
+                    <div class="col-12 product-image-thumbs d-flex">
                         @if (is_array($article->photos))
                             @foreach ($article->photos as $photo)
                                 <div class="product-image-thumb">
-                                    <img src="{{ asset('storage/' . $photo) }}" class="thumb-img"
-                                        style="width: 150px; height: auto;" alt="Foto del Artículo">
+                                    <img src="data:image/jpeg;base64,{{ $photo }}" class="thumb-img" style="width: 150px; height: auto;" alt="Foto del Artículo">
                                 </div>
                             @endforeach
                         @elseif($article->photos)
                             @foreach (json_decode($article->photos) as $photo)
-                                <div class="product-image-thumb">
-                                    <img src="{{ asset('storage/' . $photo) }}" class="thumb-img"
-                                        style="width: 150px; height: auto;" alt="Foto del Artículo">
+                                <div class="product-image-thumb" >
+                                    <img src="data:image/jpeg;base64,{{ $photo }}" class="thumb-img" style="width: 150px; height: auto;" alt="Foto del Artículo">
                                 </div>
                             @endforeach
                         @else
                             <p>No hay fotos disponibles.</p>
                         @endif
                     </div>
+
                 </div>
 
 
@@ -75,7 +68,6 @@
                     <h4 class="mt-3">Metros cuadrados:</h4>
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
                         <label class="btn btn-default text-center">
-                            <input type="radio" name="color_option" id="color_option_b1" autocomplete="off">
                             <span class="text-l">{{ $article->square_meters }}</span>
                         </label>
                     </div>
@@ -83,7 +75,6 @@
                     <h4 class="mt-3">Metros construidos:</h4>
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
                         <label class="btn btn-default text-center">
-                            <input type="radio" name="color_option" id="color_option_b1" autocomplete="off">
                             <span class="text-l">{{ $article->constructed_meters }}</span>
                         </label>
                     </div>
@@ -91,7 +82,6 @@
                     <h4 class="mt-3">Región:</h4>
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
                         <label class="btn btn-default text-center">
-                            <input type="radio" name="color_option" id="color_option_b1" autocomplete="off">
                             <span class="text-m">{{ $article->region }}</span>
                         </label>
                     </div>
@@ -99,7 +89,6 @@
                     <h4 class="mt-3">Ciudad:</h4>
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
                         <label class="btn btn-default text-center">
-                            <input type="radio" name="color_option" id="color_option_b1" autocomplete="off">
                             <span class="text-m">{{ $article->city }}</span>
                         </label>
                     </div>
@@ -107,7 +96,6 @@
                     <h4 class="mt-3">Calle:</h4>
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
                         <label class="btn btn-default text-center">
-                            <input type="radio" name="color_option" id="color_option_b1" autocomplete="off">
                             <span class="text-m">{{ $article->street }}</span>
                         </label>
                     </div>
@@ -115,26 +103,24 @@
                     <h4 class="mt-3">Venta o Arriendo:</h4>
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
                         <label class="btn btn-default text-center">
-                            <input type="radio" name="color_option" id="color_option_b1" autocomplete="off">
                             <span class="text-m">{{ $article->sale_or_rent }}</span>
                         </label>
                     </div>
 
                     <div class="form-group">
                         <label>Características:</label>
-                        @foreach($characteristics as $characteristic)
+                        @foreach($allCharacteristics as $characteristic)
                             <div class="form-check">
-                                <input class="form-check-input" disabled  type="checkbox" name="characteristics[{{ $characteristic->id }}]" value="1" id="characteristic_{{ $characteristic->id }}"
+                                <input class="form-check-input" disabled type="checkbox" name="characteristics[{{ $characteristic->id }}]" value="1" id="characteristic_{{ $characteristic->id }}"
                                     {{ $article->characteristics->contains($characteristic->id) ? 'checked' : '' }}>
                                 <label class="form-check-label" for="characteristic_{{ $characteristic->id }}" disabled>
-                                @if(isset($characteristic->icon))
-                                
-                                <i class="fas {{ $characteristic->icon }}" style="font-size: 24px;"></i>{{ $characteristic->name }}
-                                @endif
-    
-                            </label>
+                                    @if(isset($characteristic->icon))
+                                        <i class="fas {{ $characteristic->icon }}" style="font-size: 24px;"></i>{{ $characteristic->name }}
+                                    @endif
+                                </label>
                             </div>
                         @endforeach
+                        
                     </div>
                 </div>
             </div>

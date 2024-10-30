@@ -54,3 +54,7 @@ Route::resource('settings', SettingController::class);
 // Rutas para características
 Route::resource('characteristics', CharacteristicController::class);
 
+use App\Http\Controllers\LocationController;
+
+Route::get('/api/regions', [LocationController::class, 'getRegions']);
+Route::get('/api/regions/{regionId}/communes', [LocationController::class, 'getCommunes']);

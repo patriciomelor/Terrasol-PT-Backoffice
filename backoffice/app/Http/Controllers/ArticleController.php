@@ -25,14 +25,20 @@ class ArticleController extends Controller
                     return base64_encode(Storage::get($photoPath));
                 }, $photosArray);
             }
-    
+        // Decodificar las fotos si están en formato JSON
+        $article->photos = is_string($article->photos) ? json_decode($article->photos, true) : $article->photos;
+            
             return $article;
         });
     
-        return view('articles.index', compact('articles'));
+        return view('articles.index', compact('articles')); // Muestra la vista en HTML
     }
-    
-    
+    public function create()
+    {
+        $features = Feature::all();
+        $characteristics = Characteristic::all();
+        return view('articles.create', compact('features', 'characteristics'));
+    }
     public function store(Request $request)
     {
         $request->validate([
@@ -40,19 +46,18 @@ class ArticleController extends Controller
             'cover_photo' => 'required|image',
             'photos.*' => 'nullable|image',
             'description' => 'required|string',
-            // otros campos...
         ]);
-    
+
         $article = new Article();
         $article->title = $request->input('title');
         $article->description = $request->input('description');
-        // otros atributos...
-    
+
         // Foto de portada
+        // En el controlador al guardar el artículo
         if ($request->hasFile('cover_photo')) {
-            $article->cover_photo = base64_encode(file_get_contents($request->file('cover_photo')));
+            $article->cover_photo = base64_encode(file_get_contents($request->file('cover_photo')->getRealPath()));
         }
-    
+
         // Fotos adicionales
         if ($request->hasFile('photos')) {
             $photos = [];
@@ -61,22 +66,28 @@ class ArticleController extends Controller
             }
             $article->photos = json_encode($photos);
         }
-    
+
         $article->save();
-    
-        return response()->json(['message' => 'Artículo creado exitosamente.']);
-    }
-    
 
-    public function show($id)
-    {
-        $article = Article::findOrFail($id);
-        if (is_string($article->photos)) {
-            $article->photos = json_decode($article->photos, true);
+        return redirect()->route('articles.index')->with('success', 'Artículo creado exitosamente.');
+    }
+
+        public function show($id)
+        {
+            $article = Article::findOrFail($id);
+        
+            // Decodificar las fotos si están en formato JSON
+            $article->photos = is_string($article->photos) ? json_decode($article->photos, true) : $article->photos;
+        
+            // Obtener las características asociadas al artículo
+            $characteristics = $article->characteristics;
+        
+            // Obtener todas las características disponibles
+            $allCharacteristics = Characteristic::all();
+        
+            return view('articles.show', compact('article', 'characteristics', 'allCharacteristics'));
         }
-
-        return response()->json(['data' => $article]);
-    }
+    
 
     public function update(Request $request, Article $article)
     {
@@ -85,14 +96,6 @@ class ArticleController extends Controller
             'cover_photo' => 'nullable|image',
             'photos.*' => 'nullable|image',
             'description' => 'required|string',
-            'square_meters' => 'required|numeric',
-            'constructed_meters' => 'nullable|numeric',
-            'region' => 'nullable|string',
-            'city' => 'nullable|string',
-            'street' => 'nullable|string',
-            'sale_or_rent' => 'required|in:sale,rent',
-            'characteristics' => 'nullable|array',
-            'characteristics.*' => 'exists:characteristics,id',
         ]);
 
         $article->update($request->only([
@@ -106,7 +109,7 @@ class ArticleController extends Controller
             $article->characteristics()->detach();
         }
 
-        return response()->json(['message' => 'Artículo actualizado exitosamente.', 'data' => $article]);
+        return redirect()->route('articles.index')->with('success', 'Artículo actualizado exitosamente.');
     }
 
     public function destroy($id)
@@ -114,8 +117,10 @@ class ArticleController extends Controller
         $article = Article::findOrFail($id);
         $article->delete();
 
-        return response()->json(['message' => 'Artículo eliminado con éxito.']);
+        return redirect()->route('articles.index')->with('success', 'Artículo eliminado exitosamente.');
     }
+
+    // Método solo para la API
     public function apiIndex()
     {
         $articles = Article::with('characteristics')->get();
@@ -130,5 +135,4 @@ class ArticleController extends Controller
             'data' => $articles,
         ], 200);
     }
-
 }
