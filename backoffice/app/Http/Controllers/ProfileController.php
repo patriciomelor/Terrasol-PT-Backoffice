@@ -10,9 +10,7 @@ class ProfileController extends Controller
 {
     public function index()
     {
-        $users = User::with('role', 'updatedBy')
-                 ->where('id', '!=', 3) // Excluye al usuario con ID 3
-                 ->get();
+        $users = User::with(['role', 'updatedBy'])->where('id', '!=', 3)->get();
         return view('users.index', compact('users'));
     }
 
