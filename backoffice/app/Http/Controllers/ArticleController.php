@@ -13,9 +13,39 @@ class ArticleController extends Controller
     public function index()
     {
         $articles = Article::all();
+        
         return view('articles.index', compact('articles'));
     }
-    
+    public function edit($id)
+{
+    $article = Article::findOrFail($id); // Encuentra el artículo por ID o muestra un error 404 si no existe
+    $characteristics = Characteristic::all(); // Obtiene todas las características disponibles
+     // Decodificar las fotos si están en formato JSON
+     $article->photos = is_string($article->photos) ? json_decode($article->photos, true) : [];
+
+     $features = Feature::all();
+     $characteristics = Characteristic::all();
+    return view('articles.edit', compact('article', 'characteristics')); // Pasa los datos a la vista
+}
+public function deletePhoto($id, $photo)
+{
+    $article = Article::findOrFail($id);
+
+    // Decodificar las fotos actuales
+    $photos = is_string($article->photos) ? json_decode($article->photos, true) : $article->photos;
+
+    // Eliminar la foto del array
+    if (($key = array_search($photo, $photos)) !== false) {
+        unset($photos[$key]);
+    }
+
+    // Actualizar el campo de fotos en la base de datos
+    $article->photos = json_encode(array_values($photos)); // Reindexar array
+    $article->save();
+
+    return redirect()->route('articles.show', $id)->with('success', 'Foto eliminada exitosamente.');
+}
+
 
     public function create()
     {
@@ -88,44 +118,51 @@ class ArticleController extends Controller
             'cover_photo' => 'nullable|image',
             'photos.*' => 'nullable|image',
             'description' => 'required|string',
-            'square_meters' => 'required|numeric',
-            'constructed_meters' => 'nullable|numeric',
-            'region' => 'nullable|string',
-            'city' => 'nullable|string',
-            'street' => 'nullable|string',
-            'sale_or_rent' => 'required|in:sale,rent',
-            'characteristics' => 'nullable|array',
-            'characteristics.*' => 'exists:characteristics,id',
         ]);
-
-        $article->update($request->only([
-            'title', 'description', 'square_meters',
-            'constructed_meters', 'region', 'city', 'street', 'sale_or_rent'
-        ]));
-
-        // Actualizar la foto de portada si es necesario
+    
+        // Eliminar la imagen de portada si la casilla está marcada
+        if ($request->has('delete_cover_photo')) {
+            $article->cover_photo = null;
+        }
+    
+        // Eliminar fotos adicionales marcadas para eliminar
+        if ($request->has('delete_photos')) {
+            $existingPhotos = is_string($article->photos) ? json_decode($article->photos, true) : [];
+            $photosToDelete = $request->input('delete_photos');
+    
+            // Filtrar las fotos que no están en la lista de eliminación
+            $remainingPhotos = array_filter($existingPhotos, function ($key) use ($photosToDelete) {
+                return !in_array($key, $photosToDelete);
+            }, ARRAY_FILTER_USE_KEY);
+    
+            $article->photos = json_encode(array_values($remainingPhotos)); // Reindexar el array
+        }
+    
+        // Procesar foto de portada nueva, si existe
         if ($request->hasFile('cover_photo')) {
             $article->cover_photo = base64_encode(file_get_contents($request->file('cover_photo')->getRealPath()));
         }
-
-        // Actualizar las fotos adicionales
+    
+        // Procesar fotos adicionales nuevas, si existen
         if ($request->hasFile('photos')) {
-            $photos = [];
+            $newPhotos = [];
             foreach ($request->file('photos') as $photo) {
-                $photos[] = base64_encode(file_get_contents($photo));
+                $newPhotos[] = base64_encode(file_get_contents($photo->getRealPath()));
             }
-            $article->photos = json_encode($photos);
+    
+            // Combinar fotos nuevas con las existentes
+            $existingPhotos = is_string($article->photos) ? json_decode($article->photos, true) : [];
+            $article->photos = json_encode(array_merge($existingPhotos, $newPhotos));
         }
-
-        // Sincronizar características
-        if ($request->has('characteristics')) {
-            $article->characteristics()->sync($request->input('characteristics'));
-        } else {
-            $article->characteristics()->detach();
-        }
-
+    
+        $article->update($request->only([
+            'title', 'description', 'square_meters', 'constructed_meters', 'region', 'city', 'street', 'sale_or_rent'
+        ]));
+    
         return redirect()->route('articles.index')->with('success', 'Artículo actualizado exitosamente.');
     }
+    
+    
 
     public function destroy($id)
     {

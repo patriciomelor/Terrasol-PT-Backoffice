@@ -1,56 +1,64 @@
 @extends('layouts.dash')
 
 @section('content')
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>Detalle Parcela</h1>
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <div class="app-ecommerce">
+            <form action="{{ route('articles.update', $article->id) }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
+
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-6 row-gap-4">
+                    <div class="d-flex flex-column justify-content-center">
+                        <h4 class="mb-1">Editar Parcela</h4>
+                    </div>
+                    <div class="d-flex align-content-center flex-wrap gap-4">
+                        <a type="button" href="{{ route('articles.index') }}" class="btn btn-label-secondary waves-effect">Cancelar</a>
+                        <button type="submit" class="btn btn-primary waves-effect waves-light">Guardar cambios</button>
+                    </div>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Detalle parcela</li>
-                    </ol>
-                </div>
-            </div>
-        </div><!-- /.container-fluid -->
-    </section>
 
-    <!-- Main content -->
-    <section class="content">
-        <div class="card card-solid">
-            <div class="card-body">
-                <form action="{{ route('articles.update', $article->id) }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    @method('PUT') <!-- Campo oculto para usar el método PUT -->
-
-                    <div class="row">
-                        <div class="col-12 col-sm-6">
-                            <h3 class="d-inline-block d-sm-none">{{ $article->title }}</h3>
-
-                            <!-- Imagen principal -->
-                            <div class="col-12">
-                                <img id="main-image" src="{{ asset('storage/' . $article->cover_photo) }}" width="100%"
-                                    alt="Portada del Artículo">
+                <div class="row">
+                    <div class="col-12 col-lg-8">
+                        <!-- Imagen principal -->
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">Portada del Artículo</h5>
                             </div>
+                            <div class="card-body text-center">
+                                @if ($article->cover_photo)
+                                    <img id="main-image" src="data:image/jpeg;base64,{{ $article->cover_photo }}" width="100%" alt="Portada del Artículo">
+                                @else
+                                    <p>No hay portada disponible.</p>
+                                @endif
+                            </div>
+                        </div>
 
-                            <!-- Miniaturas -->
-                            <div class="col-12 product-image-thumbs">
-                                @if (is_array($article->photos))
+                        <!-- Miniaturas -->
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">Fotos Adicionales</h5>
+                            </div>
+                            <div class="card-body d-flex flex-wrap">
+                                @if (is_array($article->photos) || $article->photos)
                                     @foreach ($article->photos as $photo)
-                                        <div class="product-image-thumb">
-                                            <img src="{{ asset('storage/' . $photo) }}" class="thumb-img"
-                                                style="width: 150px; height: auto;" alt="Foto del Artículo">
-                                        </div>
-                                    @endforeach
-                                @elseif($article->photos)
-                                    @foreach (json_decode($article->photos) as $photo)
-                                        <div class="product-image-thumb">
-                                            <img src="{{ asset('storage/' . $photo) }}" class="thumb-img"
-                                                style="width: 150px; height: auto;" alt="Foto del Artículo">
+                                        <div class="product-image-thumb m-2">
+                                            <img src="data:image/jpeg;base64,{{ $photo }}" class="thumb-img" style="width: 150px; height: auto;" alt="Foto del Artículo"><br>
+                                            <!-- Botón para eliminar cada imagen -->
+                                            <form action="{{ route('articles.delete_photo', ['id' => $article->id, 'photo' => $photo]) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta imagen?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-danger mt-2">Eliminar</button>
+                                            </form>
                                         </div>
                                     @endforeach
                                 @else
@@ -58,96 +66,97 @@
                                 @endif
                             </div>
                         </div>
-
-                        <!-- Información de la parcela -->
-                        <div class="col-12 col-sm-6">
-                            <h3 class="my-3">Editar Titulo:</h3>
-                            <input type="text" name="title" value="{{ old('title', $article->title) }}"
-                                class="form-control" autofocus>
-                            <p>Editar Descripción</p>
-                            <input type="textarea" name="description"
-                                value="{{ old('description', $article->description) }}" class="form-control" autofocus>
-                            <hr>
-
-                            <h4 class="mt-3">Editar Metros cuadrados</h4>
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <input type="number" class="form-control" autofocus name="square_meters"
-                                    value="{{ old('square_meters', $article->square_meters) }}" class="form-control"
-                                    autofocus>
+                    </div>
+                    <div class="col-12 col-lg-4">
+                      <!-- Información de la parcela -->
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">Información de la Parcela</h5>
                             </div>
+                            <div class="card-body">
+                                <!-- Título -->
+                                <div class="mb-3">
+                                    <label for="title" class="form-label">Título</label>
+                                    <input type="text" name="title" value="{{ old('title', $article->title) }}" class="form-control" autofocus>
+                                </div>
 
-                            <h4 class="mt-3">Metros construidos:</h4>
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <input type="number" class="form-control" autofocus name="constructed_meters"
-                                    value="{{ old('constructed_meters', $article->constructed_meters) }}"
-                                    class="form-control" autofocus>
+                                <!-- Descripción -->
+                                <div class="mb-3">
+                                    <label for="description" class="form-label">Descripción</label>
+                                    <textarea name="description" class="form-control">{{ old('description', $article->description) }}</textarea>
+                                </div>
+
+                                <!-- Metros Cuadrados -->
+                                <div class="mb-3">
+                                    <label for="square_meters" class="form-label">Metros Cuadrados</label>
+                                    <input type="number" name="square_meters" value="{{ old('square_meters', $article->square_meters) }}" class="form-control">
+                                </div>
+
+                                <!-- Metros Construidos -->
+                                <div class="mb-3">
+                                    <label for="constructed_meters" class="form-label">Metros Construidos</label>
+                                    <input type="number" name="constructed_meters" value="{{ old('constructed_meters', $article->constructed_meters) }}" class="form-control">
+                                </div>
+
+                                <!-- Región -->
+                                <div class="mb-3">
+                                    <label for="region" class="form-label">Región</label>
+                                    <input type="text" name="region" value="{{ old('region', $article->region) }}" class="form-control">
+                                </div>
+
+                                <!-- Ciudad -->
+                                <div class="mb-3">
+                                    <label for="city" class="form-label">Ciudad</label>
+                                    <input type="text" name="city" value="{{ old('city', $article->city) }}" class="form-control">
+                                </div>
+
+                                <!-- Calle -->
+                                <div class="mb-3">
+                                    <label for="street" class="form-label">Calle</label>
+                                    <input type="text" name="street" value="{{ old('street', $article->street) }}" class="form-control">
+                                </div>
+
+                                <!-- Venta o Arriendo -->
+                                <div class="mb-3">
+                                    <label for="sale_or_rent" class="form-label">Venta o Arriendo</label>
+                                    <select name="sale_or_rent" class="form-control">
+                                        <option value="sale" {{ old('sale_or_rent', $article->sale_or_rent) == 'sale' ? 'selected' : '' }}>Venta</option>
+                                        <option value="rent" {{ old('sale_or_rent', $article->sale_or_rent) == 'rent' ? 'selected' : '' }}>Arriendo</option>
+                                    </select>
+                                </div>
+
+                                <!-- Características -->
+                                <div class="mb-3">
+                                    <label>Características:</label>
+                                    @foreach ($characteristics as $characteristic)
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="characteristics[{{ $characteristic->id }}]" value="1" id="characteristic_{{ $characteristic->id }}" {{ $article->characteristics->contains($characteristic->id) ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="characteristic_{{ $characteristic->id }}">
+                                                <i class="{{ $characteristic->icon }}"></i> {{ $characteristic->name }}
+                                            </label>
+                                        </div>
+                                    @endforeach
+                                </div>
                             </div>
-
-                            <h4 class="mt-3">Región:</h4>
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <input type="text" class="form-control" autofocus name="region" id="region-input"
-                                    value="{{ old('region', $article->region) }}">
-                            </div>
-
-                            <h4 class="mt-3">Ciudad:</h4>
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <input type="text" class="form-control" autofocus id="ciudad-input" name="city"
-                                    value="{{ old('city', $article->city) }}">
-                            </div>
-
-                            <h4 class="mt-3">Calle:</h4>
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <input type="text" class="form-control" autofocus id="calle-input" name="street"
-                                    value="{{ old('street', $article->street) }}">
-                                </label>
-                            </div>
-
-                            <h4 class="mt-3">Venta o Arriendo:</h4>
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <select name="sale_or_rent" id="sale_or_rent" class="form-control">
-                                    <option value="sale">Venta</option>
-                                    <option value="rent">Arriendo</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Características:</label>
-                                @foreach ($characteristics as $characteristic)
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox"
-                                            name="characteristics[{{ $characteristic->id }}]" value="1"
-                                            id="characteristic_{{ $characteristic->id }}"
-                                            {{ $article->characteristics->contains($characteristic->id) ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="characteristic_{{ $characteristic->id }}">
-                                            <i class="{{ $characteristic->icon }}"></i> {{ $characteristic->name }}
-                                        </label>
-                                    </div>
-                                @endforeach
-                            </div>
-
-                            <button type="submit" class="btn btn-info">Guardar</button>
-                </form>
-            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
+    </div>
 
-        </div>
-        <!-- /.card-body -->
-        </div>
-        <!-- /.card -->
-    </section>
-    <!-- /.content -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRuDch_iRINkMpRTc-m5EFIhpZ8CdeqBs&libraries=places">
-    </script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Al hacer clic en una miniatura, cambiar la imagen principal
-        document.querySelectorAll('.thumb-img').forEach(function(thumb) {
-            thumb.addEventListener('click', function() {
-                var mainImage = document.getElementById('main-image');
-                mainImage.src = this.src; // Cambiar la imagen principal
+@endsection
+
+@section('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Al hacer clic en una miniatura, cambiar la imagen principal
+            document.querySelectorAll('.thumb-img').forEach(function(thumb) {
+                thumb.addEventListener('click', function() {
+                    var mainImage = document.getElementById('main-image');
+                    mainImage.src = this.src; // Cambiar la imagen principal
+                });
             });
         });
-    });
-</script>
-
+    </script>
 @endsection
