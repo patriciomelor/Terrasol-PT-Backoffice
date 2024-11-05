@@ -17,12 +17,14 @@
                 @csrf
                 @method('PUT')
 
-                <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-6 row-gap-4">
+                <div
+                    class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-6 row-gap-4">
                     <div class="d-flex flex-column justify-content-center">
                         <h4 class="mb-1">Editar Parcela</h4>
                     </div>
                     <div class="d-flex align-content-center flex-wrap gap-4">
-                        <a type="button" href="{{ route('articles.index') }}" class="btn btn-label-secondary waves-effect">Cancelar</a>
+                        <a type="button" href="{{ route('articles.index') }}"
+                            class="btn btn-label-secondary waves-effect">Cancelar</a>
                         <button type="submit" class="btn btn-primary waves-effect waves-light">Guardar cambios</button>
                     </div>
                 </div>
@@ -36,7 +38,8 @@
                             </div>
                             <div class="card-body text-center">
                                 @if ($article->cover_photo)
-                                    <img id="main-image" src="data:image/jpeg;base64,{{ $article->cover_photo }}" width="100%" alt="Portada del Artículo">
+                                    <img id="main-image" src="data:image/jpeg;base64,{{ $article->cover_photo }}"
+                                        width="100%" alt="Portada del Artículo">
                                 @else
                                     <p>No hay portada disponible.</p>
                                 @endif
@@ -52,9 +55,13 @@
                                 @if (is_array($article->photos) || $article->photos)
                                     @foreach ($article->photos as $photo)
                                         <div class="product-image-thumb m-2">
-                                            <img src="data:image/jpeg;base64,{{ $photo }}" class="thumb-img" style="width: 150px; height: auto;" alt="Foto del Artículo"><br>
+                                            <img src="data:image/jpeg;base64,{{ $photo }}" class="thumb-img"
+                                                style="width: 150px; height: auto;" alt="Foto del Artículo"><br>
                                             <!-- Botón para eliminar cada imagen -->
-                                            <form action="{{ route('articles.delete_photo', ['id' => $article->id, 'photo' => $photo]) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta imagen?');">
+                                            <form
+                                                action="{{ route('articles.delete_photo', ['id' => $article->id, 'photo' => $photo]) }}"
+                                                method="POST"
+                                                onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta imagen?');">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-sm btn-danger mt-2">Eliminar</button>
@@ -68,7 +75,7 @@
                         </div>
                     </div>
                     <div class="col-12 col-lg-4">
-                      <!-- Información de la parcela -->
+                        <!-- Información de la parcela -->
                         <div class="card mb-4">
                             <div class="card-header">
                                 <h5 class="card-title mb-0">Información de la Parcela</h5>
@@ -77,7 +84,8 @@
                                 <!-- Título -->
                                 <div class="mb-3">
                                     <label for="title" class="form-label">Título</label>
-                                    <input type="text" name="title" value="{{ old('title', $article->title) }}" class="form-control" autofocus>
+                                    <input type="text" name="title" value="{{ old('title', $article->title) }}"
+                                        class="form-control" autofocus>
                                 </div>
 
                                 <!-- Descripción -->
@@ -89,39 +97,62 @@
                                 <!-- Metros Cuadrados -->
                                 <div class="mb-3">
                                     <label for="square_meters" class="form-label">Metros Cuadrados</label>
-                                    <input type="number" name="square_meters" value="{{ old('square_meters', $article->square_meters) }}" class="form-control">
+                                    <input type="number" name="square_meters"
+                                        value="{{ old('square_meters', $article->square_meters) }}" class="form-control">
                                 </div>
 
                                 <!-- Metros Construidos -->
                                 <div class="mb-3">
                                     <label for="constructed_meters" class="form-label">Metros Construidos</label>
-                                    <input type="number" name="constructed_meters" value="{{ old('constructed_meters', $article->constructed_meters) }}" class="form-control">
+                                    <input type="number" name="constructed_meters"
+                                        value="{{ old('constructed_meters', $article->constructed_meters) }}"
+                                        class="form-control">
                                 </div>
 
                                 <!-- Región -->
                                 <div class="mb-3">
                                     <label for="region" class="form-label">Región</label>
-                                    <input type="text" name="region" value="{{ old('region', $article->region) }}" class="form-control">
+                                    <select name="region_id" id="region" class="form-control">
+                                        @foreach ($regions as $region)
+                                            <option value="{{ $region->id }}"
+                                                {{ $region->id == old('region_id', $article->region_id) ? 'selected' : '' }}>
+                                                {{ $region->nombre }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
 
                                 <!-- Ciudad -->
                                 <div class="mb-3">
                                     <label for="city" class="form-label">Ciudad</label>
-                                    <input type="text" name="city" value="{{ old('city', $article->city) }}" class="form-control">
+                                    <select name="comuna_id" id="city" class="form-control">
+                                        @foreach ($comunas as $comuna)
+                                            <option value="{{ $comuna->id }}"
+                                                {{ $comuna->id == old('comuna_id', $article->comuna_id) ? 'selected' : '' }}>
+                                                {{ $comuna->nombre }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
+                                
 
                                 <!-- Calle -->
                                 <div class="mb-3">
                                     <label for="street" class="form-label">Calle</label>
-                                    <input type="text" name="street" value="{{ old('street', $article->street) }}" class="form-control">
+                                    <input type="text" name="street" value="{{ old('street', $article->street) }}"
+                                        class="form-control">
                                 </div>
 
                                 <!-- Venta o Arriendo -->
                                 <div class="mb-3">
                                     <label for="sale_or_rent" class="form-label">Venta o Arriendo</label>
                                     <select name="sale_or_rent" class="form-control">
-                                        <option value="sale" {{ old('sale_or_rent', $article->sale_or_rent) == 'sale' ? 'selected' : '' }}>Venta</option>
-                                        <option value="rent" {{ old('sale_or_rent', $article->sale_or_rent) == 'rent' ? 'selected' : '' }}>Arriendo</option>
+                                        <option value="sale"
+                                            {{ old('sale_or_rent', $article->sale_or_rent) == 'sale' ? 'selected' : '' }}>
+                                            Venta</option>
+                                        <option value="rent"
+                                            {{ old('sale_or_rent', $article->sale_or_rent) == 'rent' ? 'selected' : '' }}>
+                                            Arriendo</option>
                                     </select>
                                 </div>
 
@@ -130,8 +161,12 @@
                                     <label>Características:</label>
                                     @foreach ($characteristics as $characteristic)
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="characteristics[{{ $characteristic->id }}]" value="1" id="characteristic_{{ $characteristic->id }}" {{ $article->characteristics->contains($characteristic->id) ? 'checked' : '' }}>
-                                            <label class="form-check-label" for="characteristic_{{ $characteristic->id }}">
+                                            <input class="form-check-input" type="checkbox"
+                                                name="characteristics[{{ $characteristic->id }}]" value="1"
+                                                id="characteristic_{{ $characteristic->id }}"
+                                                {{ $article->characteristics->contains($characteristic->id) ? 'checked' : '' }}>
+                                            <label class="form-check-label"
+                                                for="characteristic_{{ $characteristic->id }}">
                                                 <i class="{{ $characteristic->icon }}"></i> {{ $characteristic->name }}
                                             </label>
                                         </div>

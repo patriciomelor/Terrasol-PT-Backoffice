@@ -2,6 +2,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Region;
+use App\Models\Comuna; // O Commune si usas otro nombre para el modelo de ciudad
+
 
 class LocationController extends Controller
 {

@@ -28,5 +28,14 @@ class Article extends Model
         {
             return $this->belongsToMany(Characteristic::class);
         }
+        public function region()
+        {
+            return $this->belongsTo(Region::class, 'region_id');
+        }
+
+        public function city()
+        {
+            return $this->belongsTo(City::class, 'city_id');
+        }
         
 }
