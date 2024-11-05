@@ -13,7 +13,7 @@
             <table class="table table-striped table-bordered" width="100%">
                 <thead>
                     <tr>
-                        <th>Imagen</th>
+                        <th style="width: 50%">Imagen</th>
                         <th>Título</th>
                         <th>Descripción</th>
                         <th>Metros Cuadrados</th>

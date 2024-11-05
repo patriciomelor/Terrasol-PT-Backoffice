@@ -10,8 +10,9 @@ class ProfileController extends Controller
 {
     public function index()
     {
-        $users = User::all();
-        $users = User::with('role','updatedBy')->get(); // Cargar los roles junto con los usuarios
+        $users = User::with('role', 'updatedBy')
+                 ->where('id', '!=', 3) // Excluye al usuario con ID 3
+                 ->get();
         return view('users.index', compact('users'));
     }
 
@@ -103,4 +104,12 @@ class ProfileController extends Controller
         $user->save();
         return redirect()->route('users.index')->with('success', 'Estado del usuario actualizado correctamente.');
     }
+    public function generateToken()
+{
+    $user = User::find(1); // Obtén el usuario por ID u otro criterio
+    $token = $user->createToken('TOKENPERMANT')->plainTextToken;
+
+    return response()->json(['token' => $token]);
+}
+
 }

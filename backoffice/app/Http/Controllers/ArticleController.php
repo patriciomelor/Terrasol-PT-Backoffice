@@ -182,6 +182,8 @@ public function deletePhoto($id, $photo)
     // Método solo para la API
     public function apiIndex()
     {
+        ini_set('memory_limit', '512M'); // Aumenta el límite de memoria a 256 MB
+        
         $articles = Article::with('characteristics')->get();
 
         foreach ($articles as $article) {
