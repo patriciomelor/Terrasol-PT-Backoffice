@@ -47,9 +47,8 @@
                                 <!-- Título -->
                                 <div class="mb-6">
                                     <label class="form-label" for="title">Título</label>
-                                    <input type="text" class="form-control @error('title') is-invalid @enderror"
-                                        id="title" name="title" value="{{ old('title', $article->title ?? '') }}"
-                                        required>
+                                    <input type="text" class="form-control" name="title"
+                                        value="{{ old('title') }}"required>
                                     @error('title')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -123,6 +122,96 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <!-- MTc Section -->
+                            <div class="col-xl-6 col-sm-6">
+                                <div class="card h-100">
+                                    <div class="card-header">
+                                        <h5 class="card-title mb-0">Detalles de los Metros</h5>
+                                    </div>
+
+                                    <div class="card-body">
+                                        <!-- Metros Cuadrados -->
+                                        <div class="mb-3">
+                                            <label for="square_meters" class="form-label">Metros Cuadrados de la Parcela</label>
+                                            <input type="number"
+                                                class="form-control @error('square_meters') is-invalid @enderror"
+                                                id="square_meters" name="square_meters"
+                                                value="{{ old('square_meters', $article->square_meters ?? '') }}" required>
+                                            @error('square_meters')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+
+                                        <!-- Metros Construidos -->
+                                        <div class="mb-3">
+                                            <label for="constructed_meters" class="form-label">Metros Construidos</label>
+                                            <input type="number"
+                                                class="form-control @error('constructed_meters') is-invalid @enderror"
+                                                id="constructed_meters" name="constructed_meters"
+                                                value="{{ old('constructed_meters', $article->constructed_meters ?? '') }}">
+                                            @error('constructed_meters')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- MTc Section -->
+                            <div class="col-xl-6 col-sm-6">
+                                <div class="card h-100">
+                                    <div class="card-header">
+                                        <h5 class="card-title mb-0">Ubicación</h5>
+                                    </div>
+
+                                    <div class="card-body">
+                                        <!-- Región -->
+                                        <div class="mb-6">
+                                            <label for="region" class="form-label">Región</label>
+                                            <select id="region-select" name="region"
+                                                class="select2 form-select form-select-lg">
+                                                <option value="">Selecciona una región</option>
+                                            </select>
+                                            @error('region')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+
+                                        <!-- Comuna -->
+                                        <div class="mb-6">
+                                            <label for="city" class="form-label">Comuna</label>
+                                            <select id="city-select" name="city"
+                                                class="select2 form-select form-select-lg">
+                                                <option value="">Selecciona una comuna</option>
+                                            </select>
+                                            @error('city')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+
+                                        <div class="mb-6">
+                                            <label for="street">Calle:</label>
+                                            <input type="text" name="street" id="street"
+                                                class="form-select form-select-lg @error('street') is-invalid @enderror"
+                                                value="{{ old('street') }}" autofocus>
+                                            @error('street')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- caracter Section -->
@@ -160,69 +249,24 @@
                             </div>
                         </div>
 
-                        <!-- MTc Section -->
+
                         <div class="card mb-6">
                             <div class="card-header">
-                                <h5 class="card-title mb-0">Metros Construidos</h5>
+                                <h5 class="card-title mb-0">Estado de Terreno</h5>
                             </div>
-
-                            <div class="card-body">
-                                <!-- Metros Cuadrados -->
-                                <div class="mb-6">
-                                    <label for="square_meters" class="form-label">Metros Cuadrados de la Parcela</label>
-                                    <input type="number"
-                                        class="form-control @error('square_meters') is-invalid @enderror"
-                                        id="square_meters" name="square_meters"
-                                        value="{{ old('square_meters', $article->square_meters ?? '') }}" required>
-                                    @error('square_meters')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-
-                                <!-- Metros Construidos -->
-                                <div class="mb-6">
-                                    <label for="constructed_meters" class="form-label">Metros Construidos</label>
-                                    <input type="number"
-                                        class="form-control @error('constructed_meters') is-invalid @enderror"
-                                        id="constructed_meters" name="constructed_meters"
-                                        value="{{ old('constructed_meters', $article->constructed_meters ?? '') }}">
-                                    @error('constructed_meters')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-                        <!-- MTc Section -->
-                        <div class="card mb-6">
-                            <div class="card-header">
-                                <h5 class="card-title mb-0">Ubicación</h5>
-                            </div>
-
                             <div class="card-body">
 
-                                  <!-- Región y Ciudad con select2 -->
-                                  <div class="mb-6">
-                                    <label for="region" class="form-label">Región</label>
-                                    <select id="region-select" class="form-control" name="region">
-                                        <option value="">Selecciona una región</option>
+                                <div class="mb-6 ">
+                                    <label for="sale_or_rent">Venta o Arriendo:</label>
+                                    <select name="sale_or_rent" id="sale_or_rent"
+                                        class="form-control @error('sale_or_rent') is-invalid @enderror">
+                                        <option value="sale" {{ old('sale_or_rent') == 'sale' ? 'selected' : '' }}>Venta
+                                        </option>
+                                        <option value="rent" {{ old('sale_or_rent') == 'rent' ? 'selected' : '' }}>
+                                            Arriendo
+                                        </option>
                                     </select>
-                                    @error('region')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-
-                                <div class="mb-6">
-                                    <label for="city" class="form-label">Ciudad</label>
-                                    <select id="city-select" class="form-control" name="city">
-                                        <option value="">Selecciona una comuna</option>
-                                    </select>
-                                    @error('city')
+                                    @error('sale_or_rent')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -236,39 +280,52 @@
         </div>
     </div>
 
-@endsection
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            console.log("Iniciando carga de regiones...");
 
-@section('scripts')
-<script>
-    $(document).ready(function() {
-        $('#region-select').select2({
-            placeholder: "Selecciona una región",
-            ajax: {
-                url: '/api/regions',
-                processResults: function(data) {
-                    return {
-                        results: data.map(region => ({ id: region.codigo, text: region.nombre }))
-                    };
+            // Cargar las regiones al cargar la página
+            $.ajax({
+                url: '{{ url('/api/regions') }}',
+                method: 'GET',
+                success: function(data) {
+                    console.log("Regiones recibidas:", data);
+                    data.forEach(function(region) {
+                        $('#region-select').append(new Option(region.nombre, region.id));
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error al cargar las regiones:", error);
+                    console.log("Detalles:", xhr.responseText);
                 }
-            }
-        });
+            });
 
-        $('#region-select').on('change', function() {
-            const regionId = $(this).val();
-            $('#city-select').empty().trigger('change'); 
+            // Cargar las comunas según la región seleccionada
+            $('#region-select').on('change', function() {
+                var regionId = $(this).val();
+                console.log("Región seleccionada:", regionId);
+                $('#city-select').empty().append(new Option("Selecciona una comuna", ""));
 
-            $('#city-select').select2({
-                placeholder: "Selecciona una comuna",
-                ajax: {
-                    url: `/api/regions/${regionId}/communes`,
-                    processResults: function(data) {
-                        return {
-                            results: data.map(commune => ({ id: commune.codigo, text: commune.nombre }))
-                        };
-                    }
+                if (regionId) {
+                    $.ajax({
+                        url: '{{ url('/api/regions') }}/' + regionId + '/communes',
+                        method: 'GET',
+                        success: function(data) {
+                            console.log("Comunas para la región seleccionada:", data);
+                            data.forEach(function(commune) {
+                                $('#city-select').append(new Option(commune.nombre,
+                                    commune.id));
+                            });
+                        },
+                        error: function(xhr, status, error) {
+                            console.error("Error al cargar las comunas:", error);
+                            console.log("Detalles:", xhr.responseText);
+                        }
+                    });
                 }
             });
         });
-    });
-</script>
+    </script>
+
 @endsection

@@ -2,60 +2,44 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+   <!-- Encabezado Optimizado -->
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="csrf-token" content="{{ csrf_token() }}">
+<title>Dashboard - {{ config('app.name', 'Terrasol') }}</title>
 
-    <title>Dashboard - {{ config('app.name', 'Terrasol') }}</title>
+<!-- Fonts -->
+<link rel="dns-prefetch" href="//fonts.bunny.net">
+<link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com" />
 
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+<!-- Core CSS -->
+<link href="{{ asset('css/fontawesome.css') }}" rel="stylesheet">
+<link href="{{ asset('vendor/css/core.css') }}" rel="stylesheet">
+<link href="{{ asset('vendor/css/theme-default.css') }}" rel="stylesheet">
+<link href="{{ asset('css/demo.css') }}" rel="stylesheet">
 
-    <!-- CSS AdminLTE -->
-    {{-- <link href="{{ asset('css/adminlte.css') }}" rel="stylesheet"> --}}
-    <link href="{{ asset('css/fontawesome.css') }}" rel="stylesheet">
-    {{-- <link href="{{ asset('css/all.css') }}" rel="stylesheet"> --}}
-    <link href="{{ asset('vendor/css/core.css') }}" rel="stylesheet">
+<!-- Icons -->
+<link href="{{ asset('vendor/fonts/fontawesome.css') }}" rel="stylesheet">
+<link href="{{ asset('vendor/fonts/tabler-icons.css') }}" rel="stylesheet">
+<link href="{{ asset('vendor/fonts/flag-icons.css') }}" rel="stylesheet">
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
+<!-- CSS Adicional -->
+<link href="{{ asset('vendor/libs/node-waves/node-waves.css') }}" rel="stylesheet">
+<link href="{{ asset('vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" rel="stylesheet">
+<link href="{{ asset('vendor/libs/apex-charts/apex-charts.css') }}" rel="stylesheet">
+<link href="{{ asset('vendor/libs/swiper/swiper.css') }}" rel="stylesheet">
+<link href="{{ asset('vendor/libs/datatables-bs5/datatables.bootstrap5.css') }}" rel="stylesheet">
 
-    <!-- Icons -->
-    <link href="{{ asset('vendor/fonts/fontawesome.css') }}" rel="stylesheet">
-    <link href="{{ asset('vendor/fonts/tabler-icons.css') }}" rel="stylesheet">
-    <link href="{{ asset('vendor/fonts/flag-icons.css') }}" rel="stylesheet">
+<!-- Page CSS -->
+<link href="{{ asset('vendor/css/pages/cards-advance.css') }}" rel="stylesheet">
+<!-- Cargar jQuery antes de Select2 -->
+<!-- jQuery (primero) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <!-- Core CSS -->
+<!-- Select2 (después de jQuery) -->
 
-            <link href="{{ asset('vendor/css/core.css') }}" rel="stylesheet">
-            <link href="{{ asset('vendor/css/theme-default.css') }}" rel="stylesheet">
-
-
-    <link href="{{ asset('css/demo.css') }}" rel="stylesheet">
-
-    <!-- Vendors CSS -->
-    <link href="{{ asset('vendor/libs/node-waves/node-waves.css') }}" rel="stylesheet">
-    <link href="{{ asset('vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" rel="stylesheet">
-    <link href="{{ asset('vendor/libs/typeahead-js/typeahead.css') }}" rel="stylesheet">
-    <link href="{{ asset('vendor/libs/apex-charts/apex-charts.css') }}" rel="stylesheet">
-    <link href="{{ asset('vendor/libs/swiper/swiper.css') }}" rel="stylesheet">
-    <link href="{{ asset('vendor/libs/datatables-bs5/datatables.bootstrap5.css') }}" rel="stylesheet">
-    <link href="{{ asset('vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css') }}" rel="stylesheet">
-    <link href="{{ asset('vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css') }}" rel="stylesheet">
-
-    <!-- Page CSS -->
-    <link href="{{ asset('vendor/css/pages/cards-advance.css') }}" rel="stylesheet">
-
-    <!-- Helpers -->
-    <script src="{{ asset('vendor/js/helpers.js') }}"></script>
-
-    <!-- Config: Mandatory theme config file contain global vars & default theme options -->
-    <script src="{{ asset('js/config.js') }}"></script>
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </head>
 
 <body>
@@ -368,68 +352,40 @@
     <!-- Drag Target Area To SlideIn Menu On Small Screens -->
     <div class="drag-target"></div>
     <!-- JavaScript -->
-    <!-- Core JS -->
-    <script src="{{ asset('vendor/libs/jquery/jquery.js') }}"></script>
-    <script src="{{ asset('vendor/libs/popper/popper.js') }}"></script>
-    <script src="{{ asset('vendor/js/bootstrap.js') }}"></script>
-    <script src="{{ asset('vendor/libs/node-waves/node-waves.js') }}"></script>
-    <script src="{{ asset('vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
-    <script src="{{ asset('vendor/libs/hammer/hammer.js') }}"></script>
-    <script src="{{ asset('vendor/libs/i18n/i18n.js') }}"></script>
-    <script src="{{ asset('vendor/libs/typeahead-js/typeahead.js') }}"></script>
-    <script src="{{ asset('vendor/js/menu.js') }}"></script>
+  <!-- Scripts de Core -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{{ asset('vendor/libs/popper/popper.js') }}"></script>
+<script src="{{ asset('vendor/js/bootstrap.js') }}"></script>
+<script src="{{ asset('vendor/libs/node-waves/node-waves.js') }}"></script>
+<script src="{{ asset('vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
 
-    <!-- Vendors JS -->
-    <script src="{{ asset('vendor/libs/apex-charts/apexcharts.js') }}"></script>
-    <script src="{{ asset('vendor/libs/swiper/swiper.js') }}"></script>
-    <script src="{{ asset('vendor/libs/datatables-bs5/datatables-bootstrap5.js') }}"></script>
+<!-- JS Adicional -->
+<script src="{{ asset('vendor/libs/apex-charts/apexcharts.js') }}"></script>
+<script src="{{ asset('vendor/libs/swiper/swiper.js') }}"></script>
+<script src="{{ asset('vendor/libs/datatables-bs5/datatables-bootstrap5.js') }}"></script>
 
-    <!-- Main JS -->
-    <script src="{{ asset('js/main.js') }}"></script>
+<!-- Main JS y Configuración -->
+<script src="{{ asset('vendor/js/menu.js') }}"></script>
+<script src="{{ asset('js/config.js') }}"></script>
+<script src="{{ asset('js/main.js') }}"></script>
+<!-- Select2 JS local -->
+<script src="{{ asset('js/forms-selects.js') }}"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Obtener la URL actual sin el parámetro de consulta
+        var currentUrl = window.location.href.split(/[?#]/)[0];
 
-    <!-- Page JS -->
-    <script src="{{ asset('js/dashboards-analytics.js') }}"></script>
+        // Seleccionar todos los enlaces del menú
+        var menuLinks = document.querySelectorAll('.menu-item a');
 
-    <script src="{{ asset('js/tables-datatables-basic.js') }}"></script>
-    <script src="{{ asset('js/main.js') }}"></script>
-    <script src="{{ asset('vendor/libs/@form-validation/auto-focus.js') }}"></script>
-    <script src="{{ asset('vendor/libs/@form-validation/bootstrap5.js') }}"></script>
-    <script src="{{ asset('vendor/libs/@form-validation/popular.js') }}"></script>
-    <script src="{{ asset('vendor/libs/datatables-bs5/datatables-bootstrap5.js') }}"></script>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // Obtener la URL actual sin el parámetro de consulta
-            var currentUrl = window.location.href.split(/[?#]/)[0];
-
-            // Seleccionar todos los enlaces del menú
-            var menuLinks = document.querySelectorAll('.menu-item a');
-
-            // Recorrer todos los enlaces del menú
-            menuLinks.forEach(function(link) {
-                // Comprobar si la URL del enlace coincide con la URL actual
-                if (link.href === currentUrl) {
-                    // Agregar la clase "active" al padre del enlace
-                    link.closest('.menu-item').classList.add('active');
-                }
-            });
+        // Recorrer todos los enlaces del menú
+        menuLinks.forEach(function(link) {
+            // Comprobar si la URL del enlace coincide con la URL actual
+            if (link.href === currentUrl) {
+                // Agregar la clase "active" al padre del enlace
+                link.closest('.menu-item').classList.add('active');
+            }
         });
-    </script>
-    <script>
-        $(document).ready(function() {
-            $('#table').DataTable({
-                dom: '<"top"lBf>rt<"bottom"ip><"clear">',
-                buttons: [{
-                    text: 'Crear Usuario',
-                    className: 'btn btn-primary',
-                    action: function(e, dt, node, config) {
-                        window.location.href = '/users/create';
-                    }
-                }],
-                language: {
-                    url: "//cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json"
-                }
-            });
-        });
-    </script>
+    });
+</script>
 </body>

@@ -105,3 +105,41 @@ if (typeof TemplateCustomizer !== 'undefined') {
     controls: ['rtl', 'style', 'headerType', 'contentLayout', 'layoutCollapsed', 'layoutNavbarOptions', 'themes']
   });
 }
+$(document).ready(function() {
+  // Cargar las regiones al cargar la página
+  $.ajax({
+      url: '{{ url("/api/regions") }}',
+      method: 'GET',
+      success: function(data) {
+          console.log("Regiones:", data);
+          data.forEach(function(region) {
+              $('#region-select').append(new Option(region.nombre, region.id));
+          });
+      },
+      error: function(xhr) {
+          console.log("Error al cargar las regiones:", xhr);
+      }
+  });
+
+  // Cargar las comunas según la región seleccionada
+  $('#region-select').on('change', function() {
+      var regionId = $(this).val();
+      $('#city-select').empty().append(new Option("Selecciona una comuna", "")); // Limpiar y añadir opción inicial
+
+      if (regionId) {
+          $.ajax({
+              url: '{{ url("/api/regions") }}/' + regionId + '/communes',
+              method: 'GET',
+              success: function(data) {
+                  console.log("Comunas para la región seleccionada:", data);
+                  data.forEach(function(commune) {
+                      $('#city-select').append(new Option(commune.nombre, commune.id));
+                  });
+              },
+              error: function(xhr) {
+                  console.log("Error al cargar las comunas:", xhr);
+              }
+          });
+      }
+  });
+});

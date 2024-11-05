@@ -25,8 +25,14 @@
                     @foreach ($articles as $article)
                     <tr>
                         <td style="text-align: center; vertical-align: middle;">
-                            <img id="main-image" src="data:image/jpeg;base64,{{ $article->cover_photo }}" width="100%" alt="Portada del Artículo">
+                            @if($article->cover_photo)
+                                <img src="data:image/jpeg;base64,{{ $article->cover_photo }}" width="50%" alt="Portada del Artículo">
+                            @else
+                                <p><i class="fa-solid fa-ban"></i></p>
+                            @endif
                         </td>
+                
+                            <!-- Resto de tu código -->
                         <td style="text-align: center; vertical-align: middle;">{{ $article->title }}</td>
                         <td style="text-align: left; vertical-align: middle; width:30%;">{{ $article->description }}</td>
                         <td style="text-align: center; vertical-align: middle;">{{ $article->square_meters }} Metros Cuadrados</td>

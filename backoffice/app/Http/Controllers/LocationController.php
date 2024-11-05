@@ -1,23 +1,24 @@
 <?php
-
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
+use App\Models\Region;
 
 class LocationController extends Controller
 {
-    // Obtener todas las regiones de Chile
     public function getRegions()
     {
-        $response = Http::get('https://apis.digital.gob.cl/dpa/regiones');
-        return response()->json($response->json());
+        $regions = Region::all();
+        return response()->json($regions);
     }
 
-    // Obtener las comunas según la región seleccionada
     public function getCommunes($regionId)
     {
-        $response = Http::get("https://apis.digital.gob.cl/dpa/regiones/{$regionId}/comunas");
-        return response()->json($response->json());
+        $region = Region::find($regionId);
+        if (!$region) {
+            return response()->json(['message' => 'Región no encontrada'], 404);
+        }
+
+        $communes = $region->comunas; // Usando la relación definida
+        return response()->json($communes);
     }
 }

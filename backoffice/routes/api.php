@@ -26,6 +26,5 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::get('/articles', [ArticleController::class, 'apiIndex']);
 
 use App\Http\Controllers\LocationController;
-
 Route::get('/api/regions', [LocationController::class, 'getRegions']);
-Route::get('/api/regions/{regionId}/communes', [LocationController::class, 'getCommunes']);
+Route::get('/api/regions/{region}/communes', [LocationController::class, 'getCommunes']);
