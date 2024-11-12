@@ -88,12 +88,13 @@ class SettingController extends Controller
     }
     public function apiSettings()
     {   
-        ini_set('memory_limit', '512M'); // Aumenta el límite de memoria a 256 MB
-        $settings = Setting::all();
+        $settings = Setting::all();  // Obtiene todos los registros de configuración
 
-        return response()->json([
-            'status' => 'success',
-            'data' => $settings,
-        ], 200);
+        $settingsArray = [];
+        foreach ($settings as $setting) {
+            $settingsArray[$setting->key] = $setting->value;
+        }
+
+        return response()->json($settingsArray);
     }
 }
