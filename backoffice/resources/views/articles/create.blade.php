@@ -282,8 +282,18 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        $(document).ready(function() {
-            console.log("Iniciando carga de regiones...");
+          document.addEventListener('DOMContentLoaded', function() {
+            // Definir las URLs utilizando Blade
+            const regionsUrl = "{{ url('/api/regions') }}";
+            const communesUrl = "{{ url('/api/communes') }}"; // Asumiendo que tienes esta ruta
+
+            // Ejemplo de cómo usar la URL en una llamada fetch
+            fetch(regionsUrl)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                })
+                .catch(error => console.error('Error:', error));
 
             // Cargar las regiones al cargar la página
             $.ajax({
