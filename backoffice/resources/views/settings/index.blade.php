@@ -8,12 +8,12 @@
                         <a href="{{ route('settings.create') }}"  class="btn rounded-pill btn-label-info waves-effect"><i class=" fa-solid fa-pen-to-square ti-xs me-2"></i>Crear Configuración</a>
                     </div>
                     <div class="card-body">
-                        <table id="settings-table" class="table table-striped table-hover">
+                        <table id="settings-table" class="table table-responsive">
                             <thead>
                                 <tr>
                                     <th>Nombre del Campo</th>
                                     <th>Clave</th>
-                                    <th>Valor</th>
+                                    <th style="width: 50%">Valor</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
@@ -24,12 +24,20 @@
                                     <td>{{ $setting->key }}</td>
                                     <td>{{ $setting->value }}</td>
                                     <td>
-                                        <a href="{{ route('settings.edit', $setting) }}" class="btn btn-warning"><i class="fas fa-edit" style="color: white"></i></a>
-                                        <form action="{{ route('settings.destroy', $setting) }}" method="POST" style="display:inline;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button>
-                                        </form>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-primary btn-icon rounded-pill dropdown-toggle hide-arrow waves-effect waves-light show" data-bs-toggle="dropdown" aria-expanded="true">
+                                              <i class="ti ti-dots-vertical"></i>
+                                            </button>
+                                            <ul class="dropdown-menu dropdown-menu-end" data-popper-placement="bottom-end">
+                                              <li><a class="dropdown-item waves-effect" href="{{ route('settings.edit', $setting) }}" >Editar</a></li>
+                                              <li> <form action="{{ route('settings.destroy', $setting) }}" method="POST" style="display:inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="dropdown-item waves-effect">Eliminar</button>
+                                            </form></li>
+                                            </ul>
+                                          </div>
+                                       
                                     </td>
                                 </tr>
                                 @endforeach

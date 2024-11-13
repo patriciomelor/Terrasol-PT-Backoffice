@@ -1,97 +1,86 @@
 @extends('layouts.dash')
 
 @section('content')
-<section class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>{{ isset($setting) ? 'Editar Configuración' : 'Crear Configuración' }}</h1>
-            </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">{{ isset($setting) ? 'Editar Configuración' : 'Crear Configuración' }}</li>
-                </ol>
-            </div>
-        </div>
-    </div>
-</section>
-
 <div class="content">
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                    <form action="{{ isset($setting) ? route('settings.update', $setting) : route('settings.store') }}" method="POST">
+                        <form action="{{ isset($setting) ? route('settings.update', $setting) : route('settings.store') }}" method="POST">
                             @csrf
                             @if(isset($setting))
                                 @method('PUT')
                             @endif
-                            <div class="col-md-12">
-                                <div class="form-group">
+                            <div class="row">
+                                <!-- Nombre del Sitio -->
+                                <div class="col-md-6 form-group mb-3">
                                     <label for="site_name">Nombre del Sitio</label>
                                     <input type="text" name="site_name" class="form-control" value="{{ $settings['site_name'] ?? '' }}" required>
                                 </div>
-                                <div class="form-group">
+
+                                <!-- Descripción del Sitio -->
+                                <div class="col-md-6 form-group mb-3">
                                     <label for="site_description">Descripción del Sitio</label>
-                                    <input type="textarea" name="site_description" class="form-control" value="{{ $settings['site_description'] ?? '' }}" required>
+                                    <input type="text" name="site_description" class="form-control" value="{{ $settings['site_description'] ?? '' }}" required>
                                 </div>
                             </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <div class="col-md-5 ">
-                                         <label for="primary_color">Color Primario:</label>
-                                         <input type="color" id="primary_color" name="primary_color" value="{{ $settings['primary_color'] ?? '#ffffff' }}">
-                                    </div>
-                                    <div class="col-md-5 ">
-                                         <label for="secondary_color">Color Secundario:</label>
-                                         <input type="color" id="secondary_color" name="secondary_color" value="{{ $settings['secondary_color'] ?? '#ffffff' }}">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-md-5 ">
-                                        <label for="link_color">Color de Enlace</label>
-                                        <input type="color" name="link_color"  value="{{ $settings['link_color'] ?? '' }}" required>
-                                    </div>
-                                    <div class="col-md-5 ">                              
-                                        <label for="link_hover_color">Color de Enlace (Hover)</label>
-                                        <input type="color" name="link_hover_color" value="{{ $settings['link_hover_color'] ?? '' }}" required>
-                                    </div>
+
+                            <div class="row">
+                                <!-- Color Primario -->
+                                <div class="col-md-6 form-group mb-3">
+                                    <label for="primary_color">Color Primario:</label>
+                                    <input type="color" id="primary_color" name="primary_color" class="form-control" value="{{ $settings['primary_color'] ?? '#ffffff' }}">
                                 </div>
 
+                                <!-- Color Secundario -->
+                                <div class="col-md-6 form-group mb-3">
+                                    <label for="secondary_color">Color Secundario:</label>
+                                    <input type="color" id="secondary_color" name="secondary_color" class="form-control" value="{{ $settings['secondary_color'] ?? '#ffffff' }}">
+                                </div>
                             </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
+
+                            <div class="row">
+                                <!-- Color de Enlace -->
+                                <div class="col-md-6 form-group mb-3">
+                                    <label for="link_color">Color de Enlace:</label>
+                                    <input type="color" name="link_color" class="form-control" value="{{ $settings['link_color'] ?? '' }}" required>
+                                </div>
+
+                                <!-- Color de Enlace Hover -->
+                                <div class="col-md-6 form-group mb-3">
+                                    <label for="link_hover_color">Color de Enlace (Hover):</label>
+                                    <input type="color" name="link_hover_color" class="form-control" value="{{ $settings['link_hover_color'] ?? '' }}" required>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <!-- Misión -->
+                                <div class="col-md-12 form-group mb-3">
                                     <label for="mission">Misión:</label>
-                                    <textarea id="mission" name="mission" class="summernote">{{ $settings['mission'] ?? '' }}</textarea>
+                                    <textarea id="mission" name="mission" class="form-control summernote">{{ $settings['mission'] ?? '' }}</textarea>
                                 </div>
-                                <div class="form-group">
+
+                                <!-- Visión -->
+                                <div class="col-md-12 form-group mb-3">
                                     <label for="vision">Visión:</label>
-                                    <textarea id="vision" name="vision" class="summernote">{{ $settings['vision'] ?? '' }}</textarea>
+                                    <textarea id="vision" name="vision" class="form-control summernote">{{ $settings['vision'] ?? '' }}</textarea>
                                 </div>
-                                <div class="form-group">
-                                <label for="about_us">Sobre Nosotros:</label>
-                                <textarea id="about_us" name="about_us" class="summernote">{{ $settings['about_us'] ?? '' }}</textarea>
+
+                                <!-- Sobre Nosotros -->
+                                <div class="col-md-12 form-group mb-3">
+                                    <label for="about_us">Sobre Nosotros:</label>
+                                    <textarea id="about_us" name="about_us" class="form-control summernote">{{ $settings['about_us'] ?? '' }}</textarea>
                                 </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="contact_phone">Teléfono de Contacto</label>
-                                    <input type="text" name="contact_phone" class="form-control" value="{{ old('contact_phone', $settings['contact_phone'] ?? '') }}">
-                                </div>
-                                <div class="form-group">
-                                    <label for="contact_email">Correo de Contacto</label>
-                                    <input type="email" name="contact_email" class="form-control" value="{{ old('contact_email', $settings['contact_email'] ?? '') }}">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                            <label for="address">Dirección:</label>
-                            <input id="address" name="address" class="form-control" value="{{ $settings['address'] ?? '' }}" type="text">
                             </div>
 
+                            <!-- Dirección -->
+                            <div class="form-group mb-3">
+                                <label for="address">Dirección:</label>
+                                <input id="address" name="address" class="form-control" value="{{ $settings['address'] ?? '' }}" type="text">
+                            </div>
 
-                            <!-- Agrega más campos según sea necesario -->
+                            <!-- Botón de Enviar -->
                             <button type="submit" class="btn btn-info">{{ isset($setting) ? 'Actualizar' : 'Crear' }}</button>
                         </form>
                     </div>
@@ -100,6 +89,6 @@
         </div>
     </div>
 </div>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRuDch_iRINkMpRTc-m5EFIhpZ8CdeqBs&libraries=places"></script>
 
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRuDch_iRINkMpRTc-m5EFIhpZ8CdeqBs&libraries=places"></script>
 @endsection
