@@ -108,7 +108,7 @@
                     fill="#7367F0" />
                 </svg>
               </span>
-              <span class="app-brand-text demo menu-text fw-bold ms-2 ps-1">TERRASOL</span>
+              <span class="app-brand-text demo menu-text fw-bold ms-2 ps-1" id="site_name">TERRASOL</span>
             </a>
           </div>
           <!-- Menu logo wrapper: End -->
@@ -164,7 +164,7 @@
             <li>
               <a href="../vertical-menu-template/auth-login-cover.html" class="btn btn-primary" target="_blank"
                 ><span class="tf-icons ti ti-login scaleX-n1-rtl me-md-1"></span
-                ><span class="d-none d-md-block">Login/Register</span></a
+                ><span class="d-none d-md-block">Login</span></a
               >
             </li>
             <!-- navbar button: End -->
@@ -742,26 +742,21 @@
     <!-- Page JS -->
     <script src="assets/js/front-page-landing.js"></script>
     <script src="assets/js/API.js"></script>
-    <!-- Modal -->
+      <!-- Modal HTML -->
       <div class="modal fade" id="articleModal" tabindex="-1" aria-labelledby="articleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="articleModalLabel">Detalles del Artículo</h5>
+                    <h5 class="modal-title" id="articleModalLabel">Modal title</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-             <!-- Modal Body -->
                 <div class="modal-body">
-                  <h5 id="modal-title"></h5>
-                  <p><strong>Descripción:</strong> <span id="modal-description"></span></p>
-                  <p><strong>Tamaño:</strong> <span id="modal-size"></span></p>
-                  <p><strong>Ubicación:</strong> <span id="modal-location"></span></p>
-                  <img id="modal-image" class="img-fluid" src="" alt="Cover Image">
-                  
-                  <h6>Comunas:</h6>
-                  <ul id="modal-communes"></ul> <!-- Aquí se mostrarán las comunas -->
+                    <h5 id="modal-title"></h5>
+                    <p id="modal-description"></p>
+                    <img id="modal-image" src="" alt="Cover Photo">
+                    <!-- Las comunas se agregarán aquí -->
+                    <ul id="modal-communes"></ul>
                 </div>
-
             </div>
         </div>
       </div>

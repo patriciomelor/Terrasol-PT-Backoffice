@@ -59,3 +59,7 @@ use App\Http\Controllers\LocationController;
 
 Route::get('/api/regions', [LocationController::class, 'getRegions']);
 Route::get('/api/regions/{regionId}/communes', [LocationController::class, 'getComunas']);
+use App\Http\Controllers\FaqController;
+
+Route::resource('faqs', FaqController::class)->except(['show']);
+Route::post('faqs/update-order', [FaqController::class, 'updateOrder'])->name('faqs.updateOrder');

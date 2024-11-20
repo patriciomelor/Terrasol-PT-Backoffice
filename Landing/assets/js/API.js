@@ -31,6 +31,17 @@
                 comunaList.appendChild(noComunasItem);
             }
         });
+         // Agregar inert al body (o el contenedor principal de la página)
+         document.body.setAttribute('inert', 'true');
+        
+         // Abrir el modal (asumido que usas Bootstrap o algo similar)
+         const modal = new bootstrap.Modal(document.getElementById('articleModal'));
+         modal.show();
+ 
+         // Al cerrar el modal, quitar el inert para permitir la interacción con el contenido
+         document.getElementById('articleModal').addEventListener('hidden.bs.modal', function () {
+             document.body.removeAttribute('inert');
+         });
     }
 }
 

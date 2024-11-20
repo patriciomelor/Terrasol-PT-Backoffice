@@ -269,6 +269,13 @@
                                             </div>
                                         </a>
                                     </li>
+                                    <li class="menu-item">
+                                        <a href="{{ route('faqs.index') }}" class="menu-link">
+                                            <i class="menu-icon fa-regular fa-lightbulb"></i>
+                                            <div data-i18n="F&QS">F&Q
+                                            </div>
+                                        </a>
+                                    </li>
 
                                     <!-- Configuración de la Web -->
                                     <li class="menu-header small text-uppercase">
