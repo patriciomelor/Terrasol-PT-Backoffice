@@ -222,14 +222,14 @@
                         class="layout-menu-horizontal menu-horizontal menu bg-menu-theme flex-grow-0"
                         data-bg-class="bg-menu-theme"
                         style="touch-action: none; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-                        <div class="container-xxl d-flex h-100">
+                        <div class="container-xxl d-flex text-center h-100">
 
                             <a href="#" class="menu-horizontal-prev disabled"></a>
                             <div class="menu-horizontal-wrapper">
-                                <ul class="menu-inner pb-2 pb-xl-0" style="margin-left: 0px;">
+                                <ul class="menu-inner pb-2 pb-xl-0" style="margin-left: 0px;justify-content: center;">
                                     <!-- Dashboards -->
                                     <li class="menu-item active open">
-                                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                                        <a href="{{route ('home')}}" class="menu-link menu-toggle">
                                             <i class="menu-icon tf-icons ti ti-smart-home"></i>
                                             <div data-i18n="Dashboards">Escritorio</div>
                                         </a>
@@ -271,7 +271,7 @@
                                     </li>
                                     <li class="menu-item">
                                         <a href="{{ route('faqs.index') }}" class="menu-link">
-                                            <i class="menu-icon fa-regular fa-lightbulb"></i>
+                                            <i class="menu-icon fa-solid fa-quote-left"></i>
                                             <div data-i18n="F&QS">F&Q
                                             </div>
                                         </a>
