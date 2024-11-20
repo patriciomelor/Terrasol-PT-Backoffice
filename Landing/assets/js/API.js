@@ -64,7 +64,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 callback(null); // Llamamos a la función de callback con null en caso de error
             });
     }
-
     // Mostrar misión y visión
     function displayMissionAndVision(data) {
         if (data) {
@@ -81,7 +80,6 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('site_description').textContent = 'No se pudo cargar  El subtitulo.';
         }
     }
-
     // Mostrar artículos
     function displayArticles(data) {
         const articlesContainer = document.getElementById('articles-container');
@@ -126,7 +124,7 @@ document.addEventListener('DOMContentLoaded', function () {
             articlesContainer.innerHTML = '<p>No se pudieron cargar los artículos.</p>';
         }
     }
-
+    // relaciona Regiones y comunas
     function getRegionAndCityNames(regionId, cityId) {
         return new Promise((resolve, reject) => {
             // Primero, obtener la región
@@ -169,7 +167,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
         });
     }
-
+    //trae las comunas vinculadas a cada region
     function getComunasForRegion(regionId) {
         return new Promise((resolve, reject) => {
             fetch(`http://127.0.0.1:8000/api/regions/${regionId}/communes`, {
@@ -189,12 +187,45 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
         });
     }
+    // Mostrar las preguntas frecuentes
+    function displayFaqs(faqs) {
+        const faqsContainer = document.getElementById('faqAccordion');
+        if (faqsContainer) {
+            if (faqs && Array.isArray(faqs)) {
+                faqsContainer.innerHTML = ''; // Limpiar contenedor antes de agregar
 
- 
+                faqs.forEach(faq => {
+                    const faqItem = document.createElement('div');
+                    faqItem.classList.add('card', 'accordion-item');
+                    faqItem.innerHTML = `
+                        <h2 class="accordion-header" id="heading${faq.id}">
+                            <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#collapse${faq.id}" aria-expanded="false" aria-controls="collapse${faq.id}">
+                                ${faq.question}
+                            </button>
+                        </h2>
+                        <div id="collapse${faq.id}" class="accordion-collapse collapse" aria-labelledby="heading${faq.id}" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                ${faq.answer}
+                            </div>
+                        </div>
+                    `;
+                    faqsContainer.appendChild(faqItem);
+                });
+            } else {
+                faqsContainer.innerHTML = '<p>No se pudieron cargar las preguntas frecuentes.</p>';
+            }
+        } else {
+            console.error('El contenedor #faqAccordion no existe en el DOM.');
+        }
+    }
+
+    // Obtener y mostrar las preguntas frecuentes
+    fetchData('http://127.0.0.1:8000/api/faqs', displayFaqs);
 
     // Obtener y mostrar la misión y visión
     fetchData('http://127.0.0.1:8000/api/settings', displayMissionAndVision);
 
     // Obtener y mostrar los artículos
     fetchData('http://127.0.0.1:8000/api/articles', displayArticles);
+
 });

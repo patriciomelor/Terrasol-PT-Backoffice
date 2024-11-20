@@ -35,4 +35,10 @@ class FaqController extends Controller
         }
         return response()->json(['message' => 'Orden actualizado con éxito']);
     }
+        // Función para devolver las preguntas frecuentes en formato JSON
+        public function apiIndex()
+        {
+            $faqs = Faq::orderBy('order')->get();
+            return response()->json($faqs);
+        }
 }
