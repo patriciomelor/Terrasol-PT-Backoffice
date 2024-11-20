@@ -737,9 +737,34 @@
 
     <!-- Main JS -->
     <script src="assets/js/front-main.js"></script>
+    <script src="assets/js/main.js"></script>
 
     <!-- Page JS -->
     <script src="assets/js/front-page-landing.js"></script>
     <script src="assets/js/API.js"></script>
+    <!-- Modal -->
+      <div class="modal fade" id="articleModal" tabindex="-1" aria-labelledby="articleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="articleModalLabel">Detalles del Artículo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+             <!-- Modal Body -->
+                <div class="modal-body">
+                  <h5 id="modal-title"></h5>
+                  <p><strong>Descripción:</strong> <span id="modal-description"></span></p>
+                  <p><strong>Tamaño:</strong> <span id="modal-size"></span></p>
+                  <p><strong>Ubicación:</strong> <span id="modal-location"></span></p>
+                  <img id="modal-image" class="img-fluid" src="" alt="Cover Image">
+                  
+                  <h6>Comunas:</h6>
+                  <ul id="modal-communes"></ul> <!-- Aquí se mostrarán las comunas -->
+                </div>
+
+            </div>
+        </div>
+      </div>
+
   </body>
 </html>

@@ -1,26 +1,42 @@
 <?php
+// app/Http/Controllers/LocationController.php
+
 namespace App\Http\Controllers;
 
 use App\Models\Region;
-use App\Models\Comuna; // O Commune si usas otro nombre para el modelo de ciudad
-
+use App\Models\Comuna;  // Asegúrate de que Comuna esté correctamente importado
+use Illuminate\Http\Request;
 
 class LocationController extends Controller
 {
-    public function getRegions()
+    // Método para obtener la región por ID
+    public function getRegion($regionId)
     {
-        $regions = Region::all();
-        return response()->json($regions);
-    }
+        $region = Region::find($regionId); // Busca la región por ID
 
-    public function getCommunes($regionId)
-    {
-        $region = Region::find($regionId);
         if (!$region) {
             return response()->json(['message' => 'Región no encontrada'], 404);
         }
 
-        $communes = $region->comunas; // Usando la relación definida
-        return response()->json($communes);
+        return response()->json($region); // Devuelve la región encontrada
+    }
+
+    // Método para obtener las comunas de una región específica
+    public function getComunas($regionId)
+    {
+        $region = Region::find($regionId); // Busca la región por ID
+
+        if (!$region) {
+            return response()->json(['message' => 'Región no encontrada'], 404);
+        }
+
+        // Obtener las comunas asociadas
+        $comunas = $region->comunas;  // Usando la relación definida en Region
+
+        if ($comunas->isEmpty()) {
+            return response()->json(['message' => 'No hay comunas asociadas a esta región'], 404);
+        }
+
+        return response()->json($comunas);  // Devuelve las comunas
     }
 }
