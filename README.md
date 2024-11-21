@@ -1,33 +1,40 @@
-# Proyecto Laravel 11 + Jetstream + MySQL + AdminLTE
+# Proyecto Laravel 11 + Jetstream + MySQL + Vuexy
 
 ![Laravel](https://img.shields.io/badge/Laravel-11.x-red.svg)
 ![Jetstream](https://img.shields.io/badge/Jetstream-2.x-blue.svg)
-![AdminLTE](https://img.shields.io/badge/AdminLTE-3.x-green.svg)
+![Vuexy](https://img.shields.io/badge/Vuexy-2.x-green.svg)
 ![MySQL](https://img.shields.io/badge/MySQL-8.x-orange.svg)
 ![PHP](https://img.shields.io/badge/PHP-8.2-purple.svg)
 
 ## Descripción General
 
-Este proyecto es parte del trabajo de título para el Instituto Profesional San Sebastián, bajo la supervisión del profesor Sebastián Cabezas. La aplicación desarrollada es una solución completa y escalable para la gestión de parcelas, usuarios, roles, y configuraciones de página, construida en Laravel 11 y utilizando Jetstream, MySQL, y AdminLTE.
+Este proyecto es parte del trabajo de título para el Instituto Profesional San Sebastián, bajo la supervisión del profesor Sebastián Cabezas. La aplicación desarrollada es una solución completa y escalable para la gestión de parcelas, usuarios, roles, configuraciones de página y preguntas frecuentes (FAQ), construida en Laravel 11 y utilizando **Vuexy**, **MySQL**, y **Jetstream**.
 
 ## Funcionalidades Principales
 
 - **Gestión de Usuarios**:
   - CRUD completo para la creación, edición, actualización y eliminación de usuarios.
   - Asignación de roles y definición de privilegios específicos.
+  - Generación y validación de contraseñas seguras, con la opción de visualizarlas antes de confirmarlas.
 
 - **Publicaciones de Parcelas**:
   - Creación y administración de publicaciones de parcelas.
-  - Gestión y edición de detalles de las publicaciones.
+  - Gestión y edición de detalles de las publicaciones, incluyendo fotos y características.
+  - Integración de un selector de color para personalizar las configuraciones de la parcela.
 
 - **Configuraciones de Página**:
   - Personalización de títulos, descripciones y colores.
   - Configuración de textos clave: misión, visión, sobre nosotros.
   - Administración de datos de contacto con opción de integración de Google Maps.
 
+- **Preguntas Frecuentes (FAQ)**:
+  - Funcionalidad para agregar, listar y reorganizar preguntas frecuentes.
+  - Permite el reordenamiento de las FAQs de forma dinámica y guardar el nuevo orden.
+
 - **API REST Integrada**:
   - Exposición de toda la información gestionada en el backoffice a través de una API REST.
   - Soporte para versionamiento, asegurando integraciones estables.
+  - Implementación de autenticación mediante token de acceso para las APIs.
 
 ## Instalación
 
@@ -66,11 +73,10 @@ Este proyecto incluye las siguientes dependencias clave, como se describe en el 
 
 - **PHP**: ^8.2
 - **Laravel Framework**: ^11.9
-- **AdminLTE**: ~3.1
-- **Inertia.js (Laravel Adapter)**: ^1.0
+- **Vuexy**: ~2.x
+- **Jetstream**: 2.x
 - **Laravel Sanctum**: ^4.0
 - **Laravel Tinker**: ^2.9
-- **Laravel UI**: ^4.5
 - **Tightenco Ziggy**: ^2.0
 
 ### Requerimientos para el Desarrollo
@@ -81,6 +87,20 @@ Este proyecto incluye las siguientes dependencias clave, como se describe en el 
 - **Mockery**: ^1.6
 - **Nuno Maduro Collision**: ^8.0
 - **PHPUnit**: ^11.0.1
+
+## Nuevas Funcionalidades Implementadas
+
+- **Generador de Contraseñas Seguras**:
+  Se ha implementado una funcionalidad para generar contraseñas aleatorias y validarlas antes de la creación de un usuario. También se ha agregado la opción de ver la contraseña generada antes de confirmarla.
+  
+- **Reordenamiento de Preguntas Frecuentes (FAQ)**:
+  Se ha agregado una funcionalidad que permite arrastrar y soltar las preguntas frecuentes (FAQ) para reordenarlas de forma dinámica. Además, se implementó la funcionalidad para guardar el nuevo orden de las FAQs a través de una solicitud AJAX.
+
+- **Integración de API con Autenticación Bearer Token**:
+  Se implementó la autenticación con Bearer Token para las APIs. Los usuarios deben autenticar sus solicitudes mediante un token para acceder a las APIs protegidas.
+
+- **Optimización de la Vista de Settings**:
+  Se mejoraron los formularios en la vista de configuraciones para hacerlos más legibles y atractivos visualmente, con validaciones en el frontend para los campos clave.
 
 ## Scripts Disponibles
 
