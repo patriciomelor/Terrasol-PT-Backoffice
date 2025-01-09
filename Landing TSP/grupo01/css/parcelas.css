@@ -1,0 +1,85 @@
+.main-parcelas {
+    padding-top: 50px;
+}
+
+.row{
+width: 90%;
+}
+
+.main-parcelas h2,
+.card-title,
+.card-text {
+    text-align: center;
+    margin-top: 5px; 
+}
+
+.btn-center {
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+    margin-bottom: 2px;
+}
+
+
+.custom-card {
+    height: 100%;
+}
+
+.card-body {
+    width: 100%;
+    height: 160px; /* ajustar al tamaño deseado */
+    object-fit: cover; /* asegura que la imagen se ajuste al contenedor sin distorsionar */
+    padding-top: 5px;
+    
+}
+
+.card-img-top{
+    max-width: 100%;
+    height: 13em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-text{
+    margin-bottom: 1px;
+}
+
+.section_3-title{
+    font-family: 'roboto', sans-serif;
+    font-size: 40px;
+    font-weight: bold;
+    margin: 25px 0; 
+    
+}
+
+.card-body .btn-center {
+    display: flex;
+    
+}
+
+.card:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+ /* animación del botón Consultar */
+ .card .btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.card .btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+    transition: all 0.5s ease;
+}
+
+.card:hover .btn::before {
+    left: 100%;
+}

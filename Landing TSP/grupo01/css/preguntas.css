@@ -1,0 +1,98 @@
+.containerquestion {
+    width: 100%;
+    margin: 0 auto;
+    text-align: center; /* Centra los textos */
+    padding-top: 40px;
+    padding-right: 10%;
+    padding-left: 5%;
+    
+}
+
+.containerquestion .row{
+    margin: 0 auto;
+    margin-top: 35px;
+    text-align: center; /* Centra los textos */
+}
+
+.container-faq {
+    box-shadow: 0 0 15px -1px rgba(0,0,0,.1);
+    margin-top: 20px;
+    border-radius: 10px;
+    text-align: center; /* Centra los textos */
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.container-faq .tittle-faq {
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.container-faq .item-faq {
+    box-shadow: 0 0 15px -1px rgba(0,0,0,.2);
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+.container-faq .item-faq .question {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(43, 51, 122, .2);
+    padding: 20px 20px 20px 80px;
+    transition: .4s;
+}
+
+.container-faq .item-faq .question .more {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 15px -1px rgba(0,0,0,.2);
+
+    font-size: 1rem;
+    cursor: pointer;
+    transition: .4s;
+}
+
+.container-faq .item-faq .question .more:hover {
+    box-shadow: 0 0 15px -1px rgba(0,0,0,.4);
+}
+
+.container-faq .item-faq .question span {
+    position: absolute;
+    left: 10px;
+    font-size: 3rem;
+    top: 10px;
+    opacity: .1;
+}
+
+.container-faq .item-faq .answer {
+    position: relative;
+    padding: 0 20px 0 80px;
+    overflow: hidden;
+    height: 0;
+    transition: .4s;
+    
+    text-align: center; /* Centra los textos */
+}
+
+.container-faq .item-faq .answer p {
+    font-size: 1.3rem;
+    text-align: center; /* Centra los textos */
+}
+
+.container-faq .item-faq .answer span {
+    position: absolute;
+    font-size: 3rem;
+    top: -10px;
+    opacity: .2;
+}
+
+.container-faq .item-faq .question h3 {
+    margin: 0; /* Ajusta el margen para el título h3 */
+    text-align: center; /* Centra los textos */
+}

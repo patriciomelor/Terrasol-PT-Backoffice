@@ -1,0 +1,57 @@
+.navbar{
+    background-color: #323232;
+    height: 60px;
+    margin: 0 auto;
+    padding: 0.5rem;
+}
+
+.navbar.scrolled {
+    background-color: #323232;
+}
+
+.navbar-brand{
+    font-weight: 500;
+    color: #DDD0C8;
+    font-size: 24px;
+    transition: 0.3s color;
+}
+
+.navbar-toggler{
+    border: none;
+    font-size: 1.25rem;
+}
+
+.navbar-toggler:focus, .btn-close:focus{
+  box-shadow: none;
+  outline: none;
+}
+
+.nav-link{
+    color: #666777; /* Color de los enlaces no activos */
+    font-weight: 500;
+    position: relative;
+}
+
+.nav-link:hover, .nav-link.active{
+    color: #DDD0C8;
+}
+
+@media (min-width: 991px) {
+    .nav-link::before{
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 2px;
+        background-color: #DDD0C8;
+        visibility: hidden;
+        transition: 0.3s ease-in-out;
+    }
+
+    .nav-link:hover::before, .nav-link.active::before{
+        width: 100%;
+        visibility: visible;
+    }
+}
