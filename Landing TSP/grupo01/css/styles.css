@@ -1,0 +1,122 @@
+/* Menu superior */
+body.index-page .navbar {
+    background-color: #191617; /* Cambia el color de fondo del menú */
+  }
+
+  body.index-page .navbar .navbar-brand {
+    color: white;
+  }
+  
+  
+  body.index-page .navbar-toggler {
+    border-color: white; /* Cambia el color del borde del botón de navegación */
+  }
+  
+  body.index-page .navbar-toggler-icon {
+    background-image: url('ruta/a/tu/imagen'); /* Cambia la imagen del icono del botón de navegación */
+  }
+  
+  /* Cambia el estilo de los enlaces del menú */
+  body.index-page .navbar-nav .nav-link {
+    color: white;
+    font-weight: bold;
+  }
+  
+  /* Cambia el estilo del enlace activo en el menú */
+  body.index-page .navbar-nav .nav-link.active {
+    color: #fff; /* Cambia el color del texto del enlace activo */
+    background-color: white; /* Cambia el color de fondo del enlace activo */
+  }
+  
+/* Slider */
+body.index-page #carouselExampleControls {
+    width: 100%;
+    height: 100vh; /* establece una altura específica */
+}
+
+body.index-page .carousel-inner {
+    overflow: hidden; /* Para ocultar cualquier contenido que se extienda más allá del borde redondeado */
+}
+  
+body.index-page #carouselExampleControls .carousel-inner {
+    height: 100%;
+    display: flex; /* Utiliza flexbox para alinear y distribuir las imágenes */
+}
+
+body.index-page #carouselExampleControls .carousel-inner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  
+}
+
+body.index-page .carousel-item img {
+  width: 100%;
+  max-height: 100vh;
+  object-fit: cover;
+}
+
+body.index-page .carousel-title-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10; /* Aumenta el valor de z-index */
+  text-align: center; /* Alinea el contenido al centro */
+}
+
+body.index-page .carousel-title {
+  color: white;
+  font-weight: bold;
+  text-align: right;
+  font-family:'Open Sans', sans-serif;
+  font-weight: bold;
+  text-shadow: 4px 8px 4px rgba(0, 0, 0, 0.5);
+  font-family: 'Open Sans', sans-serif;
+  text-align: center; /* Centra el texto horizontalmente */
+  color: #fff; /* Color del texto (blanco en este caso) */
+  font-weight: bold; /* Peso de la fuente */
+  margin-bottom: 120px;
+  background-color: transparent; /* Establece el fondo como transparente */
+}
+
+/* Define una animación para el título del carrusel */
+@keyframes fadeInUp {
+  from {
+      opacity: 0;
+      transform: translateY(60px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+/* Aplicación de animación al título del carrusel */
+body.index-page .carousel-caption h2 {
+  animation: fadeInUp 0.5s ease forwards; /* Animación 'fadeInUp' durante 0.5 segundos */
+  opacity: 0; /* Inicia con una opacidad de 0 para el efecto de desvanecimiento */
+}
+
+/* Asegura que la animación solo se aplique una vez */
+body.index-page .carousel-caption {
+  animation: none; /* Deshabilita la animación en el contenedor principal */
+}
+
+/* Agrega retrasos de animación para cada elemento del carrusel */
+body.index-page .carousel-item:nth-child(1) .carousel-caption h2 {
+  animation-delay: 0.5s; /* Retrasa la animación del primer título en 0.5 segundos */
+}
+
+body.index-page .carousel-item:nth-child(2) .carousel-caption h2 {
+  animation-delay: 1s; /* Retrasa la animación del segundo título en 1 segundo */
+}
+
+body.index-page .carousel-item:nth-child(3) .carousel-caption h2 {
+  animation-delay: 1s; /* Retrasa la animación del tercer título en 1 segundos */
+}
+
+body.index-page .carousel-item:nth-child(4) .carousel-caption h2 {
+  animation-delay: 1s; /* Retrasa la animación del cuarto título en 1 segundos */
+}
+
