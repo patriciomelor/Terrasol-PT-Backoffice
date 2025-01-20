@@ -63,3 +63,4 @@ use App\Http\Controllers\FaqController;
 
 Route::resource('faqs', FaqController::class)->except(['show']);
 Route::post('faqs/update-order', [FaqController::class, 'updateOrder'])->name('faqs.updateOrder');
+Route::resource('faqs', FaqController::class);

@@ -41,53 +41,44 @@
                     <li data-id="{{ $faq->id }}" class="faq-item list-group-item mb-3" draggable="true">
                         <strong>{{ $faq->question }}</strong><br>
                         <p>{{ $faq->answer }}</p>
+            
+                        <form action="{{ route('faqs.destroy', $faq->id) }}" method="POST" style="display: inline;"> 
+                            @csrf
+                            @method('DELETE') 
+                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                        </form>
                     </li>
-                @endforeach
+                @endforeach 
             </ul>
+                <button id="update-order" class="btn btn-success">Actualizar Orden</button>
         </div>
     </div>
 
-    <div class="mt-3">
-        <button id="update-order" class="btn btn-success">Actualizar Orden</button>
-    </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script> 
     <script>
-        // Usar JavaScript para permitir el reordenamiento dinámico
         const faqList = document.getElementById('faq-list');
-        let faqsOrder = [];
-
-        // Guardar el orden de los FAQ en el inicio
-        faqList.addEventListener('dragstart', (e) => {
-            faqsOrder = Array.from(faqList.children).map(item => item.dataset.id);
-        });
-
-        // Permitir el arrastre sobre los elementos
-        faqList.addEventListener('dragover', (e) => {
-            e.preventDefault();
-        });
-
-        // Al dejar el elemento arrastrado
-        faqList.addEventListener('drop', (e) => {
-            e.preventDefault();
-            const draggedFaqId = e.target.closest('.faq-item').dataset.id;
-            const index = faqsOrder.indexOf(draggedFaqId);
-            faqsOrder.splice(index, 1);
-            faqsOrder.push(draggedFaqId);
-        });
-
-        // Enviar el nuevo orden al servidor
-        document.getElementById('update-order').addEventListener('click', () => {
-            fetch("{{ route('faqs.updateOrder') }}", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                },
-                body: JSON.stringify({ faqs: faqsOrder })
-            }).then(response => response.json())
-              .then(data => {
-                  alert(data.message);
-              });
+        new Sortable(faqList, { 
+            animation: 150, 
+            onUpdate: function (evt/**Event*/){
+                const faqsOrder = Array.from(faqList.children).map(item => item.dataset.id);
+    
+                fetch("{{ route('faqs.updateOrder') }}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                    },
+                    body: JSON.stringify({ faqs: faqsOrder })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data.message); 
+                })
+                .catch(error => {
+                    console.error('Error al actualizar el orden:', error);
+                    alert('Error al actualizar el orden.');
+                });
+            },
         });
     </script>
 @endsection

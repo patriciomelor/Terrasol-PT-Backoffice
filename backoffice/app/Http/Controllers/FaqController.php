@@ -29,11 +29,15 @@ class FaqController extends Controller
 
     public function updateOrder(Request $request)
     {
-        // Actualizar el orden de las F&Q
         foreach ($request->faqs as $index => $faqId) {
-            Faq::where('id', $faqId)->update(['order' => $index + 1]);
+            Faq::where('id', $faqId)->update(['order' => $index + 1]); 
         }
         return response()->json(['message' => 'Orden actualizado con éxito']);
+    }
+    public function destroy(Faq $faq) 
+    {
+        $faq->delete();
+        return redirect()->route('faqs.index')->with('danger', 'Pregunta eliminada correctamente.');
     }
         // Función para devolver las preguntas frecuentes en formato JSON
         public function apiIndex()

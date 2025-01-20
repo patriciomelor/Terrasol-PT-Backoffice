@@ -1,0 +1,551 @@
+/* Menu superior */
+body.index-page .navbar {
+    background-color: #191617; /* Cambia el color de fondo del menú */
+  }
+
+  body.index-page .navbar .navbar-brand {
+    color: white;
+  }
+  
+  
+  body.index-page .navbar-toggler {
+    border-color: white; /* Cambia el color del borde del botón de navegación */
+  }
+  
+  body.index-page .navbar-toggler-icon {
+    background-image: url('ruta/a/tu/imagen'); /* Cambia la imagen del icono del botón de navegación */
+  }
+  
+  /* Cambia el estilo de los enlaces del menú */
+  body.index-page .navbar-nav .nav-link {
+    color: white;
+    font-weight: bold;
+  }
+  
+  /* Cambia el estilo del enlace activo en el menú */
+  body.index-page .navbar-nav .nav-link.active {
+    color: #fff; /* Cambia el color del texto del enlace activo */
+    background-color: white; /* Cambia el color de fondo del enlace activo */
+  }
+  
+/* Slider */
+body.index-page #carouselExampleControls {
+    width: 100%;
+    height: 100vh; /* establece una altura específica */
+}
+
+body.index-page .carousel-inner {
+    overflow: hidden; /* Para ocultar cualquier contenido que se extienda más allá del borde redondeado */
+}
+  
+body.index-page #carouselExampleControls .carousel-inner {
+    height: 100%;
+    display: flex; /* Utiliza flexbox para alinear y distribuir las imágenes */
+}
+
+body.index-page #carouselExampleControls .carousel-inner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  
+}
+
+body.index-page .carousel-item img {
+  width: 100%;
+  max-height: 100vh;
+  object-fit: cover;
+}
+
+body.index-page .carousel-title-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10; /* Aumenta el valor de z-index */
+  text-align: center; /* Alinea el contenido al centro */
+}
+
+body.index-page .carousel-title {
+  color: white;
+  font-weight: bold;
+  text-align: right;
+  font-family:'Open Sans', sans-serif;
+  font-weight: bold;
+  text-shadow: 4px 8px 4px rgba(0, 0, 0, 0.5);
+  font-family: 'Open Sans', sans-serif;
+  text-align: center; /* Centra el texto horizontalmente */
+  color: #fff; /* Color del texto (blanco en este caso) */
+  font-weight: bold; /* Peso de la fuente */
+  margin-bottom: 120px;
+  background-color: transparent; /* Establece el fondo como transparente */
+}
+
+/* Define una animación para el título del carrusel */
+@keyframes fadeInUp {
+  from {
+      opacity: 0;
+      transform: translateY(60px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+/* Aplicación de animación al título del carrusel */
+body.index-page .carousel-caption h2 {
+  animation: fadeInUp 0.5s ease forwards; /* Animación 'fadeInUp' durante 0.5 segundos */
+  opacity: 0; /* Inicia con una opacidad de 0 para el efecto de desvanecimiento */
+}
+
+/* Asegura que la animación solo se aplique una vez */
+body.index-page .carousel-caption {
+  animation: none; /* Deshabilita la animación en el contenedor principal */
+}
+
+/* Agrega retrasos de animación para cada elemento del carrusel */
+body.index-page .carousel-item:nth-child(1) .carousel-caption h2 {
+  animation-delay: 0.5s; /* Retrasa la animación del primer título en 0.5 segundos */
+}
+
+body.index-page .carousel-item:nth-child(2) .carousel-caption h2 {
+  animation-delay: 1s; /* Retrasa la animación del segundo título en 1 segundo */
+}
+
+body.index-page .carousel-item:nth-child(3) .carousel-caption h2 {
+  animation-delay: 1s; /* Retrasa la animación del tercer título en 1 segundos */
+}
+
+body.index-page .carousel-item:nth-child(4) .carousel-caption h2 {
+  animation-delay: 1s; /* Retrasa la animación del cuarto título en 1 segundos */
+}
+
+.containerquestion {
+  width: 100%;
+  margin: 0 auto;
+  text-align: center; /* Centra los textos */
+  padding-top: 40px;
+  padding-right: 10%;
+  padding-left: 5%;
+  
+}
+
+.containerquestion .row{
+  margin: 0 auto;
+  margin-top: 35px;
+  text-align: center; /* Centra los textos */
+}
+
+.container-faq {
+  box-shadow: 0 0 15px -1px rgba(0,0,0,.1);
+  margin-top: 20px;
+  border-radius: 10px;
+  text-align: center; /* Centra los textos */
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+.container-faq .tittle-faq {
+  text-align: center;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.container-faq .item-faq {
+  box-shadow: 0 0 15px -1px rgba(0,0,0,.2);
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+
+.container-faq .item-faq .question {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(43, 51, 122, .2);
+  padding: 20px 20px 20px 80px;
+  transition: .4s;
+}
+
+.container-faq .item-faq .question .more {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 15px -1px rgba(0,0,0,.2);
+
+  font-size: 1rem;
+  cursor: pointer;
+  transition: .4s;
+}
+
+.container-faq .item-faq .question .more:hover {
+  box-shadow: 0 0 15px -1px rgba(0,0,0,.4);
+}
+
+.container-faq .item-faq .question span {
+  position: absolute;
+  left: 10px;
+  font-size: 3rem;
+  top: 10px;
+  opacity: .1;
+}
+
+.container-faq .item-faq .answer {
+  position: relative;
+  padding: 0 20px 0 80px;
+  overflow: hidden;
+  height: 0;
+  transition: .4s;
+  
+  text-align: center; /* Centra los textos */
+}
+
+.container-faq .item-faq .answer p {
+  font-size: 1.3rem;
+  text-align: center; /* Centra los textos */
+}
+
+.container-faq .item-faq .answer span {
+  position: absolute;
+  font-size: 3rem;
+  top: -10px;
+  opacity: .2;
+}
+
+.container-faq .item-faq .question h3 {
+  margin: 0; /* Ajusta el margen para el título h3 */
+  text-align: center; /* Centra los textos */
+}
+.main-about{
+  background-color: #DDD0C8;
+  }
+  
+  .container{
+      margin: auto;
+  }
+  
+  .section_2{
+      width: 75%;
+      margin: auto;
+      padding: 60px 0;
+      color: black;
+  }
+  
+  .sectionAbout-us_title{
+      font-family: 'roboto', sans-serif;
+      font-size: 40px;
+      font-weight: bold;
+      margin: 25px 0; 
+      
+  }
+  
+  .us{
+      display: flex;
+      flex-direction: column;
+  }
+  
+  .us-text{
+      width: 80%;
+      padding: 0 5% 0 0;
+  }
+  
+  .us-paragraph{
+      font-family: 'roboto', sans-serif;
+      font-size: 18px;
+      text-align: justify;
+      padding: 10px; /* Espacio alrededor del texto para mayor legibilidad */
+  }
+  
+  .paragraph-text{
+      margin: 2% 0;
+  }
+  
+  .us-rs{
+      margin: 10px 0;
+  }
+  
+  .us-rs-title{
+      font-family: 'roboto', sans-serif;
+      font-size: 20px;
+      font-weight: bold;
+      margin: 10px 0;
+  }
+  
+  .rs-link{
+      margin: 0 10px;
+  }
+  
+  .us-video{
+      margin-right: 5%;
+  }
+  
+  .fb-video{
+      display: block; /* Asegura que el video sea un elemento de bloque */
+      margin: auto; /* Centra el video horizontalmente */
+      max-width: 100%; /* Asegura que el video no exceda el ancho del contenedor */
+      padding-right: 100px;
+  }
+  
+  .rs-icon .fa-facebook, .rs-icon .fa-square-instagram {
+      font-size: 80px; /* Ajusta este valor al tamaño deseado */
+      color: #000; /* Ajusta este valor al color deseado */
+  }
+  .main-parcelas {
+    padding-top: 50px;
+}
+
+.row{
+width: 90%;
+}
+
+.main-parcelas h2,
+.card-title,
+.card-text {
+    text-align: center;
+    margin-top: 5px; 
+}
+
+.btn-center {
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+    margin-bottom: 2px;
+}
+
+
+.custom-card {
+    height: 100%;
+}
+
+.card-body {
+    width: 100%;
+    height: 160px; /* ajustar al tamaño deseado */
+    object-fit: cover; /* asegura que la imagen se ajuste al contenedor sin distorsionar */
+    padding-top: 5px;
+    
+}
+
+.card-img-top{
+    max-width: 100%;
+    height: 13em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-text{
+    margin-bottom: 1px;
+}
+
+.section_3-title{
+    font-family: 'roboto', sans-serif;
+    font-size: 40px;
+    font-weight: bold;
+    margin: 25px 0; 
+    
+}
+
+.card-body .btn-center {
+    display: flex;
+    
+}
+
+.card:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+ /* animación del botón Consultar */
+ .card .btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.card .btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+    transition: all 0.5s ease;
+}
+
+.card:hover .btn::before {
+    left: 100%;
+}
+.navbar{
+  background-color: #323232;
+  height: 60px;
+  margin: 0 auto;
+  padding: 0.5rem;
+}
+
+.navbar.scrolled {
+  background-color: #323232;
+}
+
+.navbar-brand{
+  font-weight: 500;
+  color: #DDD0C8;
+  font-size: 24px;
+  transition: 0.3s color;
+}
+
+.navbar-toggler{
+  border: none;
+  font-size: 1.25rem;
+}
+
+.navbar-toggler:focus, .btn-close:focus{
+box-shadow: none;
+outline: none;
+}
+
+.nav-link{
+  color: #666777; /* Color de los enlaces no activos */
+  font-weight: 500;
+  position: relative;
+}
+
+.nav-link:hover, .nav-link.active{
+  color: #DDD0C8;
+}
+
+@media (min-width: 991px) {
+  .nav-link::before{
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 2px;
+      background-color: #DDD0C8;
+      visibility: hidden;
+      transition: 0.3s ease-in-out;
+  }
+
+  .nav-link:hover::before, .nav-link.active::before{
+      width: 100%;
+      visibility: visible;
+  }
+}
+.contact-form-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding-top: 80px;
+  padding-bottom: 20px;
+}
+
+.contact-form-container {
+  background: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 800px;
+}
+
+.contact-form-container h2 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.contact-form-container .form-group {
+  margin-bottom: 15px;
+}
+
+.contact-form-container .form-group label {
+  margin-bottom: 5px;
+  display: block;
+}
+
+.contact-form-container .form-control {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.contact-form-container textarea.form-control {
+  resize: none;
+  height: 100px;
+}
+
+.contact-form-container button {
+  width: 100%;
+  padding: 10px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.contact-form-container button:hover {
+  background-color: #555;
+}
+
+.contact-form-container #response-message.success {
+  color: green;
+}
+
+.contact-form-container #response-message.error {
+  color: red;
+}
+
+.form-control{
+  margin-left: 10px;
+}
+/* Define el color de fondo marrón para el footer */
+.footer {
+  background-color: #4b3219; /* Color marrón */
+  color: white; /* Color del texto */
+  padding: 50px 0; /* Añadir un poco de relleno para el espaciado */
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+/* Estilo para la información de contacto */
+.contact-info {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+/* Estilo para el contenedor del logo */
+.logo-container {
+  text-align: right; /* Alinea el logo a la derecha */
+}
+
+/* Estilo para el logo */
+.logo-container img {
+  max-width: 250px; /* Ancho máximo del logo */
+}
+
+/* Estilo para los íconos de redes sociales */
+.social-icons {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.social-icons li {
+  display: inline-block;
+  margin-right: 10px; /* Añadir espaciado entre los íconos */
+}
+
+.social-icons li a {
+  color: white; /* Color del ícono */
+  font-size: 20px;
+}
+
+/* Estilo para los encabezados del footer */
+h4 {
+  font-size: 20px;
+  margin-bottom: 20px; /* Añadir espaciado entre los encabezados */
+}

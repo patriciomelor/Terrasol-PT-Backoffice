@@ -1,18 +1,4 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/menu.css" >
-    <link rel="stylesheet" href="css/footer.css" >
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-</head>
-<body class="index-page">
-    <?php include "components/menu.php"; ?>
-
-    <section class="Inicio" id="Inicio">
+<section class="Inicio" id="Inicio">
     <!-- Slider con imágenes -->
   
     <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
@@ -62,40 +48,3 @@
       </div>
 
       </section>
-
-      <section class="Nosotros" id="Nosotros">
-      <?php include "about.php"; ?>
-      </section>
-
-      <section class="Parcelas" id="Parcelas">
-      <?php include "parcelas.php"; ?>
-      </section>
-
-      <section class="Terrenos" id="Terrenos">
-      <?php include "terrenos.php"; ?>
-      </section>
-
-      <section class="Casa" id="Casa">
-      <?php include "casas.php"; ?>
-      </section>
-
-      <section class="Preguntas" id="Preguntas">
-      <?php include "preguntas.php"; ?>
-      </section>
-
-      <section class="Contacto" id="Contacto">
-      <?php include "contacto.php"; ?>
-      </section>
-
-      <!-- Footer -->
-      <?php include "components/footer.php"; ?>
-
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-        <script src="js/menu.js"></script>
-        <script src="js/funciones.js"></script>
-
-  
-    </body>
-    
-</body>
-</html>

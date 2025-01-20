@@ -47,12 +47,12 @@
                         <button type="submit" class="btn btn-primary d-grid w-100 waves-effect waves-light">Ingresar</button>
                     </form>
 
-                    <p class="text-center mt-3">
+                    {{-- <p class="text-center mt-3">
                         <span>Nuevo en la plataforma?</span>
                         <a href="{{ route('register') }}">
                             <span>Crear Cuenta</span>
                         </a>
-                    </p>
+                    </p> --}}
                 </div>
             </div>
     
