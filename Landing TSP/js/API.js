@@ -1,15 +1,16 @@
-   // Debe estar en el ámbito global, no dentro de otra función
-   function openModal(articleId) {
+document.addEventListener('DOMContentLoaded', () => {
+// Debe estar en el ámbito global, no dentro de otra función
+function openModal(articleId) {
     // Obtener los datos del artículo con la ID correspondiente (puedes obtener estos datos de la API si es necesario)
     const article = data.data.find(article => article.id === articleId);
-    
+
     if (article) {
         // Actualizar los campos del modal con los datos del artículo
         document.getElementById('modal-title').textContent = article.title;
         document.getElementById('modal-description').textContent = article.description;
         document.getElementById('modal-size').textContent = `${article.square_meters} m² / ${article.constructed_meters} m²`;
         document.getElementById('modal-location').textContent = `${regionName}, ${cityName}, ${article.street}`;
-        
+
         // Si hay una imagen de portada, mostrarla
         const coverImage = article.photos.length > 0 ? `data:image/jpeg;base64,${article.photos[0]}` : 'default-cover.jpg';
         document.getElementById('modal-image').src = coverImage;
@@ -31,20 +32,20 @@
                 comunaList.appendChild(noComunasItem);
             }
         });
-         // Agregar inert al body (o el contenedor principal de la página)
-         document.body.setAttribute('inert', 'true');
-        
-         // Abrir el modal (asumido que usas Bootstrap o algo similar)
-         const modal = new bootstrap.Modal(document.getElementById('articleModal'));
-         modal.show();
- 
-         // Al cerrar el modal, quitar el inert para permitir la interacción con el contenido
-         document.getElementById('articleModal').addEventListener('hidden.bs.modal', function () {
-             document.body.removeAttribute('inert');
-         });
+        // Agregar inert al body (o el contenedor principal de la página)
+        document.body.setAttribute('inert', 'true');
+
+        // Abrir el modal (asumido que usas Bootstrap o algo similar)
+        const modal = new bootstrap.Modal(document.getElementById('articleModal'));
+        modal.show();
+
+        // Al cerrar el modal, quitar el inert para permitir la interacción con el contenido
+        document.getElementById('articleModal').addEventListener('hidden.bs.modal', function () {
+            document.body.removeAttribute('inert');
+        });
     }
 }
-
+});
 document.addEventListener('DOMContentLoaded', function () {
     const token = '97jI2Q87CImBAEcNzbS33ucBCyJacSHJSOZW3EMD5db839c0';  // Sustituye este valor por tu Bearer Token real
 
@@ -83,47 +84,34 @@ document.addEventListener('DOMContentLoaded', function () {
     // Mostrar artículos
     function displayArticles(data) {
         const articlesContainer = document.getElementById('articles-container');
-
-        // Verifica que la respuesta contenga los artículos en 'data' y que sea un array
+      
         if (data && data.data && Array.isArray(data.data)) {
-            // Limpiar el contenedor antes de agregar nuevos artículos
-            articlesContainer.innerHTML = '';
-
-            data.data.forEach(article => {
-                getRegionAndCityNames(article.region, article.city).then(names => {
-                    const regionName = names.regionName || 'Desconocida';
-                    const cityName = names.cityName || 'Desconocida';
-                    const comunaName = names.comunaName || 'Desconocida'; // Agregado para mostrar la comuna
-
-                    // Crear el HTML de cada tarjeta
-                    const card = document.createElement('div');
-                    card.classList.add('col-lg-4', 'col-sm-6');
-                    card.innerHTML = `
-                    <div class="card mt-3 mt-lg-0 shadow-none">
-                        <div class="bg-label-primary border border-bottom-0 border-label-primary position-relative team-image-box">
-                            ${article.photos.length > 0 ?
-                            `<img src="data:image/jpeg;base64,${article.photos[0]}" class="position-absolute card-img-position bottom-0 start-50 scaleX-n1-rtl" alt="Cover Photo">` :
-                            '<img src="default-cover.jpg" class="position-absolute card-img-position bottom-0 start-50 scaleX-n1-rtl" alt="Cover Photo">'
-                        }
-                        </div>
-                        <div class="card-body border border-top-0 border-label-primary text-center">
-                            <h5 class="card-title mb-0">${article.title}</h5>
-                            <p class="text-muted mb-0">${article.square_meters} m² / ${article.constructed_meters} m²</p>
-                            <p class="text-muted mb-0">${regionName}, ${comunaName}, ${article.street}</p>
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#articleModal" onclick="openModal(${article.id})">
-                                Ver más
-                            </button>
-                        </div>
-                    </div>
-                `;
-                    // Agregar la tarjeta al contenedor
-                    articlesContainer.appendChild(card);
-                });
-            });
+          articlesContainer.innerHTML = ''; // Limpiar el contenedor
+      
+          data.data.forEach(article => {
+            // Obtener nombres de región y ciudad (si es necesario)
+            // ... (código para getRegionAndCityNames, si lo usas) ...
+      
+            const card = document.createElement('div');
+            card.classList.add('col-lg-4', 'col-md-6', 'mb-4'); // Ajusta las clases según tu diseño
+            card.innerHTML = `
+              <div class="card">
+                <img src="${article.photos.length > 0 ? `data:image/jpeg;base64,${article.photos[0]}` : 'default-article-image.jpg'}" class="card-img-top" alt="Imagen del artículo">
+                <div class="card-body">
+                  <h5 class="card-title">${article.title}</h5>
+                  <p class="card-text">${article.description}</p>
+                  <a href="#" class="btn btn-primary">Leer más</a> 
+                </div>
+              </div>
+            `;
+            articlesContainer.appendChild(card);
+          });
         } else {
-            articlesContainer.innerHTML = '<p>No se pudieron cargar los artículos.</p>';
+          articlesContainer.innerHTML = '<p>No se pudieron cargar los artículos.</p>';
         }
-    }
+      }
+      
+    
     // relaciona Regiones y comunas
     function getRegionAndCityNames(regionId, cityId) {
         return new Promise((resolve, reject) => {
@@ -187,39 +175,37 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
         });
     }
-    // Mostrar las preguntas frecuentes
     function displayFaqs(faqs) {
-        const faqsContainer = document.getElementById('faqAccordion'); 
-    
+        const faqsContainer = document.getElementById('faqAccordion');
         if (faqsContainer) {
-            if (faqs && Array.isArray(faqs)) {
-                faqsContainer.innerHTML = ''; // Limpiar el contenedor
+          if (faqs && Array.isArray(faqs)) {
+            faqsContainer.innerHTML = ''; // Limpiar el contenedor
     
-                faqs.forEach(faq => {
-                    const faqItem = document.createElement('div');
-                    faqItem.classList.add('item-faq'); // Agregar la clase 'item-faq'
-                    faqItem.innerHTML = `
-                        <div class="question">
-                            <h3>${faq.question}<span>P</span></h3> 
-                            <div class="more"><i>+</i></div>
-                        </div>
-                        <div class="answer">
-                            <p>${faq.answer}<span>R</span></p> 
-                        </div>
-                    `;
-                    faqsContainer.appendChild(faqItem); 
-                });
-    
-                // (Opcional) Si necesitas agregar la funcionalidad de expandir/colapsar las preguntas, 
-                // agrega el código aquí.
-    
-            } else {
-                faqsContainer.innerHTML = '<p>No se pudieron cargar las preguntas frecuentes.</p>';
-            }
+            faqs.forEach((faq, index) => {
+              const faqItem = `
+                <div class="accordion-item">
+                  <h2 class="accordion-header"style="font-size:15px" id="heading${index}">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${index}" aria-expanded="false" aria-controls="collapse${index}">
+                      ${faq.question}
+                    </button>
+                  </h2>
+                  <div id="collapse${index}" class="accordion-collapse collapse" aria-labelledby="heading${index}" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                      ${faq.answer}
+                    </div>
+                  </div>
+                </div>
+              `;
+              faqsContainer.appendChild(document.createRange().createContextualFragment(faqItem));
+            });
+          } else {
+            faqsContainer.innerHTML = '<p>No se pudieron cargar las preguntas frecuentes.</p>';
+          }
         } else {
-            console.error('El contenedor #faqAccordion no existe en el DOM.');
+          console.error('El contenedor #faqAccordion no existe en el DOM.');
         }
-    }
+      }
+    
 
     // Obtener y mostrar las preguntas frecuentes
     fetchData('http://127.0.0.1:8000/api/faqs', displayFaqs);
@@ -230,37 +216,29 @@ document.addEventListener('DOMContentLoaded', function () {
     // Obtener y mostrar los artículos
     fetchData('http://127.0.0.1:8000/api/articles', displayArticles);
 
-    let question = document.querySelectorAll('.question');
-let btnDropdown = document.querySelectorAll('.question .more')
-let answer = document.querySelectorAll('.answer');
-let parrafo = document.querySelectorAll('.answer p');
 
-for ( let i = 0; i < btnDropdown.length; i ++ ) {
+   // Obtener todas las preguntas (elementos con la clase "question")
+  const questions = document.querySelectorAll('.question');
 
-    let altoParrafo = parrafo[i].clientHeight;
-    let switchc = 0;
+  // Agregar un event listener a cada pregunta
+  questions.forEach(question => {
+    question.addEventListener('click', () => {
+      // Encontrar el elemento "answer" que corresponde a la pregunta
+      const answer = question.nextElementSibling;
+      const parrafo = answer.querySelector('p'); // Obtener el párrafo dentro de la respuesta
+      const btnDropdown = question.querySelector('.more'); // Obtener el botón dentro de la pregunta
 
-    btnDropdown[i].addEventListener('click', () => {
-
-        if ( switchc == 0 ) {
-
-            answer[i].style.height = `${altoParrafo}px`;
-            question[i].style.marginBottom = '10px';
-            btnDropdown[i].innerHTML = '<i>-</i>';
-            switchc ++;
-
-        }
-
-        else if ( switchc == 1 ) {
-
-            answer[i].style.height = `0`;
-            question[i].style.marginBottom = '0';
-            btnDropdown[i].innerHTML = '<i>+</i>';
-            switchc --;
-
-        }
-
-    })
-
-}
+      // Alternar la visibilidad y la altura de la respuesta
+      if (answer.style.height === '0px' || answer.style.height === '') {
+        const altoParrafo = parrafo.clientHeight; // Obtener la altura del párrafo
+        answer.style.height = `${altoParrafo}px`;
+        question.style.marginBottom = '10px';
+        btnDropdown.innerHTML = '<i>-</i>';
+      } else {
+        answer.style.height = '0px';
+        question.style.marginBottom = '0px';
+        btnDropdown.innerHTML = '<i>+</i>';
+      }
+    });
+  });
 });

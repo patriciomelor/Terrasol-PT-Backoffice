@@ -123,24 +123,23 @@ body.index-page .carousel-item:nth-child(4) .carousel-caption h2 {
 .containerquestion {
   width: 100%;
   margin: 0 auto;
-  text-align: center; /* Centra los textos */
+  text-align: center; 
   padding-top: 40px;
   padding-right: 10%;
   padding-left: 5%;
-  
 }
 
-.containerquestion .row{
+.containerquestion .row {
   margin: 0 auto;
   margin-top: 35px;
-  text-align: center; /* Centra los textos */
+  text-align: center; 
 }
 
 .container-faq {
-  box-shadow: 0 0 15px -1px rgba(0,0,0,.1);
+  box-shadow: 0 0 15px -1px rgba(0, 0, 0, .1);
   margin-top: 20px;
   border-radius: 10px;
-  text-align: center; /* Centra los textos */
+  text-align: center; 
   margin-left: 5%;
   margin-right: 5%;
 }
@@ -153,38 +152,45 @@ body.index-page .carousel-item:nth-child(4) .carousel-caption h2 {
   font-weight: bold;
 }
 
-.container-faq .item-faq {
-  box-shadow: 0 0 15px -1px rgba(0,0,0,.2);
+/* Estilos para los elementos del acordeón de Bootstrap */
+.accordion-item {
+  box-shadow: 0 0 15px -1px rgba(0, 0, 0, .2);
   margin-bottom: 20px;
   border-radius: 10px;
 }
 
-.container-faq .item-faq .question {
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: rgba(43, 51, 122, .2);
-  padding: 20px 20px 20px 80px;
-  transition: .4s;
+.accordion-button {
+  position: relative!important;
+  display: flex!important;
+  justify-content: space-between!important;
+  align-items: center!important;
+  background: rgba(43, 51, 122, .2)!important;
+  padding: 20px 20px 20px 80px!important;
+  transition: .4s!important;
+  font-size: 1rem!important;
 }
 
-.container-faq .item-faq .question .more {
+.accordion-button::after { /* Usar ::after para el icono "+" */
+  content: '+'; 
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 0 15px -1px rgba(0,0,0,.2);
-
+  box-shadow: 0 0 15px -1px rgba(0, 0, 0, .2);
   font-size: 1rem;
   cursor: pointer;
   transition: .4s;
+  margin-left: 10px; 
 }
 
-.container-faq .item-faq .question .more:hover {
-  box-shadow: 0 0 15px -1px rgba(0,0,0,.4);
+.accordion-button:hover::after {
+  box-shadow: 0 0 15px -1px rgba(0, 0, 0, .4);
 }
 
-.container-faq .item-faq .question span {
+.accordion-button.collapsed::after { /* Cambiar a "-" cuando esté abierto */
+  content: '-';
+}
+
+.accordion-button span { 
   position: absolute;
   left: 10px;
   font-size: 3rem;
@@ -192,32 +198,30 @@ body.index-page .carousel-item:nth-child(4) .carousel-caption h2 {
   opacity: .1;
 }
 
-.container-faq .item-faq .answer {
+.accordion-collapse {
   position: relative;
   padding: 0 20px 0 80px;
   overflow: hidden;
-  height: 0;
   transition: .4s;
-  
-  text-align: center; /* Centra los textos */
 }
 
-.container-faq .item-faq .answer p {
+.accordion-body {
   font-size: 1.3rem;
-  text-align: center; /* Centra los textos */
+  text-align: center; 
 }
 
-.container-faq .item-faq .answer span {
+.accordion-body span { 
   position: absolute;
   font-size: 3rem;
   top: -10px;
   opacity: .2;
 }
 
-.container-faq .item-faq .question h3 {
-  margin: 0; /* Ajusta el margen para el título h3 */
-  text-align: center; /* Centra los textos */
+.accordion-header h3 { /* Ajustar el margen para el título h3 */
+  margin: 0;
+  text-align: center; 
 }
+
 .main-about{
   background-color: #DDD0C8;
   }

@@ -1,3 +1,4 @@
+document.addEventListener('DOMContentLoaded', () => {
 const phoneInput = document.getElementById('phone');
 
 phoneInput.addEventListener('input', function(event) {
@@ -45,7 +46,7 @@ function validateEmail(email) {
 }
 
 
-
+});
 
 
 
