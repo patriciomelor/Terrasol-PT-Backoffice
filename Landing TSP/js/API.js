@@ -84,33 +84,61 @@ document.addEventListener('DOMContentLoaded', function () {
     // Mostrar artículos
     function displayArticles(data) {
         const articlesContainer = document.getElementById('articles-container');
-      
+    
         if (data && data.data && Array.isArray(data.data)) {
-          articlesContainer.innerHTML = ''; // Limpiar el contenedor
-      
-          data.data.forEach(article => {
-            // Obtener nombres de región y ciudad (si es necesario)
-            // ... (código para getRegionAndCityNames, si lo usas) ...
-      
-            const card = document.createElement('div');
-            card.classList.add('col-lg-4', 'col-md-6', 'mb-4'); // Ajusta las clases según tu diseño
-            card.innerHTML = `
-              <div class="card">
-                <img src="${article.photos.length > 0 ? `data:image/jpeg;base64,${article.photos[0]}` : 'default-article-image.jpg'}" class="card-img-top" alt="Imagen del artículo">
-                <div class="card-body">
-                  <h5 class="card-title">${article.title}</h5>
-                  <p class="card-text">${article.description}</p>
-                  <a href="#" class="btn btn-primary">Leer más</a> 
-                </div>
-              </div>
-            `;
-            articlesContainer.appendChild(card);
-          });
+            articlesContainer.innerHTML = ''; // Limpiar el contenedor
+    
+            data.data.forEach(article => {
+                getRegionAndCityNames(article.region, article.city).then(names => {
+                    const regionName = names.regionName || 'Desconocida';
+                    const cityName = names.cityName || 'Desconocida';
+                    const comunaName = names.comunaName || 'Desconocida';
+    
+                    // Obtener las características del artículo
+                    const caracteristicas = article.caracteristicas || []; 
+    
+                    // Construir el HTML de la descripción 
+                    let descriptionHTML = `<p class="card-text">${article.description.substring(0, 150)}...</p>`; 
+                    descriptionHTML += `<p class="card-text">${regionName}, ${cityName}, ${article.street}</p>`;
+    
+                    // Agregar los iconos de características
+                    if (caracteristicas.length > 0) {
+                        descriptionHTML += '<div class="caracteristicas">';
+                        caracteristicas.forEach(caracteristica => {
+                            descriptionHTML += `<span><i class="${caracteristica.icono}"></i> ${caracteristica.nombre}</span>`; 
+                        });
+                        descriptionHTML += '</div>';
+                    }
+    
+                    // Crear el HTML de la card
+                    const card = document.createElement('div');
+                    card.classList.add('col-lg-4', 'col-sm-6');
+                    card.innerHTML = `
+                    <div class="card mt-3 mt-lg-0 shadow-none">
+                        <div class="bg-label-primary border border-bottom-0 border-label-primary position-relative team-image-box">
+                            ${article.cover_photo ? 
+                                `<img src="data:image/jpeg;base64,${article.cover_photo}" class="card-img-top" alt="Cover Photo">` :
+                                '<img src="default-cover.jpg" class="card-img-top" alt="Cover Photo">'
+                            }
+                        </div>
+                        <div class="card-body border border-top-0 border-label-primary text-center">
+                            <h5 class="card-title mb-0">${article.title}</h5>
+                            ${descriptionHTML}
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#articleModal" onclick="openModal(${article.id})">
+                                Ver más
+                            </button>
+                        </div>
+                    </div>
+                `;
+    
+                    // Agregar la card al contenedor (ESTA LÍNEA SE MOVIÓ)
+                    articlesContainer.appendChild(card); 
+                });
+            });
         } else {
-          articlesContainer.innerHTML = '<p>No se pudieron cargar los artículos.</p>';
+            articlesContainer.innerHTML = '<p>No se pudieron cargar los artículos.</p>';
         }
-      }
-      
+    }
     
     // relaciona Regiones y comunas
     function getRegionAndCityNames(regionId, cityId) {

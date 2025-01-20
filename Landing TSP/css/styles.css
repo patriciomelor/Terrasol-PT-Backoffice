@@ -553,3 +553,24 @@ h4 {
   font-size: 20px;
   margin-bottom: 20px; /* Añadir espaciado entre los encabezados */
 }
+/* ... (tus estilos CSS) ... */
+
+.card-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 3; 
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.caracteristicas {
+  margin-top: 10px; 
+}
+
+.caracteristicas span {
+  display: inline-block;
+  margin-right: 10px; 
+}
+
+.caracteristicas i {
+  margin-right: 5px; 
+}
