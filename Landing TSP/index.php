@@ -11,6 +11,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body class="index-page">
+<div id="loading-overlay">
+  <div class="loading-spinner"></div>
+</div>
     <?php include "components/menu.php"; ?>
    
     <?php include "components/carousel.php";?>
@@ -25,7 +28,7 @@
 
     <?php include "components/footer.php"; ?>
 
-
+    <script src="js/LoadSpinner.js"></script>
     <script src="js/menu.js"></script>
     <script src="js/API.js"></script>
     <script src="js/formContacto.js"></script>

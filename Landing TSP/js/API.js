@@ -67,20 +67,31 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     // Mostrar misión y visión
     function displayMissionAndVision(data) {
-        if (data) {
-            document.getElementById('mission').innerHTML = data.mission || 'No se ha definido la misión.';
-            document.getElementById('vision').innerHTML = data.vision || 'No se ha definido la visión.';
-            document.getElementById('nosotros').innerHTML = data.about_us || 'No se ha definido la Sobre nosotros.';
-            document.getElementById('site_name').innerHTML = data.site_name || 'No se ha definido El titulo.';
-            document.getElementById('site_description').innerHTML = data.site_description || 'No se ha definido El subtitulo.';
-        } else {
-            document.getElementById('mission').textContent = 'No se pudo cargar la misión.';
-            document.getElementById('vision').textContent = 'No se pudo cargar la visión.';
-            document.getElementById('nosotros').textContent = 'No se pudo cargar la Sobre Nosotros.';
-            document.getElementById('site_name').textContent = 'No se pudo cargar  El titulo.';
-            document.getElementById('site_description').textContent = 'No se pudo cargar  El subtitulo.';
-        }
-    }
+        document.addEventListener('DOMContentLoaded', () => {
+          if (data && data.settings) {
+            // Obtener todos los elementos que tienen un atributo 'data-setting'
+            const settingsElements = document.querySelectorAll('[data-setting]');
+      
+            settingsElements.forEach(element => {
+              // Obtener el nombre del setting del atributo 'data-setting'
+              const settingName = element.dataset.setting;
+      
+              // Obtener el valor del setting del objeto data.settings
+              const settingValue = data.settings[settingName];
+      
+              // Actualizar el contenido del elemento con el valor del setting
+              if (settingValue) {
+                element.textContent = settingValue;
+              } else {
+                // Mostrar un mensaje de error si el setting no se encuentra
+                element.textContent = `No se pudo cargar ${settingName}`;
+              }
+            });
+          } else {
+            console.error('Error al cargar los datos de la API');
+          }
+        });
+      }
     // Mostrar artículos
     function displayArticles(data) {
         const articlesContainer = document.getElementById('articles-container');
@@ -139,7 +150,6 @@ document.addEventListener('DOMContentLoaded', function () {
             articlesContainer.innerHTML = '<p>No se pudieron cargar los artículos.</p>';
         }
     }
-    
     // relaciona Regiones y comunas
     function getRegionAndCityNames(regionId, cityId) {
         return new Promise((resolve, reject) => {
@@ -203,6 +213,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
         });
     }
+    //Trae las preguntas frecuentes
     function displayFaqs(faqs) {
         const faqsContainer = document.getElementById('faqAccordion');
         if (faqsContainer) {
@@ -234,8 +245,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       }
     
-
-    // Obtener y mostrar las preguntas frecuentes
     fetchData('http://127.0.0.1:8000/api/faqs', displayFaqs);
 
     // Obtener y mostrar la misión y visión

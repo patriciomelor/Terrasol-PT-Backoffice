@@ -2,7 +2,7 @@
 
 <nav class="navbar navbar-expand-lg fixed-top">
   <div class="container-fluid">
-  <span id="site-name" class="navbar-brand  mx-lg-2"></span> 
+  <span id="site-name" data-setting="site_name" class="navbar-brand  mx-lg-2"></span> 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
