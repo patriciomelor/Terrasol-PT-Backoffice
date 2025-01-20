@@ -1,3 +1,5 @@
+
+<div class="main-about" id="main-about" >
 <section class="container section_2">
   <h3 class="section_2-title">Sobre nosotros</h3>
   <div class="section_2-content row"> 
@@ -31,3 +33,4 @@
 
   </div> 
 </section>
+</div>

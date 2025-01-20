@@ -4,39 +4,42 @@
 namespace App\Http\Controllers;
 
 use App\Models\Region;
-use App\Models\Comuna;  // Asegúrate de que Comuna esté correctamente importado
+use App\Models\Comuna;
 use Illuminate\Http\Request;
 
 class LocationController extends Controller
 {
-    // Método para obtener la región por ID
     public function getRegion($regionId)
     {
-        $region = Region::find($regionId); // Busca la región por ID
+        $region = Region::find($regionId);
 
         if (!$region) {
-            return response()->json(['message' => 'Región no encontrada'], 404);
+            return response()->json(['message' => 'Región no encontrada', 'data' => []], 200);
         }
 
-        return response()->json($region); // Devuelve la región encontrada
+        return response()->json(['message' => 'Región encontrada', 'data' => $region], 200);
     }
 
-    // Método para obtener las comunas de una región específica
     public function getComunas($regionId)
     {
-        $region = Region::find($regionId); // Busca la región por ID
+        $region = Region::find($regionId);
 
         if (!$region) {
-            return response()->json(['message' => 'Región no encontrada'], 404);
+            return response()->json(['message' => 'Región no encontrada', 'data' => []], 200);
         }
 
-        // Obtener las comunas asociadas
-        $comunas = $region->comunas;  // Usando la relación definida en Region
+        $comunas = $region->comunas;
 
         if ($comunas->isEmpty()) {
-            return response()->json(['message' => 'No hay comunas asociadas a esta región'], 404);
+            return response()->json(['message' => 'No hay comunas asociadas a esta región', 'data' => []], 200);
         }
 
-        return response()->json($comunas);  // Devuelve las comunas
+        return response()->json(['message' => 'Comunas encontradas', 'data' => $comunas], 200);
+    }
+
+    public function getRegions()
+    {
+        $regions = Region::all();
+        return response()->json(['message' => 'Regiones encontradas', 'data' => $regions], 200);
     }
 }

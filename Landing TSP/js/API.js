@@ -49,171 +49,243 @@ function openModal(articleId) {
 document.addEventListener('DOMContentLoaded', function () {
     const token = '97jI2Q87CImBAEcNzbS33ucBCyJacSHJSOZW3EMD5db839c0';  // Sustituye este valor por tu Bearer Token real
 
-    // Función para manejar las solicitudes a la API
-    function fetchData(url, callback) {
-        fetch(url, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(response => response.json())
-            .then(data => callback(data))
-            .catch(error => {
-                console.error('Error fetching data:', error);
-                callback(null); // Llamamos a la función de callback con null en caso de error
-            });
-    }
+  // Función para manejar las solicitudes a la API
+  function fetchData(url, callback) {
+    fetch(url, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(response => response.json())
+      .then(data => callback(data))
+      .catch(error => {
+        console.error('Error fetching data:', error);
+        // Manejar el error, por ejemplo, mostrar un mensaje al usuario
+      });
+  }
+
     // Mostrar misión y visión
     function displayMissionAndVision(data) {
-        document.addEventListener('DOMContentLoaded', () => {
-          if (data && data.settings) {
-            // Obtener todos los elementos que tienen un atributo 'data-setting'
-            const settingsElements = document.querySelectorAll('[data-setting]');
-      
-            settingsElements.forEach(element => {
-              // Obtener el nombre del setting del atributo 'data-setting'
-              const settingName = element.dataset.setting;
-      
-              // Obtener el valor del setting del objeto data.settings
-              const settingValue = data.settings[settingName];
-      
-              // Actualizar el contenido del elemento con el valor del setting
-              if (settingValue) {
-                element.textContent = settingValue;
-              } else {
-                // Mostrar un mensaje de error si el setting no se encuentra
-                element.textContent = `No se pudo cargar ${settingName}`;
-              }
-            });
-          } else {
-            console.error('Error al cargar los datos de la API');
-          }
-        });
+      if (data) {
+          document.getElementById('mission').innerHTML = data.mission || 'No se ha definido la misión.';
+          document.getElementById('vision').innerHTML = data.vision || 'No se ha definido la visión.';
+          document.getElementById('nosotros').innerHTML = data.about_us || 'No se ha definido la Sobre nosotros.';
+          document.getElementById('site_name').innerHTML = data.site_name || 'No se ha definido El titulo.';
+          document.getElementById('site_description').innerHTML = data.site_description || 'No se ha definido El subtitulo.';
+      } else {
+          document.getElementById('mission').textContent = 'No se pudo cargar la misión.';
+          document.getElementById('vision').textContent = 'No se pudo cargar la visión.';
+          document.getElementById('nosotros').textContent = 'No se pudo cargar la Sobre Nosotros.';
+          document.getElementById('site_name').textContent = 'No se pudo cargar  El titulo.';
+          document.getElementById('site_description').textContent = 'No se pudo cargar  El subtitulo.';
       }
+  }
     // Mostrar artículos
-    function displayArticles(data) {
-        const articlesContainer = document.getElementById('articles-container');
-    
-        if (data && data.data && Array.isArray(data.data)) {
-            articlesContainer.innerHTML = ''; // Limpiar el contenedor
-    
-            data.data.forEach(article => {
-                getRegionAndCityNames(article.region, article.city).then(names => {
-                    const regionName = names.regionName || 'Desconocida';
-                    const cityName = names.cityName || 'Desconocida';
-                    const comunaName = names.comunaName || 'Desconocida';
-    
-                    // Obtener las características del artículo
-                    const caracteristicas = article.caracteristicas || []; 
-    
-                    // Construir el HTML de la descripción 
-                    let descriptionHTML = `<p class="card-text">${article.description.substring(0, 150)}...</p>`; 
-                    descriptionHTML += `<p class="card-text">${regionName}, ${cityName}, ${article.street}</p>`;
-    
-                    // Agregar los iconos de características
-                    if (caracteristicas.length > 0) {
-                        descriptionHTML += '<div class="caracteristicas">';
-                        caracteristicas.forEach(caracteristica => {
-                            descriptionHTML += `<span><i class="${caracteristica.icono}"></i> ${caracteristica.nombre}</span>`; 
-                        });
-                        descriptionHTML += '</div>';
-                    }
-    
-                    // Crear el HTML de la card
-                    const card = document.createElement('div');
-                    card.classList.add('col-lg-4', 'col-sm-6');
-                    card.innerHTML = `
-                    <div class="card mt-3 mt-lg-0 shadow-none">
-                        <div class="bg-label-primary border border-bottom-0 border-label-primary position-relative team-image-box">
-                            ${article.cover_photo ? 
-                                `<img src="data:image/jpeg;base64,${article.cover_photo}" class="card-img-top" alt="Cover Photo">` :
-                                '<img src="default-cover.jpg" class="card-img-top" alt="Cover Photo">'
-                            }
-                        </div>
-                        <div class="card-body border border-top-0 border-label-primary text-center">
-                            <h5 class="card-title mb-0">${article.title}</h5>
-                            ${descriptionHTML}
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#articleModal" onclick="openModal(${article.id})">
-                                Ver más
-                            </button>
-                        </div>
-                    </div>
-                `;
-    
-                    // Agregar la card al contenedor (ESTA LÍNEA SE MOVIÓ)
-                    articlesContainer.appendChild(card); 
+  function displayArticles(data) {
+    const articlesContainer = document.getElementById('articles-container');
+
+    if (data && data.data && Array.isArray(data.data)) {
+      articlesContainer.innerHTML = ''; // Limpiar el contenedor
+
+      data.data.forEach(article => {
+        if (article.region && article.city) {
+          getRegionAndCityNames(article.region, article.city)
+            .then(names => {
+              // Este código se ejecuta DESPUÉS de obtener la región y la comuna
+              const regionName = names.regionName;
+              const comunaName = names.comunaName;
+
+              // Obtener las características del artículo
+              const caracteristicas = article.caracteristicas || [];
+
+              // Construir el HTML de la descripción 
+              let descriptionHTML = `<p class="card-text">${article.description.substring(0, 150)}...</p>`;
+              // Usar comunaName en lugar de cityName
+              descriptionHTML += `<p class="card-text">${regionName}, ${comunaName}, ${article.street}</p>`;
+
+              // Agregar los iconos de características
+              if (caracteristicas.length > 0) {
+                descriptionHTML += '<div class="caracteristicas">';
+                caracteristicas.forEach(caracteristica => {
+                  descriptionHTML += `<span><i class="${caracteristica.icono}"></i> ${caracteristica.nombre}</span>`;
                 });
+                descriptionHTML += '</div>';
+              }
+
+              // Crear el HTML de la card
+              const card = document.createElement('div');
+              card.classList.add('col-lg-4', 'col-sm-6');
+              card.innerHTML = `
+                <div class="col">
+                  <div class="card">
+                    <div class="bg-label-primary border border-bottom-0 border-label-primary position-relative team-image-box">
+                      ${article.cover_photo ? 
+                        `<img src="data:image/jpeg;base64,${article.cover_photo}" class="card-img-top" alt="Cover Photo">` :
+                        '<img src="default-cover.jpg" class="card-img-top" alt="Cover Photo">'
+                      }
+                    </div>
+                    <div class="card-body">
+                      <h5 class="card-title">${article.title}</h5>
+                      ${descriptionHTML}
+                    </div>
+                    <div class="btn-center">
+                      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#articleModal" onclick="openModal(${article.id})">
+                        Ver más
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              `;
+
+              // Agregar la card al contenedor
+              articlesContainer.appendChild(card);
+            })
+            .catch(error => {
+              // Manejar el error
+              console.error('Error al obtener la región o comuna:', error);
             });
         } else {
-            articlesContainer.innerHTML = '<p>No se pudieron cargar los artículos.</p>';
+          // Manejar el caso en que no hay región o ciudad
+          console.warn("Artículo sin región o ciudad:", article);
         }
+      });
+    } else {
+      articlesContainer.innerHTML = '<p>No se pudieron cargar los artículos.</p>';
     }
+  }
+
     // relaciona Regiones y comunas
     function getRegionAndCityNames(regionId, cityId) {
-        return new Promise((resolve, reject) => {
-            // Primero, obtener la región
-            fetch(`http://127.0.0.1:8000/api/regions/${regionId}`, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                }
+      return new Promise((resolve, reject) => {
+          // Primero, obtener la región
+          fetch(`http://127.0.0.1:8000/api/regions/${regionId}`, {
+              method: 'GET',
+              headers: {
+                  'Authorization': `Bearer ${token}`,
+                  'Content-Type': 'application/json'
+              }
+          })
+              .then(res => res.json())
+              .then(regionData => {
+                  const regionName = regionData ? regionData.nombre : 'Desconocida';
+
+                  // Luego, obtener las comunas asociadas a la región
+                  fetch(`http://127.0.0.1:8000/api/regions/${regionId}/communes`, {
+                      method: 'GET',
+                      headers: {
+                          'Authorization': `Bearer ${token}`,
+                          'Content-Type': 'application/json'
+                      }
+                  })
+                      .then(res => res.json())
+                      .then(cityData => {
+                          const cityName = cityData ? cityData.find(city => city.id === cityId)?.nombre : 'Desconocida';
+
+                          // Encontrar la comuna que corresponde al cityId
+                          const comunaName = cityData ? cityData.find(comuna => comuna.id == cityId)?.nombre : 'Desconocida';
+
+                          resolve({ regionName, cityName, comunaName });
+                      })
+                      .catch(error => {
+                          console.error('Error fetching city data:', error);
+                          resolve({ regionName, cityName: 'Desconocida', comunaName: 'Desconocida' });
+                      });
+              })
+              .catch(error => {
+                  console.error('Error fetching region data:', error);
+                  resolve({ regionName: 'Desconocida', cityName: 'Desconocida', comunaName: 'Desconocida' });
+              });
+      });
+  }
+  //trae las comunas vinculadas a cada region
+  function getComunasForRegion(regionId) {
+      return new Promise((resolve, reject) => {
+          fetch(`http://127.0.0.1:8000/api/regions/${regionId}/communes`, {
+              method: 'GET',
+              headers: {
+                  'Authorization': `Bearer ${token}`,
+                  'Content-Type': 'application/json'
+              }
+          })
+              .then(res => res.json())
+              .then(data => {
+                  resolve(data); // Devolvemos las comunas
+              })
+              .catch(error => {
+                  console.error('Error fetching communes:', error);
+                  resolve([]); // En caso de error, devolvemos un array vacío
+              });
+      });
+  }
+  // Función para obtener los nombres de la región y la comuna
+  function getRegionAndCityNames(regionId, cityId) {
+    console.log("Region ID:", regionId);
+    console.log("City ID:", cityId);
+
+    return new Promise((resolve, reject) => {
+      // 1. Obtener la región
+      fetch(`http://127.0.0.1:8000/api/regions/${regionId}`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        })
+        .then(res => {
+          if (!res.ok) {
+            throw new Error(`Error al obtener la región ${regionId}: ${res.status} ${res.statusText}`);
+          }
+          return res.json();
+        })
+        .then(regionData => {
+          console.log("Region data:", regionData);
+          const regionName = regionData.data.nombre || 'Desconocida';
+
+          // 2. Obtener la comuna
+          fetch(`http://127.0.0.1:8000/api/regions/${regionId}/communes`, {
+              method: 'GET',
+              headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+              }
             })
-                .then(res => res.json())
-                .then(regionData => {
-                    const regionName = regionData ? regionData.nombre : 'Desconocida';
-
-                    // Luego, obtener las comunas asociadas a la región
-                    fetch(`http://127.0.0.1:8000/api/regions/${regionId}/communes`, {
-                        method: 'GET',
-                        headers: {
-                            'Authorization': `Bearer ${token}`,
-                            'Content-Type': 'application/json'
-                        }
-                    })
-                        .then(res => res.json())
-                        .then(cityData => {
-                            const cityName = cityData ? cityData.find(city => city.id === cityId)?.nombre : 'Desconocida';
-
-                            // Encontrar la comuna que corresponde al cityId
-                            const comunaName = cityData ? cityData.find(comuna => comuna.id == cityId)?.nombre : 'Desconocida';
-
-                            resolve({ regionName, cityName, comunaName });
-                        })
-                        .catch(error => {
-                            console.error('Error fetching city data:', error);
-                            resolve({ regionName, cityName: 'Desconocida', comunaName: 'Desconocida' });
-                        });
-                })
-                .catch(error => {
-                    console.error('Error fetching region data:', error);
-                    resolve({ regionName: 'Desconocida', cityName: 'Desconocida', comunaName: 'Desconocida' });
-                });
-        });
-    }
-    //trae las comunas vinculadas a cada region
-    function getComunasForRegion(regionId) {
-        return new Promise((resolve, reject) => {
-            fetch(`http://127.0.0.1:8000/api/regions/${regionId}/communes`, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                }
+            .then(res => {
+              if (!res.ok) {
+                throw new Error(`Error al obtener las comunas de la región ${regionId}: ${res.status} ${res.statusText}`);
+              }
+              return res.json();
             })
-                .then(res => res.json())
-                .then(data => {
-                    resolve(data); // Devolvemos las comunas
-                })
-                .catch(error => {
-                    console.error('Error fetching communes:', error);
-                    resolve([]); // En caso de error, devolvemos un array vacío
-                });
+            .then(comunaData => {
+              console.log("Comuna data:", comunaData);
+              // Acceder al array de comunas a través de comunaData.data
+              const comunaName = comunaData.data.find(comuna => comuna.id === cityId)?.nombre || 'Desconocida';
+
+              resolve({
+                regionName,
+                comunaName
+              });
+            })
+            .catch(error => {
+              console.error('Error al obtener la comuna:', error);
+              resolve({
+                regionName,
+                comunaName: 'Desconocida'
+              });
+            });
+        })
+        .catch(error => {
+          console.error('Error al obtener la región:', error);
+          resolve({
+            regionName: 'Desconocida',
+            comunaName: 'Desconocida'
+          });
         });
-    }
-    //Trae las preguntas frecuentes
+    });
+  }
+
+   //Trae las preguntas frecuentes
     function displayFaqs(faqs) {
         const faqsContainer = document.getElementById('faqAccordion');
         if (faqsContainer) {
@@ -222,13 +294,15 @@ document.addEventListener('DOMContentLoaded', function () {
     
             faqs.forEach((faq, index) => {
               const faqItem = `
-                <div class="accordion-item">
+                <div class="accordion-item item-faq">
+                <div class="question">
                   <h2 class="accordion-header"style="font-size:15px" id="heading${index}">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${index}" aria-expanded="false" aria-controls="collapse${index}">
-                      ${faq.question}
+                      <h3>${faq.question}</h3>
                     </button>
                   </h2>
-                  <div id="collapse${index}" class="accordion-collapse collapse" aria-labelledby="heading${index}" data-bs-parent="#faqAccordion">
+                  </div>
+                  <div id="collapse${index}" class="accordion-collapse collapse answer" aria-labelledby="heading${index}" data-bs-parent="#faqAccordion">
                     <div class="accordion-body">
                       ${faq.answer}
                     </div>

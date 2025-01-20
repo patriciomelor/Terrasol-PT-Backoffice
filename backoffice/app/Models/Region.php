@@ -6,13 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Region extends Model
 {
-    // Especificar el nombre de la tabla
-    protected $table = 'regiones';
+    protected $table = 'regiones'; // Nombre de la tabla en plural
+    public $timestamps = true;
 
-    // Si utilizas timestamps (created_at y updated_at)
-    public $timestamps = true; // O false si no los usas
+    protected $fillable = ['nombre']; // O $guarded = [];
 
-    // Relación con Comunas
     public function comunas()
     {
         return $this->hasMany(Comuna::class, 'region_id');
