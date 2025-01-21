@@ -99,14 +99,20 @@ public function deletePhoto($id, $photo)
     
         $article->save();
         // Guardar las características
-        $article->characteristics()->sync($request->input('characteristics', [])); 
-        
+        if ($request->has('characteristics')) {
+            foreach ($request->input('characteristics') as $characteristicId) {
+                $characteristic = Characteristic::find($characteristicId);
+                $article->characteristics()->attach($characteristicId, [
+                    'icon' => $characteristic->icon, // Obtener el icono de la característica
+                    // ... otros campos que quieras guardar ...
+                ]);
+            }}
         return redirect()->route('articles.index')->with('success', 'Artículo creado exitosamente.');
     }
     
-    public function show($id)
+    public function show($id,Article $article, Region $regiones, Comuna $comunas)
     {
-        $article = Article::findOrFail($id);
+        $article = Article::with(['region', 'comuna', 'characteristics'])->findOrFail($article->id); 
         
         // Decodificar las fotos si están en formato JSON
         $article->photos = is_string($article->photos) ? json_decode($article->photos, true) : $article->photos;
@@ -114,7 +120,7 @@ public function deletePhoto($id, $photo)
         // Obtener todas las características y las asociadas al artículo
         $allCharacteristics = Characteristic::all();
 
-        return view('articles.show', compact('article', 'allCharacteristics'));
+        return view('articles.show', compact('article', 'allCharacteristics', 'regiones', 'comunas'));
     }
 
     public function update(Request $request, Article $article)
@@ -169,18 +175,13 @@ public function deletePhoto($id, $photo)
     
         return redirect()->route('articles.index')->with('success', 'Artículo actualizado exitosamente.');
     }
-    
-    
-    
-
     public function destroy($id)
-    {
+    { 
         $article = Article::findOrFail($id);
         $article->delete();
 
         return redirect()->route('articles.index')->with('success', 'Artículo eliminado exitosamente.');
     }
-
     // Método solo para la API
     public function apiIndex()
     {

@@ -1,9 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-
-                <div class="card-header">{{ __('Reset Password') }}</div>
-
+       <!-- Login Form -->
+       <div class="d-flex col-12 col-lg-4 align-items-center authentication-bg p-sm-12 p-6">
+        <div class="w-px-400 mx-auto mt-12 pt-5">
+            <h4 class="mb-1">Bienvenido a Terrasol! 👋</h4>
                 <div class="card-body">
                     <form method="POST" action="{{ route('password.update') }}">
                         @csrf
@@ -55,4 +56,6 @@
                         </div>
                     </form>
                 </div>
+        </div>
+       </div>
 @endsection

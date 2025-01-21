@@ -44,22 +44,12 @@
             <span class="text-danger">{{ $message }}</span>
         @enderror
     </div>
- <!-- Ver Contraseña -->
- <div class="form-group mb-3 mb-3">
-    <input type="checkbox" id="show-password" onclick="togglePassword()"> 
-    <label for="show-password">Ver Contraseña</label>
-</div>
-
             <!-- Confirmar Contraseña -->
             <div class="form-group mb-3 mb-3">
                 <label for="password_confirmation">Confirmar Contraseña:</label>
                 <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" required>
             </div>
 
-            <!-- Generar Contraseña -->
-            <div class="form-group mb-3 mb-3">
-                <button type="button" class="btn btn-warning" onclick="generatePassword()">Generar Contraseña</button>
-            </div>
 
         <div class="form-group mb-3">
             <label for="role">Rol:</label>
@@ -91,34 +81,6 @@
     </div>
     </div>
 </div>
-<script>
-    function generatePassword() {
-        var charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+";
-        var passwordLength = 12;
-        var password = "";
-        
-        for (var i = 0; i < passwordLength; i++) {
-            var randomIndex = Math.floor(Math.random() * charset.length);
-            password += charset[randomIndex];
-        }
 
-        // Establecer la contraseña generada en el campo de la contraseña
-        document.getElementById('password').value = password;
-        document.getElementById('password_confirmation').value = password; // Asegurarse que la confirmación también se complete
-    }
-
-    function togglePassword() {
-        var passwordField = document.getElementById("password");
-        var passwordConfirmationField = document.getElementById("password_confirmation");
-        
-        if (document.getElementById("show-password").checked) {
-            passwordField.type = "text";
-            passwordConfirmationField.type = "text";
-        } else {
-            passwordField.type = "password";
-            passwordConfirmationField.type = "password";
-        }
-    }
-</script>
 
 @endsection

@@ -24,9 +24,9 @@ Route::get('/', function () {
 // O puedes definir las rutas manualmente:
 Route::prefix('password')->group(function () {
     Route::get('reset', [\App\Http\Controllers\Auth\ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
-    Route::post('email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
-    Route::get('reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
-    Route::post('reset', [ResetPasswordController::class, 'reset'])->name('password.update');
+    Route::post('email', [\App\Http\Controllers\Auth\ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+    Route::get('reset/{token}', [\App\Http\Controllers\Auth\ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+    Route::post('reset', [\App\Http\Controllers\Auth\ResetPasswordController::class, 'reset'])->name('password.update');
     Route::get('/password/reset', [\App\Http\Controllers\Auth\ForgotPasswordController::class, 'showLinkRequestForm'])
     ->name('password.request');
 });

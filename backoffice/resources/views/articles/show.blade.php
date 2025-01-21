@@ -82,14 +82,14 @@
                     <h4 class="mt-3">Región:</h4>
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
                         <label class="btn btn-default text-center">
-                            <span class="text-m">{{ $article->region }}</span>
+                            <span class="text-m">{{ $article->region->nombre }}</span>
                         </label>
                     </div>
 
                     <h4 class="mt-3">Ciudad:</h4>
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
                         <label class="btn btn-default text-center">
-                            <span class="text-m">{{ $article->city }}</span>
+                            <span class="text-m">{{ $article->city->nombre }}</span>
                         </label>
                     </div>
 
@@ -109,16 +109,16 @@
 
                     <div class="form-group">
                         <label>Características:</label>
-                        @foreach($allCharacteristics as $characteristic)
+                        @foreach($article->characteristics as $characteristic) 
                             <div class="form-check">
-                                <input class="form-check-input" disabled type="checkbox" name="characteristics[{{ $characteristic->id }}]" value="1" id="characteristic_{{ $characteristic->id }}"
-                                    {{ $article->characteristics->contains($characteristic->id) ? 'checked' : '' }}>
+                                <input class="form-check-input" disabled type="checkbox" name="characteristics[{{ $characteristic->id }}]" value="1" id="characteristic_{{ $characteristic->id }}" checked>
                                 <label class="form-check-label" for="characteristic_{{ $characteristic->id }}" disabled>
                                     @if(isset($characteristic->icon))
-                                        <i class="fas {{ $characteristic->icon }}" style="font-size: 24px;"></i>{{ $characteristic->name }}
+                                        <i class="fas {{ $characteristic->icon }}" style="font-size: 24px;"></i> {{ $characteristic->name }}
                                     @endif
                                 </label>
                             </div>
+                    </div>
                         @endforeach
                         
                     </div>
