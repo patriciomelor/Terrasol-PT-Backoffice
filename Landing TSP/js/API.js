@@ -318,7 +318,7 @@ document.addEventListener('DOMContentLoaded', function () {
           console.error('El contenedor #faqAccordion no existe en el DOM.');
         }
       }
-    
+
     fetchData('http://127.0.0.1:8000/api/faqs', displayFaqs);
 
     // Obtener y mostrar la misión y visión
@@ -352,4 +352,5 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
   });
+
 });

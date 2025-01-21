@@ -1,7 +1,7 @@
 
     <div class="contact-form-wrapper">
       <div class="contact-form-container">
-        <form id="contact-form">
+        <form id="contact-form" action="mailer/mail.php" method="post">
           <h2>Contáctanos</h2>
           <div class="form-group mb-3">
             <label for="nombre">Nombre   </label>

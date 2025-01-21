@@ -8,6 +8,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\CharacteristicController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Auth\ForgotPasswordController; // Importar el controlador
 
 // Rutas de autenticación
 Auth::routes(['verify' => true]);
@@ -22,11 +23,13 @@ Route::get('/', function () {
 
 // Rutas de recuperación de contraseñas
 Route::prefix('password')->group(function () {
-    Route::get('reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+    Route::get('/password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
     Route::post('email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
     Route::get('reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
     Route::post('reset', [ResetPasswordController::class, 'reset'])->name('password.update');
+
 });
+
 
 // Rutas de registro
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
