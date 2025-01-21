@@ -26,7 +26,7 @@ class Article extends Model
     
         public function characteristics()
         {
-            return $this->belongsToMany(Characteristic::class);
+            return $this->belongsToMany(Characteristic::class, 'article_characteristic', 'article_id', 'characteristic_id');
         }
         public function region()
         {

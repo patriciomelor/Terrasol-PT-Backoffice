@@ -10,6 +10,6 @@ class Characteristic extends Model
     // Characteristic.php
     public function articles()
     {
-        return $this->belongsToMany(Article::class);
+        return $this->belongsToMany(Article::class, 'article_characteristic', 'characteristic_id', 'article_id');
     }
 }

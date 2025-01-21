@@ -98,7 +98,9 @@ public function deletePhoto($id, $photo)
         }
     
         $article->save();
-    
+        // Guardar las características
+        $article->characteristics()->sync($request->input('characteristics', [])); 
+        
         return redirect()->route('articles.index')->with('success', 'Artículo creado exitosamente.');
     }
     

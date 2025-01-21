@@ -39,7 +39,8 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <!-- Select2 (después de jQuery) -->
-
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </head>
 
 <body>
@@ -367,7 +368,8 @@
 <script src="{{ asset('js/config.js') }}"></script>
 <script src="{{ asset('js/main.js') }}"></script>
 <!-- Select2 JS local -->
-<script src="{{ asset('js/forms-selects.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         // Obtener la URL actual sin el parámetro de consulta

@@ -92,7 +92,7 @@
                                         <label for="cover_photo">Foto de Portada</label>
                                         <input type="file"
                                             class="form-control @error('cover_photo') is-invalid @enderror"
-                                            name="cover_photo" id="cover_photo">
+                                            name="cover_photo" id="cover_photo" accept="image/*" max="1" required>
                                         @error('cover_photo')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -106,7 +106,7 @@
                                     <div class="col">
                                         <label for="photos">Fotos Adicionales</label>
                                         <input type="file" class="form-control @error('photos.*') is-invalid @enderror"
-                                            name="photos[]" id="photos" multiple>
+                                            name="photos[]" id="photos" accept="image/*" multiple>
                                         @error('photos.*')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -283,58 +283,69 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
           document.addEventListener('DOMContentLoaded', function() {
-            // Definir las URLs utilizando Blade
-            const regionsUrl = "{{ url('/api/regions') }}";
-            const communesUrl = "{{ url('/api/communes') }}"; // Asumiendo que tienes esta ruta
+    // Definir las URLs utilizando Blade
+    const regionsUrl = "{{ url('/api/regions') }}";
+    const communesUrl = "{{ url('/api/communes') }}"; 
 
-            // Ejemplo de cómo usar la URL en una llamada fetch
-            fetch(regionsUrl)
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                })
-                .catch(error => console.error('Error:', error));
+    // Cargar las regiones al cargar la página
+    $.ajax({
+        url: regionsUrl,
+        method: 'GET',
+        success: function(data) {
+            console.log("Regiones recibidas:", data);
+            // Accede al array de regiones dentro de data.data
+            data.data.forEach(function(region) {
+                $('#region-select').append(new Option(region.nombre, region.id));
+            });
+        },
+        error: function(xhr, status, error) {
+            console.error("Error al cargar las regiones:", error);
+            console.log("Detalles:", xhr.responseText);
+        }
+    });
 
-            // Cargar las regiones al cargar la página
+    // Cargar las comunas según la región seleccionada
+    $('#region-select').on('change', function() {
+        var regionId = $(this).val();
+        console.log("Región seleccionada:", regionId);
+        $('#city-select').empty().append(new Option("Selecciona una comuna", ""));
+
+        if (regionId) {
             $.ajax({
-                url: '{{ url('/api/regions') }}',
+                url: '{{ url('/api/regions') }}/' + regionId + '/communes',
                 method: 'GET',
                 success: function(data) {
-                    console.log("Regiones recibidas:", data);
-                    data.forEach(function(region) {
-                        $('#region-select').append(new Option(region.nombre, region.id));
+                    console.log("Comunas para la región seleccionada:", data);
+                    // Accede al array de comunas dentro de data.data
+                    data.data.forEach(function(commune) { 
+                        $('#city-select').append(new Option(commune.nombre, commune.id));
                     });
                 },
                 error: function(xhr, status, error) {
-                    console.error("Error al cargar las regiones:", error);
+                    console.error("Error al cargar las comunas:", error);
                     console.log("Detalles:", xhr.responseText);
                 }
             });
+        }
+    });
+});
+        const input = document.getElementById('photos');
 
-            // Cargar las comunas según la región seleccionada
-            $('#region-select').on('change', function() {
-                var regionId = $(this).val();
-                console.log("Región seleccionada:", regionId);
-                $('#city-select').empty().append(new Option("Selecciona una comuna", ""));
-
-                if (regionId) {
-                    $.ajax({
-                        url: '{{ url('/api/regions') }}/' + regionId + '/communes',
-                        method: 'GET',
-                        success: function(data) {
-                            console.log("Comunas para la región seleccionada:", data);
-                            data.forEach(function(commune) {
-                                $('#city-select').append(new Option(commune.nombre,
-                                    commune.id));
-                            });
-                        },
-                        error: function(xhr, status, error) {
-                            console.error("Error al cargar las comunas:", error);
-                            console.log("Detalles:", xhr.responseText);
-                        }
-                    });
-                }
-            });
+        input.addEventListener('change', function() {
+        if (this.files.length > 3) {
+            alert('Puedes subir un máximo de 3 imágenes.');
+            this.value = ''; // Limpiar la selección de archivos
+        } else {
+            for (let i = 0; i < this.files.length; i++) {
+            const file = this.files[i];
+            if (!file.type.startsWith('image/')) {
+                alert('Solo se permiten imágenes.');
+                this.value = ''; // Limpiar la selección de archivos
+                return;
+            }
+            // Aquí puedes agregar código para previsualizar las imágenes o mostrar información adicional
+            }
+        }
         });
     </script>
 

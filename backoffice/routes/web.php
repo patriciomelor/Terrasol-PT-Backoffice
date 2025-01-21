@@ -21,13 +21,14 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-// Rutas de recuperación de contraseñas
+// O puedes definir las rutas manualmente:
 Route::prefix('password')->group(function () {
-    Route::get('/password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+    Route::get('reset', [\App\Http\Controllers\Auth\ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
     Route::post('email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
     Route::get('reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
     Route::post('reset', [ResetPasswordController::class, 'reset'])->name('password.update');
-
+    Route::get('/password/reset', [\App\Http\Controllers\Auth\ForgotPasswordController::class, 'showLinkRequestForm'])
+    ->name('password.request');
 });
 
 
