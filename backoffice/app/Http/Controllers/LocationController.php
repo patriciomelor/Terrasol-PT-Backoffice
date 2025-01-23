@@ -9,23 +9,23 @@ use Illuminate\Http\Request;
 
 class LocationController extends Controller
 {
-    public function getRegion($regionId)
+    public function getRegion($regionNombre) // Cambiar $regionId a $regionNombre
     {
-        $region = Region::find($regionId);
+        $region = Region::where('nombre', $regionNombre)->first(); // Buscar por nombre
 
         if (!$region) {
-            return response()->json(['message' => 'Región no encontrada', 'data' => []], 200);
+            return response()->json(['message' => 'Región no encontrada', 'data' => []], 404); // 404 Not Found
         }
 
         return response()->json(['message' => 'Región encontrada', 'data' => $region], 200);
     }
 
-    public function getComunas($regionId)
+    public function getComunas($regionNombre) // Cambiar $regionId a $regionNombre
     {
-        $region = Region::find($regionId);
+        $region = Region::where('nombre', $regionNombre)->first(); // Buscar por nombre
 
         if (!$region) {
-            return response()->json(['message' => 'Región no encontrada', 'data' => []], 200);
+            return response()->json(['message' => 'Región no encontrada', 'data' => []], 404); // 404 Not Found
         }
 
         $comunas = $region->comunas;

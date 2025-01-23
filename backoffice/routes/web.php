@@ -49,7 +49,6 @@ Route::resource('articles', ArticleController::class)->except(['show', 'edit']);
 Route::get('articles/{id}', [ArticleController::class, 'show'])->name('articles.show');
 Route::get('articles/{article}/edit', [ArticleController::class, 'edit'])->name('articles.edit');
 Route::delete('/articles/{id}/photo/{photo}', [ArticleController::class, 'deletePhoto'])->name('articles.delete_photo');
-
 // Rutas para roles
 Route::resource('roles', RoleController::class);
 

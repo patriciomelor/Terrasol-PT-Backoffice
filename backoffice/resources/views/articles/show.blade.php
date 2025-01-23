@@ -82,14 +82,14 @@
                     <h4 class="mt-3">Región:</h4>
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
                         <label class="btn btn-default text-center">
-                            <span class="text-m">{{ $article->region->nombre }}</span> 
+                            <span class="text-m">{{ $article->region }}</span> 
                         </label>
                     </div>
 
                     <h4 class="mt-3">Ciudad:</h4>
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
                         <label class="btn btn-default text-center">
-                            <span class="text-m"> {{ $regionName }}</span> 
+                            <span class="text-m"> {{ $article->city }}</span> 
                         </label>
                     </div>
 

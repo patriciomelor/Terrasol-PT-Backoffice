@@ -202,7 +202,7 @@
                                         <div class="mb-6">
                                             <label for="street">Calle:</label>
                                             <input type="text" name="street" id="street"
-                                                class="form-select form-select-lg @error('street') is-invalid @enderror"
+                                                class="select2 form-select form-select-lg @error('street') is-invalid @enderror"
                                                 value="{{ old('street') }}" required>
                                             @error('street')
                                                 <span class="invalid-feedback" role="alert">
@@ -280,58 +280,58 @@
             </form>
         </div>
     </div>
+    <script
+        src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+        crossorigin="anonymous"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Definir las URLs utilizando Blade
-            const regionsUrl = "{{ url('/api/regions') }}";
+    document.addEventListener('DOMContentLoaded', function () {
 
-            // Cargar las regiones al cargar la página
-            $.ajax({
-                url: regionsUrl,
-                method: 'GET',
-                success: function(data) {
-                    console.log("Regiones recibidas:", data);
-                    // Accede al array de regiones dentro de data.data
-                    data.data.forEach(function(region) {
-                        // Agregar opciones al `#region-select`
-                        $('#region-select').append(new Option(region.nombre, region.id));
-                    });
+        // URLs de la API
+        const regionsUrl = "{{ url('/api/regions') }}";
+        const communesUrl = "{{ url('/api/communes') }}";
 
-                    // Inicializar Select2 después de cargar las regiones
-                    $('#region-select').select2();
-                },
-                error: function(xhr, status, error) {
-                    console.error("Error al cargar las regiones:", error);
-                    console.log("Detalles:", xhr.responseText);
-                }
-            });
-
-            // Cargar las comunas según la región seleccionada
-            $('#region-select').on('change', function() {
-                var regionId = $(this).val();
-                console.log("Región seleccionada:", regionId);
-                $('#city-select').empty().append(new Option("Selecciona una comuna", ""));
-
-                if (regionId) {
-                    $.ajax({
-                        url: '{{ url('/api/regions') }}/' + regionId.toString() + '/communes',
-                        method: 'GET',
-                        success: function(data) {
-                            console.log("Comunas para la región seleccionada:", data);
-                            data.data.forEach(function(commune) {
-                                $('#city-select').append(new Option(commune.nombre,
-                                    commune.id));
-                            });
-                            // Inicializar Select2 para el `#city-select`
-                            $('#city-select').select2();
-                        },
-                        error: function(xhr, status, error) {
-                            console.error("Error al cargar las comunas:", error);
-                            console.log("Detalles:", xhr.responseText);
-                        }
-                    });
-                }
-            });
+        // Cargar regiones
+        $.ajax({
+            url: regionsUrl,
+            method: 'GET',
+            success: function (data) {
+                console.log("Regiones recibidas:", data);
+                data.data.forEach(function (region) {
+                    $('#region-select').append(new Option(region.nombre, region.nombre));
+                });
+            },
+            error: function (xhr, status, error) {
+                console.error("Error al cargar las regiones:", error); // Usar console.error
+                console.error("Detalles:", xhr.responseText); // Usar console.error
+                // Mostrar un mensaje de error al usuario (opcional)
+            }
         });
-    </script>
+
+        // Cargar comunas al cambiar la región
+        $('#region-select').on('change', function () {
+            var regionNombre = $(this).val(); // Obtener el nombre de la región
+            console.log("Región seleccionada:", regionNombre);
+            $('#city-select').empty().append(new Option("Selecciona una comuna", ""));
+
+            if (regionNombre) {
+                $.ajax({
+                    url: '{{ url('/api/regions') }}/' + regionNombre + '/communes',
+                    method: 'GET',
+                    success: function (data) {
+                        console.log("Comunas para la región seleccionada:", data);
+                        data.data.forEach(function (commune) {
+                            $('#city-select').append(new Option(commune.nombre, commune.nombre));
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error al cargar las comunas:", error); // Usar console.error
+                        console.error("Detalles:", xhr.responseText); // Usar console.error
+                        // Mostrar un mensaje de error al usuario (opcional)
+                    }
+                });
+            }
+        });
+    });
+  </script>
 @endsection
