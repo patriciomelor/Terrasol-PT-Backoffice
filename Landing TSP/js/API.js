@@ -91,8 +91,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
       data.data.forEach(article => {
         if (article.region && article.city) {
-          getRegionAndCityNames(article.region, article.city)
-            .then(names => {
+          getComunaName(article.city) // Llamar a la nueva función
+            .then(comunaName => {
               // Este código se ejecuta DESPUÉS de obtener la región y la comuna
               const regionName = names.regionName;
               const comunaName = names.comunaName;
@@ -104,6 +104,7 @@ document.addEventListener('DOMContentLoaded', function () {
               let descriptionHTML = `<p class="card-text">${article.description.substring(0, 150)}...</p>`;
               // Usar comunaName en lugar de cityName
               descriptionHTML += `<p class="card-text">${regionName}, ${comunaName}, ${article.street}</p>`;
+
 
               // Agregar los iconos de características
               if (caracteristicas.length > 0) {
@@ -219,6 +220,27 @@ document.addEventListener('DOMContentLoaded', function () {
               });
       });
   }
+  function getComunaName(comunaId) {
+    return new Promise((resolve, reject) => {
+      fetch(`http://127.0.0.1:8000/comunas`) // Llamar a la API de comunas
+        .then(res => {
+          if (!res.ok) {
+            throw new Error(`Error al obtener las comunas: ${res.status} ${res.statusText}`);
+          }
+          return res.json();
+        })
+        .then(comunasData => {
+          const comuna = comunasData.data.find(comuna => comuna.id === comunaId); // Buscar la comuna por ID
+          const comunaName = comuna ? comuna.nombre : 'Desconocida';
+          resolve(comunaName);
+        })
+        .catch(error => {
+          console.error('Error al obtener el nombre de la comuna:', error);
+          resolve('Desconocida'); // Devolver "Desconocida" en caso de error
+        });
+    });
+  }
+  
   // Función para obtener los nombres de la región y la comuna
   function getRegionAndCityNames(regionId, cityId) {
     console.log("Region ID:", regionId);

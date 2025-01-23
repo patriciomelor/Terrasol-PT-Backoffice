@@ -42,4 +42,8 @@ class LocationController extends Controller
         $regions = Region::all();
         return response()->json(['message' => 'Regiones encontradas', 'data' => $regions], 200);
     }
+    public function getComunasAPI() {
+        $comunas = Comuna::all();
+        return response()->json(['message'=> 'Comunas encontradas', 'data' => $comunas], 200);
+    }
 }
