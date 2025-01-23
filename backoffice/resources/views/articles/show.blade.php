@@ -68,28 +68,28 @@
                     <h4 class="mt-3">Metros cuadrados:</h4>
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
                         <label class="btn btn-default text-center">
-                            <span class="text-l">{{ $article->square_meters }}</span>
+                            <span class="text-l">{{ $article->square_meters }}Metros</span>
                         </label>
                     </div>
 
                     <h4 class="mt-3">Metros construidos:</h4>
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
                         <label class="btn btn-default text-center">
-                            <span class="text-l">{{ $article->constructed_meters }}</span>
+                            <span class="text-l">{{ $article->constructed_meters }}Metros</span>
                         </label>
                     </div>
 
                     <h4 class="mt-3">Región:</h4>
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
                         <label class="btn btn-default text-center">
-                            <span class="text-m">{{ $article->region->nombre }}</span>
+                            <span class="text-m">{{ $article->region->nombre }}</span> 
                         </label>
                     </div>
 
                     <h4 class="mt-3">Ciudad:</h4>
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
                         <label class="btn btn-default text-center">
-                            <span class="text-m">{{ $article->city->nombre }}</span>
+                            <span class="text-m"> {{ $regionName }}</span> 
                         </label>
                     </div>
 

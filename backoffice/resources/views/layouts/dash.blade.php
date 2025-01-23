@@ -26,21 +26,17 @@
 <link href="{{ asset('vendor/fonts/flag-icons.css') }}" rel="stylesheet">
 
 <!-- CSS Adicional -->
-<link href="{{ asset('vendor/libs/node-waves/node-waves.css') }}" rel="stylesheet">
-<link href="{{ asset('vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" rel="stylesheet">
-<link href="{{ asset('vendor/libs/apex-charts/apex-charts.css') }}" rel="stylesheet">
-<link href="{{ asset('vendor/libs/swiper/swiper.css') }}" rel="stylesheet">
-<link href="{{ asset('vendor/libs/datatables-bs5/datatables.bootstrap5.css') }}" rel="stylesheet">
+<link href="{{ asset('css/node-waves.css') }}" rel="stylesheet">
+<link href="{{ asset('css/perfect-scrollbar.css') }}" rel="stylesheet">
+<link href="{{ asset('css/apex-charts.css') }}" rel="stylesheet">
+<link href="{{ asset('css/swiper.css') }}" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
 
 <!-- Page CSS -->
-<link href="{{ asset('vendor/css/pages/cards-advance.css') }}" rel="stylesheet">
+<link href="{{ asset('css/cards-advance.css') }}" rel="stylesheet">
 <!-- Cargar jQuery antes de Select2 -->
 <!-- jQuery (primero) -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<!-- Select2 (después de jQuery) -->
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </head>
 
 <body>
@@ -159,39 +155,12 @@
                                                 Profile</span>
                                         </a>
                                     </li>
-                                    <li>
-                                        <a class="dropdown-item waves-effect"
-                                            href="pages-account-settings-account.html">
-                                            <i class="ti ti-settings me-3 ti-md"></i><span
-                                                class="align-middle">Settings</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item waves-effect"
-                                            href="pages-account-settings-billing.html">
-                                            <span class="d-flex align-items-center align-middle">
-                                                <i class="flex-shrink-0 ti ti-file-dollar me-3 ti-md"></i><span
-                                                    class="flex-grow-1 align-middle">Billing</span>
-                                                <span
-                                                    class="flex-shrink-0 badge bg-danger d-flex align-items-center justify-content-center">4</span>
-                                            </span>
-                                        </a>
-                                    </li>
+                                   
+
                                     <li>
                                         <div class="dropdown-divider my-1 mx-n2"></div>
                                     </li>
-                                    <li>
-                                        <a class="dropdown-item waves-effect" href="pages-pricing.html">
-                                            <i class="ti ti-currency-dollar me-3 ti-md"></i><span
-                                                class="align-middle">Pricing</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item waves-effect" href="pages-faq.html">
-                                            <i class="ti ti-question-mark me-3 ti-md"></i><span
-                                                class="align-middle">FAQ</span>
-                                        </a>
-                                    </li>
+
                                     <li>
                                         <div class="d-grid px-2 pt-2 pb-1">
                                             <a class="btn btn-sm btn-danger d-flex waves-effect waves-light"
@@ -206,13 +175,6 @@
                             <!--/ User -->
                         </ul>
                     </div>
-
-                    <!-- Search Small Screens -->
-                    <div class="navbar-search-wrapper search-input-wrapper container-xxl d-none">
-                        <input type="text" class="form-control search-input border-0 container-xxl"
-                            placeholder="Search..." aria-label="Search...">
-                        <i class="ti ti-x search-toggler cursor-pointer"></i>
-                    </div>
                 </div>
             </nav>
             <!-- Layout container -->
@@ -224,8 +186,6 @@
                         data-bg-class="bg-menu-theme"
                         style="touch-action: none; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
                         <div class="container-xxl d-flex text-center h-100">
-
-                            <a href="#" class="menu-horizontal-prev disabled"></a>
                             <div class="menu-horizontal-wrapper">
                                 <ul class="menu-inner pb-2 pb-xl-0" style="margin-left: 0px;justify-content: center;">
                                     <!-- Dashboards -->
@@ -236,10 +196,7 @@
                                         </a>
                                     </li>
 
-                                    <!-- Configuración de usuarios -->
-                                    <li class="menu-header small text-uppercase">
-                                        <span class="menu-header-text">Config. Usuarios</span>
-                                    </li>
+                   
                                     <li class="menu-item">
                                         <a href="{{ route('users.index') }}" class="menu-link">
                                             <i class="menu-icon fas fa-user"></i>
@@ -289,7 +246,6 @@
                                         </a>
                                     </li>
                                 </ul>
-                            </div><a href="#" class="menu-horizontal-next"></a>
                         </div>
                     </aside>
                     <div class="container-xxl flex-grow-1 container-p-y">
@@ -352,40 +308,52 @@
     <div class="drag-target"></div>
     <!-- JavaScript -->
   <!-- Scripts de Core -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="{{ asset('vendor/libs/popper/popper.js') }}"></script>
-<script src="{{ asset('vendor/js/bootstrap.js') }}"></script>
-<script src="{{ asset('vendor/libs/node-waves/node-waves.js') }}"></script>
-<script src="{{ asset('vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script type="module" src="{{ asset('js/main.js') }}"></script>
+    <script src="{{ asset('js/core.js') }}"></script>
+    <script src="{{ asset('js/helpers.js') }}"></script>
+    <script src="{{ asset('js/menu.js') }}"></script>
+    <script src="{{ asset('js/config.js') }}"></script>
+    <script src="{{ asset('js/popper.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.js') }}"></script>
+    <script src="{{ asset('js/node-waves.js') }}"></script>
+    <script src="{{ asset('js/perfect-scrollbar.js') }}"></script>
 
-<!-- JS Adicional -->
-<script src="{{ asset('vendor/libs/apex-charts/apexcharts.js') }}"></script>
-<script src="{{ asset('vendor/libs/swiper/swiper.js') }}"></script>
-<script src="{{ asset('vendor/libs/datatables-bs5/datatables-bootstrap5.js') }}"></script>
+    <!-- JS Adicional -->
+    <script src="{{ asset('js/swiper.js') }}"></script>
 
-<!-- Main JS y Configuración -->
-<script src="{{ asset('vendor/js/menu.js') }}"></script>
-<script src="{{ asset('js/config.js') }}"></script>
-<script src="{{ asset('js/main.js') }}"></script>
-<!-- Select2 JS local -->
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
-<script>
+    <!-- Main JS y Configuración -->
+    <script>
     document.addEventListener("DOMContentLoaded", function() {
+    function actualizarMenuActivo() {
         // Obtener la URL actual sin el parámetro de consulta
         var currentUrl = window.location.href.split(/[?#]/)[0];
-
+    
         // Seleccionar todos los enlaces del menú
         var menuLinks = document.querySelectorAll('.menu-item a');
-
+    
+        // Eliminar la clase "active open" de todos los elementos del menú
+        menuLinks.forEach(function(link) {
+        link.closest('.menu-item').classList.remove('active', 'open');
+        });
+    
         // Recorrer todos los enlaces del menú
         menuLinks.forEach(function(link) {
-            // Comprobar si la URL del enlace coincide con la URL actual
-            if (link.href === currentUrl) {
-                // Agregar la clase "active" al padre del enlace
-                link.closest('.menu-item').classList.add('active');
-            }
+        // Comprobar si la URL del enlace coincide con la URL actual
+        if (link.href === currentUrl) {
+            // Agregar la clase "active open" al padre del enlace
+            link.closest('.menu-item').classList.add('active', 'open');
+        }
         });
+    }
+    
+    // Ejecutar la función al cargar la página
+    document.addEventListener("DOMContentLoaded", actualizarMenuActivo);
+    
+    // Ejecutar la función cada vez que cambie la URL
+    window.addEventListener('popstate', actualizarMenuActivo);
     });
-</script>
+    </script>
+
 </body>

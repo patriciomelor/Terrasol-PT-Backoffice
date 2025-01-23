@@ -2,15 +2,15 @@
 
 @section('content')
 
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
     <div class="container-xxl flex-grow-1 container-p-y">
         <div class="app-ecommerce">
@@ -122,6 +122,7 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- Footer Section -->
                         <div class="row">
                             <!-- MTc Section -->
                             <div class="col-xl-6 col-sm-6">
@@ -133,7 +134,8 @@
                                     <div class="card-body">
                                         <!-- Metros Cuadrados -->
                                         <div class="mb-3">
-                                            <label for="square_meters" class="form-label">Metros Cuadrados de la Parcela</label>
+                                            <label for="square_meters" class="form-label">Metros Cuadrados de la
+                                                Parcela</label>
                                             <input type="number"
                                                 class="form-control @error('square_meters') is-invalid @enderror"
                                                 id="square_meters" name="square_meters"
@@ -161,19 +163,18 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- MTc Section -->
+                            <!-- Direccion Section -->
                             <div class="col-xl-6 col-sm-6">
                                 <div class="card h-100">
                                     <div class="card-header">
                                         <h5 class="card-title mb-0">Ubicación</h5>
                                     </div>
-
                                     <div class="card-body">
                                         <!-- Región -->
                                         <div class="mb-6">
                                             <label for="region" class="form-label">Región</label>
                                             <select id="region-select" name="region"
-                                                class="select2 form-select form-select-lg">
+                                                class="select2 form-select form-select-lg" required>
                                                 <option value="">Selecciona una región</option>
                                             </select>
                                             @error('region')
@@ -187,7 +188,7 @@
                                         <div class="mb-6">
                                             <label for="city" class="form-label">Comuna</label>
                                             <select id="city-select" name="city"
-                                                class="select2 form-select form-select-lg">
+                                                class="select2 form-select form-select-lg" required>
                                                 <option value="">Selecciona una comuna</option>
                                             </select>
                                             @error('city')
@@ -197,11 +198,12 @@
                                             @enderror
                                         </div>
 
+                                        <!-- calle -->
                                         <div class="mb-6">
                                             <label for="street">Calle:</label>
                                             <input type="text" name="street" id="street"
                                                 class="form-select form-select-lg @error('street') is-invalid @enderror"
-                                                value="{{ old('street') }}" autofocus>
+                                                value="{{ old('street') }}" required>
                                             @error('street')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -214,7 +216,7 @@
                         </div>
                     </div>
 
-                    <!-- caracter Section -->
+                    <!-- Lateral Section -->
                     <div class="col-12 col-lg-4">
                         <!-- Características Section -->
                         <div class="card mb-6">
@@ -248,8 +250,7 @@
                                 </div>
                             </div>
                         </div>
-
-
+                        <!-- Precio Section -->
                         <div class="card mb-6">
                             <div class="card-header">
                                 <h5 class="card-title mb-0">Estado de Terreno</h5>
@@ -260,9 +261,9 @@
                                     <label for="sale_or_rent">Venta o Arriendo:</label>
                                     <select name="sale_or_rent" id="sale_or_rent"
                                         class="form-control @error('sale_or_rent') is-invalid @enderror">
-                                        <option value="sale" {{ old('sale_or_rent') == 'sale' ? 'selected' : '' }}>Venta
+                                        <option value="Venta" {{ old('sale_or_rent') == 'sale' ? 'selected' : '' }}>Venta
                                         </option>
-                                        <option value="rent" {{ old('sale_or_rent') == 'rent' ? 'selected' : '' }}>
+                                        <option value="Arriendo" {{ old('sale_or_rent') == 'rent' ? 'selected' : '' }}>
                                             Arriendo
                                         </option>
                                     </select>
@@ -279,74 +280,58 @@
             </form>
         </div>
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-          document.addEventListener('DOMContentLoaded', function() {
-    // Definir las URLs utilizando Blade
-    const regionsUrl = "{{ url('/api/regions') }}";
-    const communesUrl = "{{ url('/api/communes') }}"; 
+        document.addEventListener('DOMContentLoaded', function() {
+            // Definir las URLs utilizando Blade
+            const regionsUrl = "{{ url('/api/regions') }}";
 
-    // Cargar las regiones al cargar la página
-    $.ajax({
-        url: regionsUrl,
-        method: 'GET',
-        success: function(data) {
-            console.log("Regiones recibidas:", data);
-            // Accede al array de regiones dentro de data.data
-            data.data.forEach(function(region) {
-                $('#region-select').append(new Option(region.nombre, region.id));
-            });
-        },
-        error: function(xhr, status, error) {
-            console.error("Error al cargar las regiones:", error);
-            console.log("Detalles:", xhr.responseText);
-        }
-    });
-
-    // Cargar las comunas según la región seleccionada
-    $('#region-select').on('change', function() {
-        var regionId = $(this).val();
-        console.log("Región seleccionada:", regionId);
-        $('#city-select').empty().append(new Option("Selecciona una comuna", ""));
-
-        if (regionId) {
+            // Cargar las regiones al cargar la página
             $.ajax({
-                url: '{{ url('/api/regions') }}/' + regionId + '/communes',
+                url: regionsUrl,
                 method: 'GET',
                 success: function(data) {
-                    console.log("Comunas para la región seleccionada:", data);
-                    // Accede al array de comunas dentro de data.data
-                    data.data.forEach(function(commune) { 
-                        $('#city-select').append(new Option(commune.nombre, commune.id));
+                    console.log("Regiones recibidas:", data);
+                    // Accede al array de regiones dentro de data.data
+                    data.data.forEach(function(region) {
+                        // Agregar opciones al `#region-select`
+                        $('#region-select').append(new Option(region.nombre, region.id));
                     });
+
+                    // Inicializar Select2 después de cargar las regiones
+                    $('#region-select').select2();
                 },
                 error: function(xhr, status, error) {
-                    console.error("Error al cargar las comunas:", error);
+                    console.error("Error al cargar las regiones:", error);
                     console.log("Detalles:", xhr.responseText);
                 }
             });
-        }
-    });
-});
-        const input = document.getElementById('photos');
 
-        input.addEventListener('change', function() {
-        if (this.files.length > 3) {
-            alert('Puedes subir un máximo de 3 imágenes.');
-            this.value = ''; // Limpiar la selección de archivos
-        } else {
-            for (let i = 0; i < this.files.length; i++) {
-            const file = this.files[i];
-            if (!file.type.startsWith('image/')) {
-                alert('Solo se permiten imágenes.');
-                this.value = ''; // Limpiar la selección de archivos
-                return;
-            }
-            // Aquí puedes agregar código para previsualizar las imágenes o mostrar información adicional
-            }
-        }
+            // Cargar las comunas según la región seleccionada
+            $('#region-select').on('change', function() {
+                var regionId = $(this).val();
+                console.log("Región seleccionada:", regionId);
+                $('#city-select').empty().append(new Option("Selecciona una comuna", ""));
+
+                if (regionId) {
+                    $.ajax({
+                        url: '{{ url('/api/regions') }}/' + regionId.toString() + '/communes',
+                        method: 'GET',
+                        success: function(data) {
+                            console.log("Comunas para la región seleccionada:", data);
+                            data.data.forEach(function(commune) {
+                                $('#city-select').append(new Option(commune.nombre,
+                                    commune.id));
+                            });
+                            // Inicializar Select2 para el `#city-select`
+                            $('#city-select').select2();
+                        },
+                        error: function(xhr, status, error) {
+                            console.error("Error al cargar las comunas:", error);
+                            console.log("Detalles:", xhr.responseText);
+                        }
+                    });
+                }
+            });
         });
     </script>
-
 @endsection
