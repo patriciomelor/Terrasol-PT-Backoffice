@@ -68,14 +68,14 @@
                     <h4 class="mt-3">Metros cuadrados:</h4>
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
                         <label class="btn btn-default text-center">
-                            <span class="text-l">{{ $article->square_meters }}Metros</span>
+                            <span class="text-l">{{ $article->square_meters }} m²</span>
                         </label>
                     </div>
 
                     <h4 class="mt-3">Metros construidos:</h4>
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
                         <label class="btn btn-default text-center">
-                            <span class="text-l">{{ $article->constructed_meters }}Metros</span>
+                            <span class="text-l">{{ $article->constructed_meters }} m²</span>
                         </label>
                     </div>
 
@@ -111,10 +111,10 @@
                         <label>Características:</label>
                         @foreach($article->characteristics as $characteristic) 
                             <div class="form-check">
-                                <input class="form-check-input" disabled type="checkbox" name="characteristics[{{ $characteristic->id }}]" value="1" id="characteristic_{{ $characteristic->id }}" checked>
-                                <label class="form-check-label" for="characteristic_{{ $characteristic->id }}" disabled>
+                                <input hidden class="form-check-input" disabled type="checkbox" name="characteristics[{{ $characteristic->id }}]" value="1" id="characteristic_{{ $characteristic->id }}" checked>
+                                <label class="form-check-label" for="characteristic_{{ $characteristic->id }}">
                                     @if(isset($characteristic->icon))
-                                        <i class="fas {{ $characteristic->icon }}" style="font-size: 24px;"></i> {{ $characteristic->name }}
+                                        <i class="fas {{ $characteristic->icon }}" style="font-size: 24px;"></i> -{{ $characteristic->name }}
                                     @endif
                                 </label>
                             </div>
