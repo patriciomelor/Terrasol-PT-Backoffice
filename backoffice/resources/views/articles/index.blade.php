@@ -34,7 +34,10 @@
                 
                             <!-- Resto de tu código -->
                         <td style="text-align: center; vertical-align: middle;">{{ $article->title }}</td>
-                        <td style="text-align: left; vertical-align: middle; width:30%;">{{ $article->description }}</td>
+                        <td  style="text-align: center; vertical-align: middle; width:30%;" class="texto-largo"> 
+                            <p>{{ $article->description }}</p>
+                            <span class="texto-completo" style="display: none;">{{ $article->description }}</span>
+                          </td>
                         <td style="text-align: center; vertical-align: middle;">{{ $article->square_meters }} Metros Cuadrados</td>
                         <td style="text-align: center; vertical-align: middle;">{{ $article->constructed_meters }} Metros Construidos</td>
                         <td style="text-align: center; vertical-align: middle;">
@@ -77,4 +80,32 @@
             </table>
         </div>
     </div>
+<script>
+ const textosLargos = document.querySelectorAll('.texto-largo');
+const limiteCaracteres = 100; 
+
+textosLargos.forEach(textoLargo => {
+  const parrafo = textoLargo.querySelector('p');
+  const textoCompleto = textoLargo.querySelector('.texto-completo');
+
+  if (parrafo.textContent.length > limiteCaracteres) {
+    const textoCortado = parrafo.textContent.substring(0, limiteCaracteres) + '...';
+    parrafo.textContent = textoCortado;
+
+    const botonLeerMas = document.createElement('button');
+    botonLeerMas.textContent = 'Leer más';
+
+    botonLeerMas.addEventListener('click', () => {
+      if (botonLeerMas.textContent === 'Leer más') {
+        parrafo.textContent = textoCompleto.textContent;
+        botonLeerMas.textContent = 'Leer menos';
+      } else {
+        parrafo.textContent = textoCortado;
+        botonLeerMas.textContent = 'Leer más';
+      }
+    });
+
+    textoLargo.insertBefore(botonLeerMas, textoCompleto);
+  }
+});  </script>
 @endsection
