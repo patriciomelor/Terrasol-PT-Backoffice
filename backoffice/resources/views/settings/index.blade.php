@@ -5,7 +5,7 @@
                 <div class="card">
                     <div class="card-header border-bottom">
                         <h3 class="card-title mb-4">Configuraciones</h3>
-                        <a href="{{ route('settings.create') }}"  class="btn rounded-pill btn-label-info waves-effect"><i class=" fa-solid fa-pen-to-square ti-xs me-2"></i>Crear Configuración</a>
+                        <a href="{{ route('settings.create') }}"  class="btn rounded-pill btn-label-info waves-effect"><i class=" fa-solid fa-pen-to-square ti-xs me-2"></i>Modificar Masivamente</a>
                     </div>
                     <div class="card-body">
                         <table id="settings-table" class="table table-responsive">
