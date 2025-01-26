@@ -21,13 +21,7 @@
             <a class="nav-link mx-lg-2" href="#Nosotros">Nosotros</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link mx-lg-2" href="#Parcelas">Parcelas</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link mx-lg-2" href="#Terrenos">Sólo terreno</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link mx-lg-2" href="#Casa">Casa en parcela</a>
+            <a class="nav-link mx-lg-2" href="#main-parcelas">Propiedades</a>
           </li>
           <li class="nav-item">
             <a class="nav-link mx-lg-2" href="#Preguntas">Preguntas frecuentes</a>

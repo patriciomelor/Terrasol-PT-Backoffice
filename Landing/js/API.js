@@ -1,53 +1,52 @@
-  // Debe estar en el ámbito global, no dentro de otra función
-  function openModal(articleId) {
-    // Obtener los datos del artículo con la ID correspondiente (puedes obtener estos datos de la API si es necesario)
-    const article = data.data.find(article => article.id === articleId);
+// Debe estar en el ámbito global, no dentro de otra función
+function openModal(articleId) {
+  // Obtener los datos del artículo con la ID correspondiente (puedes obtener estos datos de la API si es necesario)
+  const article = data.data.find(article => article.id === articleId);
 
-    if (article) {
-      // Actualizar los campos del modal con los datos del artículo
-      document.getElementById('modal-title').textContent = article.title;
-      document.getElementById('modal-description').textContent = article.description;
-      document.getElementById('modal-size').textContent = `${article.square_meters} m² / ${article.constructed_meters} m²`;
-      document.getElementById('modal-location').textContent = `${regionName}, ${cityName}, ${article.street}`;
+  if (article) {
+    // Actualizar los campos del modal con los datos del artículo
+    document.getElementById('modal-title').textContent = article.title;
+    document.getElementById('modal-description').textContent = article.description;
+    document.getElementById('modal-size').textContent = `${article.square_meters} m² / ${article.constructed_meters} m²`;
+    document.getElementById('modal-location').textContent = `${regionName}, ${cityName}, ${article.street}`;
 
-      // Si hay una imagen de portada, mostrarla
-      const coverImage = article.photos.length > 0 ? `data:image/jpeg;base64,${article.photos[0]}` : 'default-cover.jpg';
-      document.getElementById('modal-image').src = coverImage;
+    // Si hay una imagen de portada, mostrarla
+    const coverImage = article.photos.length > 0 ? `data:image/jpeg;base64,${article.photos[0]}` : 'default-cover.jpg';
+    document.getElementById('modal-image').src = coverImage;
 
-      // Mostrar las comunas si están disponibles
-      getComunasForRegion(article.region).then(comunas => {
-        const comunaList = document.getElementById('modal-communes');
-        comunaList.innerHTML = ''; // Limpiar las comunas previas si existen
+    // Mostrar las comunas si están disponibles
+    getComunasForRegion(article.region).then(comunas => {
+      const comunaList = document.getElementById('modal-communes');
+      comunaList.innerHTML = ''; // Limpiar las comunas previas si existen
 
-        if (comunas.length > 0) {
-          comunas.forEach(comuna => {
-            const comunaItem = document.createElement('li');
-            comunaItem.textContent = comuna.nombre; // Mostrar el nombre de la comuna
-            comunaList.appendChild(comunaItem);
-          });
-        } else {
-          const noComunasItem = document.createElement('li');
-          noComunasItem.textContent = 'No hay comunas asociadas a esta región.';
-          comunaList.appendChild(noComunasItem);
-        }
-      });
-      // Agregar inert al body (o el contenedor principal de la página)
-      document.body.setAttribute('inert', 'true');
+      if (comunas.length > 0) {
+        comunas.forEach(comuna => {
+          const comunaItem = document.createElement('li');
+          comunaItem.textContent = comuna.nombre; // Mostrar el nombre de la comuna
+          comunaList.appendChild(comunaItem);
+        });
+      } else {
+        const noComunasItem = document.createElement('li');
+        noComunasItem.textContent = 'No hay comunas asociadas a esta región.';
+        comunaList.appendChild(noComunasItem);
+      }
+    });
+    // Agregar inert al body (o el contenedor principal de la página)
+    document.body.setAttribute('inert', 'true');
 
-      // Abrir el modal (asumido que usas Bootstrap o algo similar)
-      const modal = new bootstrap.Modal(document.getElementById('articleModal'));
-      modal.show();
+    // Abrir el modal (asumido que usas Bootstrap o algo similar)
+    const modal = new bootstrap.Modal(document.getElementById('articleModal'));
+    modal.show();
 
-      // Al cerrar el modal, quitar el inert para permitir la interacción con el contenido
-      document.getElementById('articleModal').addEventListener('hidden.bs.modal', function () {
-        document.body.removeAttribute('inert');
-      });
-    }
+    // Al cerrar el modal, quitar el inert para permitir la interacción con el contenido
+    document.getElementById('articleModal').addEventListener('hidden.bs.modal', function () {
+      document.body.removeAttribute('inert');
+    });
   }
+}
 document.addEventListener('DOMContentLoaded', function () {
   const token = '97jI2Q87CImBAEcNzbS33ucBCyJacSHJSOZW3EMD5db839c0';  // Sustituye este valor por tu Bearer Token real
 
-  // Función para manejar las solicitudes a la API
   function fetchData(url, callback) {
     fetch(url, {
       method: 'GET',
@@ -63,20 +62,24 @@ document.addEventListener('DOMContentLoaded', function () {
         // Manejar el error, por ejemplo, mostrar un mensaje al usuario
       });
   }
-  // Mostrar misión y visión
+
   function displayMissionAndVision(data) {
     if (data) {
-      document.getElementById('mission').innerHTML = data.mission || 'No se ha definido la misión.';
-      document.getElementById('vision').innerHTML = data.vision || 'No se ha definido la visión.';
-      document.getElementById('nosotros').innerHTML = data.about_us || 'No se ha definido la Sobre nosotros.';
-      document.getElementById('site_name').innerHTML = data.site_name || 'No se ha definido El titulo.';
-      document.getElementById('site_description').innerHTML = data.site_description || 'No se ha definido El subtitulo.';
+      const missionElement = document.getElementById('mission');
+      const visionElement = document.getElementById('vision');
+      const nosotrosElement = document.getElementById('nosotros');
+      const siteNameElement = document.getElementById('site_name');
+      const siteDescriptionElements = document.querySelectorAll('.site_description');
+  
+      if (missionElement) missionElement.innerHTML = data.mission || 'No se ha definido la misión.';
+      if (visionElement) visionElement.innerHTML = data.vision || 'No se ha definido la visión.';
+      if (nosotrosElement) nosotrosElement.innerHTML = data.about_us || 'No se ha definido la Sobre nosotros.';
+      if (siteNameElement) siteNameElement.innerHTML = data.site_name || 'No se ha definido El titulo.';
+      siteDescriptionElements.forEach(element => {
+        element.innerHTML = data.site_description || 'No se ha definido El subtitulo.';
+      });
     } else {
-      document.getElementById('mission').textContent = 'No se pudo cargar la misión.';
-      document.getElementById('vision').textContent = 'No se pudo cargar la visión.';
-      document.getElementById('nosotros').textContent = 'No se pudo cargar la Sobre Nosotros.';
-      document.getElementById('site_name').textContent = 'No se pudo cargar  El titulo.';
-      document.getElementById('site_description').textContent = 'No se pudo cargar  El subtitulo.';
+      console.error('No se pudieron cargar los datos de misión y visión.');
     }
   }
   // Mostrar artículos
@@ -157,14 +160,21 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
   // Trae Comunas
+  // Obtener el nombre de la comuna
   function getComunaName(comunaId) {
     return new Promise((resolve, reject) => {
-      fetch(`http://127.0.0.1:8000/comunas`)
-        .then(res => {
-          if (!res.ok) {
-            throw new Error(`Error al obtener las comunas: ${res.status} ${res.statusText}`);
+      fetch(`http://127.0.0.1:8000/api/comunas`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`Error al obtener las comunas: ${response.status} ${response.statusText}`);
           }
-          return res.json();
+          return response.json();
         })
         .then(comunasData => {
           const comuna = comunasData.data.find(comuna => comuna.id === comunaId);
@@ -177,15 +187,21 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
   }
-  // Nueva función para obtener el nombre de la región
+  // Obtener el nombre de la región
   function getRegionName(regionId) {
     return new Promise((resolve, reject) => {
-      fetch(`http://127.0.0.1:8000/api/regions/${regionId}`)
-        .then(res => {
-          if (!res.ok) {
-            throw new Error(`Error al obtener la región: ${res.status} ${res.statusText}`);
+      fetch(`http://127.0.0.1:8000/api/regions/${regionId}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`Error al obtener la región: ${response.status} ${response.statusText}`);
           }
-          return res.json();
+          return response.json();
         })
         .then(regionData => {
           const regionName = regionData.data.nombre || 'Desconocida';
@@ -197,6 +213,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
   }
+
   //trae las comunas vinculadas a cada region
   function getComunasForRegion(regionId) {
     return new Promise((resolve, reject) => {
