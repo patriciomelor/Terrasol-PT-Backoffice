@@ -555,7 +555,7 @@ h4 {
 }
 /* ... (tus estilos CSS) ... */
 
-.card-text {
+.card-text-articles {
   display: -webkit-box;
   -webkit-line-clamp: 3; 
   -webkit-box-orient: vertical;

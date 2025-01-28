@@ -5,10 +5,9 @@
             <div class="col-md-4">
                 <h4>Contacto</h4>
                 <ul class="contact-info">
-                    <li><i class="fas fa-envelope"></i> info@terrasolparcelas.com</li>
-                    <li><i class="fas fa-map-marker-alt"></i>  Entre Talca y la Region de Los Lagos, Chile.</li>
-                    <li><i class="fas fa-phone"></i> +1234567890</li>
-                    <li><i class="fab fa-whatsapp"></i> +1234567890</li>
+                    <li><i class="fas fa-envelope" ></i> <span id="contact_email"></span></li>
+                    <li><i class="fas fa-map-marker-alt" ></i> <span id="address"></span></li>
+                    <li><i class="fas fa-phone" ></i> <span id="contact_phone"></span></li>
                 </ul>
             </div>
             <div class="col-md-4">
