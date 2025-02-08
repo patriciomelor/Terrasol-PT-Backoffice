@@ -1,32 +1,21 @@
 <?php
 
 namespace App\Models;
+
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Support\Facades\Hash; // Asegúrate de que este `use` esté presente
-use Illuminate\Contracts\Auth\CanResetPassword; 
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Contracts\Auth\CanResetPassword;
 
 
 class User extends Authenticatable implements CanResetPassword 
 {
-    use HasFactory;
-    use HasApiTokens;
-    use Notifiable;
-    // En app/Models/User.php
+    use HasFactory, Notifiable, HasApiTokens;  
     protected $dates = ['created_at', 'updated_at', 'last_login_at'];
 
-    public function role()
-    {
-        return $this->belongsTo(Role::class);
-    }
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'name',
         'email',
@@ -34,7 +23,6 @@ class User extends Authenticatable implements CanResetPassword
         'user_login',
         'role_id',
     ];
-
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -43,16 +31,25 @@ class User extends Authenticatable implements CanResetPassword
     protected $hidden = [
         'password',
         'remember_token',
-        'two_factor_recovery_codes',
-        'two_factor_secret',
     ];
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
 
+   
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = Hash::make($value);
     }
-
-
 
     /**
      * Get the attributes that should be cast.
@@ -98,4 +95,19 @@ class User extends Authenticatable implements CanResetPassword
         return $this->belongsTo(User::class, 'updated_by');
     }
 
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
+     */
+    public function rules(): array
+    {
+        return [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+            'user_login' => 'required|string|max:255|unique:users',
+            'role_id' => 'required|exists:roles,id',
+        ];
+    }
 }
