@@ -89,7 +89,7 @@ async function displayArticles(articles) {
     const streetName = article.street || 'Desconocida';
     const imageUrl = article.cover_photo;
 
-    const articleData = encodeURIComponent(JSON.stringify(article)); 
+    const articleData = encodeURIComponent(JSON.stringify(article));
 
     const articleCard = document.createElement('div');
     articleCard.className = 'card mb-3';
@@ -113,6 +113,42 @@ function setArticleSession(articleId) {
   const article = articles.find(article => article.id === articleId);
   sessionStorage.setItem('article', JSON.stringify(article));
 }
+//Trae las preguntas frecuentes
+function displayFaqs(faqs) {
+  const faqsContainer = document.getElementById('faqAccordion');
+  if (faqsContainer) {
+    if (faqs && Array.isArray(faqs)) {
+      faqsContainer.innerHTML = ''; // Limpiar el contenedor
+
+      faqs.forEach((faq, index) => {
+        const faqItem = `
+                    <div class="accordion-item item-faq">
+                    <div class="question">
+                      <h2 class="accordion-header" style="font-size:15px" id="heading${index}">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${index}" aria-expanded="false" aria-controls="collapse${index}">
+                          <h3>${faq.question}</h3>
+                        </button>
+                      </h2>
+                      </div>
+                      <div id="collapse${index}" class="accordion-collapse collapse answer" aria-labelledby="heading${index}" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                          ${faq.respuesta} <div class="update-characteristic-modal">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  `;
+        faqsContainer.appendChild(document.createRange().createContextualFragment(faqItem));
+      });
+    } else {
+      faqsContainer.innerHTML = '<p>No se pudieron cargar las preguntas frecuentes.</p>';
+    }
+  } else {
+    console.error('El contenedor #faqAccordion no existe en el DOM.');
+  }
+}
+
+fetchData('http://127.0.0.1:8000/api/faqs', displayFaqs);
 
 // Función init
 async function init() {
