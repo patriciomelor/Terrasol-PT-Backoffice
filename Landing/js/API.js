@@ -30,7 +30,7 @@ async function getRegionName(regionId) {
     if (!regionId) return 'Desconocida';
     if (regionCache[regionId]) return regionCache[regionId];
     try {
-        const response = await fetch(`http://127.0.0.1:8000/api/regions/${regionId}`, {
+        const response = await fetch(`http://24.199.83.67/api/regions/${regionId}`, {
             method: 'GET',
             headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
         });
@@ -122,7 +122,7 @@ function displayFaqs(faqs) {
 async function init() {
     try {
         // Carga de configuraciones
-        const settingsResponse = await fetch('http://127.0.0.1:8000/api/settings', {
+        const settingsResponse = await fetch('http://24.199.83.67/api/settings', {
             method: 'GET',
             headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
         });
@@ -130,7 +130,7 @@ async function init() {
         displaySettings(settings);
 
         // Carga de artículos
-        const articlesResponse = await fetch('http://127.0.0.1:8000/api/articles', {
+        const articlesResponse = await fetch('http://24.199.83.67/api/articles', {
             method: 'GET',
             headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
         });
