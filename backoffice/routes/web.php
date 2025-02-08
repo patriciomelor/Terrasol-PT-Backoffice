@@ -34,13 +34,13 @@ Route::prefix('password')->group(function () {
 Auth::routes(['verify' => true]);
 
 // Rutas del perfil de usuario
-Route::prefix('profile')->group(function () {
+// Route::prefix('profile')->group(function () {
     Route::get('/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/update', [ProfileController::class, 'update'])->name('profile.update');
     Route::patch('/users/{user}/toggle-active', [ProfileController::class, 'toggleActive'])->name('users.toggleActive');
-});
+// });
 
-Route::middleware(['auth'])->group(function () {
+// Route::middleware(['auth'])->group(function () {
 Route::resource('users', ProfileController::class);
 Route::resource('articles', ArticleController::class)->except(['show', 'edit']);
 Route::get('articles/{id}', [ArticleController::class, 'show'])->name('articles.show');
@@ -53,5 +53,6 @@ Route::get('/api/regions/{regionId}/communes', [LocationController::class, 'getC
 Route::resource('faqs', FaqController::class)->except(['show']);
 Route::post('faqs/update-order', [FaqController::class, 'updateOrder'])->name('faqs.updateOrder');
 Route::resource('faqs', controller: FaqController::class);
+Route::resource('roles', RoleController::class);
 Route::get('/home', [HomeController::class, 'index'])->name('home');
-});
+// });

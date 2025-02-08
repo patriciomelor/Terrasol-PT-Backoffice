@@ -204,10 +204,13 @@
                                         </a>
                                     </li>
                                     <li class="menu-item">
+                                        @if(Route::has('roles.index'))
                                         <a href="{{ route('roles.index') }}" class="menu-link">
                                             <i class="menu-icon fas fa-lock"></i>
                                             <div data-i18n="Roles">Roles</div>
                                         </a>
+                                        @endif
+
                                     </li>
 
                                     <!-- Sitio -->
