@@ -4,26 +4,23 @@ const regionCache = {};
 const comunaCache = {};
 let articles = []; // Variable global para almacenar los artículos
 
-
 function displaySettings(data) {
   if (data) {
-    const missionElement = document.getElementById('mission');
-    const visionElement = document.getElementById('vision');
-    const nosotrosElement = document.getElementById('nosotros');
-    const siteNameElement = document.getElementById('site_name');
-    const contact_phoneElement = document.getElementById('contact_phone');
-    const contact_emailElement = document.getElementById('contact_email');
-    const addressElement = document.getElementById('address');
-    const siteDescriptionElements = document.getElementById('site_description');
+    const elements = {
+      mission: 'mission',
+      vision: 'vision',
+      about_us: 'nosotros',
+      site_name: 'site_name',
+      site_description: 'site_description',
+      contact_phone: 'contact_phone',
+      contact_email: 'contact_email',
+      address: 'address'
+    };
 
-    if (missionElement) missionElement.innerHTML = data.mission || 'No se ha definido la misión.';
-    if (visionElement) visionElement.innerHTML = data.vision || 'No se ha definido la visión.';
-    if (nosotrosElement) nosotrosElement.innerHTML = data.about_us || 'No se ha definido la sección Sobre Nosotros.';
-    if (siteNameElement) siteNameElement.innerHTML = data.site_name || 'No se ha definido el título.';
-    if (siteDescriptionElements) siteDescriptionElements.innerHTML = data.site_description || 'No se ha definido la descripción.';
-    if (contact_phoneElement) contact_phoneElement.innerHTML = data.contact_phone || 'No se ha definido el número de contacto.';
-    if (contact_emailElement) contact_emailElement.innerHTML = data.contact_email || 'No se ha definido el correo de contacto.';
-    if (addressElement) addressElement.innerHTML = data.address || 'No se ha definido la dirección.';
+    Object.entries(elements).forEach(([key, id]) => {
+      const element = document.getElementById(id);
+      if (element) element.innerHTML = data[key] || `No se ha definido ${key.replace('_', ' ')}.`;
+    });
   } else {
     console.error('No se pudieron cargar los datos de misión y visión.');
   }
@@ -89,8 +86,6 @@ async function displayArticles(articles) {
     const streetName = article.street || 'Desconocida';
     const imageUrl = article.cover_photo;
 
-    const articleData = encodeURIComponent(JSON.stringify(article));
-
     const articleCard = document.createElement('div');
     articleCard.className = 'card mb-3';
     articleCard.innerHTML = `
@@ -109,48 +104,44 @@ async function displayArticles(articles) {
     container.appendChild(articleCard);
   }
 }
+
 function setArticleSession(articleId) {
   const article = articles.find(article => article.id === articleId);
   sessionStorage.setItem('article', JSON.stringify(article));
 }
-//Trae las preguntas frecuentes
+
+// 🛠️ Función corregida para mostrar preguntas frecuentes
 function displayFaqs(faqs) {
   const faqsContainer = document.getElementById('faqAccordion');
-  if (faqsContainer) {
-    if (faqs && Array.isArray(faqs)) {
-      faqsContainer.innerHTML = ''; // Limpiar el contenedor
-
-      faqs.forEach((faq, index) => {
-        const faqItem = `
-                    <div class="accordion-item item-faq">
-                    <div class="question">
-                      <h2 class="accordion-header" style="font-size:15px" id="heading${index}">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${index}" aria-expanded="false" aria-controls="collapse${index}">
-                          <h3>${faq.question}</h3>
-                        </button>
-                      </h2>
-                      </div>
-                      <div id="collapse${index}" class="accordion-collapse collapse answer" aria-labelledby="heading${index}" data-bs-parent="#faqAccordion">
-                        <div class="accordion-body">
-                          ${faq.respuesta} <div class="update-characteristic-modal">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  `;
-        faqsContainer.appendChild(document.createRange().createContextualFragment(faqItem));
-      });
-    } else {
-      faqsContainer.innerHTML = '<p>No se pudieron cargar las preguntas frecuentes.</p>';
-    }
-  } else {
+  if (!faqsContainer) {
     console.error('El contenedor #faqAccordion no existe en el DOM.');
+    return;
   }
+
+  if (!faqs || !Array.isArray(faqs)) {
+    faqsContainer.innerHTML = '<p>No se pudieron cargar las preguntas frecuentes.</p>';
+    return;
+  }
+
+  faqsContainer.innerHTML = faqs.map((faq, index) => `
+    <div class="accordion-item item-faq">
+      <h2 class="accordion-header" style="font-size:15px" id="heading${index}">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+          data-bs-target="#collapse${index}" aria-expanded="false" aria-controls="collapse${index}">
+          <h3>${faq.question}</h3>
+        </button>
+      </h2>
+      <div id="collapse${index}" class="accordion-collapse collapse answer" 
+        aria-labelledby="heading${index}" data-bs-parent="#faqAccordion">
+        <div class="accordion-body">
+          ${faq.answer || faq.respuesta || 'No hay respuesta disponible.'}
+        </div>
+      </div>
+    </div>
+  `).join('');
 }
 
-fetchData('http://127.0.0.1:8000/api/faqs', displayFaqs);
-
-// Función init
+// ✅ Llamada a la API de FAQs dentro de init()
 async function init() {
   try {
     // Carga de configuraciones
@@ -162,7 +153,18 @@ async function init() {
       },
     });
     const settings = await settingsResponse.json();
-    displaySettings(settings); // Asegúrate de que displaySettings está definida antes de esta línea
+    displaySettings(settings);
+
+    // Carga de FAQs
+    const faqsResponse = await fetch('http://127.0.0.1:8000/api/faqs', {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    const faqsData = await faqsResponse.json();
+    displayFaqs(faqsData.data || []);
 
     // Carga de artículos
     const articlesResponse = await fetch('http://127.0.0.1:8000/api/articles', {
@@ -180,7 +182,7 @@ async function init() {
   }
 }
 
-// Llamada a init
+// Llamada a init cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', () => {
   init();
 });
