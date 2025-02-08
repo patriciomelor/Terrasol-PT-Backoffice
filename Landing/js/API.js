@@ -30,7 +30,7 @@ async function getRegionName(regionId) {
   if (!regionId) return 'Desconocida';
   if (regionCache[regionId]) return regionCache[regionId];
   try {
-    const response = await fetch(`http://24.199.83.67/api/regions/${regionId}`, {
+    const response = await fetch(`https://24.199.83.67/api/regions/${regionId}`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -52,7 +52,7 @@ async function getComunaName(comunaId) {
   if (!comunaId) return 'Desconocida';
   if (comunaCache[comunaId]) return comunaCache[comunaId];
   try {
-    const response = await fetch('http://24.199.83.67/api/comunas', {
+    const response = await fetch('https://24.199.83.67/api/comunas', {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -145,7 +145,7 @@ function displayFaqs(faqs) {
 async function init() {
   try {
     // Carga de configuraciones
-    const settingsResponse = await fetch('http://24.199.83.67/api/settings', {
+    const settingsResponse = await fetch('https://24.199.83.67/api/settings', {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -156,7 +156,7 @@ async function init() {
     displaySettings(settings);
 
     // Carga de FAQs
-    const faqsResponse = await fetch('http://24.199.83.67/api/faqs', {
+    const faqsResponse = await fetch('https://24.199.83.67/api/faqs', {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -167,7 +167,7 @@ async function init() {
     displayFaqs(faqsData.data || []);
 
     // Carga de artículos
-    const articlesResponse = await fetch('http://24.199.83.67/api/articles', {
+    const articlesResponse = await fetch('https://24.199.83.67/api/articles', {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`,
