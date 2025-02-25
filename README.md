@@ -1,22 +1,34 @@
 # Terrasol-PT-Backoffice
 
 ## Descripción
-Terrasol-PT-Backoffice es un sistema de gestión desarrollado en Laravel 11 para administrar artículos, usuarios y roles dentro de la plataforma. Utiliza una arquitectura moderna basada en PHP 8.3 y cuenta con integraciones de bases de datos MySQL.
+Terrasol-PT-Backoffice es un sistema de gestión desarrollado en Laravel 11, diseñado para administrar artículos, usuarios y roles dentro de la plataforma. Utiliza una arquitectura MVC moderna basada en PHP 8.3, con integraciones a bases de datos MySQL y una API REST para consumo de datos.
 
 ## Tecnologías Utilizadas
 - **Framework:** Laravel 11
 - **Lenguaje:** PHP 8.3
 - **Base de Datos:** MySQL
-- **Frontend:** Blade Templates
+- **Frontend:** Blade Templates + JavaScript
 - **Autenticación:** Laravel Sanctum
 - **Gestor de Dependencias:** Composer & NPM
 - **Servidor Web:** Apache / Nginx
 
-## Instalación
+## Arquitectura
+El sistema sigue el patrón **Modelo-Vista-Controlador (MVC)** para separar la lógica de negocio de la presentación. 
+- **Modelo:** Representa los datos y las reglas de negocio.
+- **Vista:** Utiliza Blade Templates para la representación visual.
+- **Controlador:** Gestiona las solicitudes HTTP y la lógica de la aplicación.
 
+## Diseño de Base de Datos
+La base de datos está diseñada con una estructura normalizada, donde:
+- **Usuarios:** Gestiona credenciales y permisos.
+- **Roles:** Define los permisos dentro del sistema.
+- **Artículos:** Contiene información detallada de los artículos publicados.
+- **Preguntas Frecuentes (FAQs):** Base de datos para información recurrente.
+
+## Instalación
 ### 1. Clonar el repositorio
 ```bash
-git clone https://github.com/tuusuario/Terrasol-PT-Backoffice.git
+git clone https://github.com/patriciomelor/Terrasol-PT-Backoffice.git
 cd Terrasol-PT-Backoffice/backoffice
 ```
 
@@ -56,9 +68,67 @@ php artisan migrate --seed
 php artisan serve
 ```
 
-## Uso
-Acceder a `http://127.0.0.1:8000`
-- Iniciar sesión con las credenciales de usuario administrador generadas con los seeders.
+## API y Manejo de Datos
+La aplicación cuenta con una API REST para acceder a los datos de forma programática. 
+
+### **Manejo de API en JavaScript**
+Se utiliza JavaScript para consumir la API y mostrar los datos en la interfaz.
+
+Ejemplo de carga de configuración general:
+```js
+async function fetchSettings() {
+    try {
+        const response = await fetch('http://24.199.83.67/api/settings', {
+            method: 'GET',
+            headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        });
+        const data = await response.json();
+        displaySettings(data);
+    } catch (error) {
+        console.error('Error al obtener configuración:', error);
+    }
+}
+```
+
+### **Visualización de Artículos**
+Los artículos se muestran en tarjetas dinámicas:
+```js
+async function displayArticles(articles) {
+    const container = document.getElementById('articleContainer');
+    if (!container) return;
+    container.innerHTML = '';
+    articles.forEach(article => {
+        container.innerHTML += `
+            <div class="card">
+                <img src="data:image/jpeg;base64,${article.cover_photo}" alt="${article.title}">
+                <h5>${article.title}</h5>
+                <p>${article.description}</p>
+                <a href="article.php?id=${article.id}" class="btn btn-primary">Ver más</a>
+            </div>`;
+    });
+}
+```
+
+### **Carga de Preguntas Frecuentes (FAQs)**
+```js
+async function displayFaqs(faqs) {
+    const faqsContainer = document.getElementById('faqAccordion');
+    if (!faqsContainer) return;
+    faqsContainer.innerHTML = faqs.map((faq, index) => `
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading${index}">
+                <button class="accordion-button collapsed" data-bs-toggle="collapse"
+                    data-bs-target="#collapse${index}">
+                    ${faq.question}
+                </button>
+            </h2>
+            <div id="collapse${index}" class="accordion-collapse collapse">
+                <div class="accordion-body">${faq.answer}</div>
+            </div>
+        </div>`
+    ).join('');
+}
+```
 
 ## Rutas y Endpoints
 
@@ -75,65 +145,12 @@ Acceder a `http://127.0.0.1:8000`
 - `DELETE /users/{id}` (Eliminar usuario)
 
 ### Artículos:
-- `GET /articles` (Gestión de artículos)
+- `GET /articles` (Gestín de artículos)
 - `POST /articles` (Crear artículo)
 - `PUT /articles/{id}` (Actualizar artículo)
 - `DELETE /articles/{id}` (Eliminar artículo)
 
-## API
-La aplicación también cuenta con una API REST para acceder a los datos.
-
-### Autenticación:
-Todas las rutas de la API requieren autenticación mediante token Bearer. Puedes obtener un token al iniciar sesión en la aplicación.
-
-### Rutas:
-#### **Obtener configuración general**
-- **Método:** `GET`
-- **Ruta:** `/api/settings`
-- **Descripción:** Obtiene la configuración general de la aplicación (misión, visión, etc.).
-- **Respuesta:**
-```json
-{
-  "mission": "Misión de la empresa",
-  "vision": "Visión de la empresa",
-  "about_us": "Información sobre la empresa"
-}
-```
-
-#### **Obtener lista de artículos**
-- **Método:** `GET`
-- **Ruta:** `/api/articles`
-- **Descripción:** Obtiene la lista de artículos.
-- **Respuesta:**
-```json
-{
-  "data": [
-    {
-      "id": 1,
-      "title": "Título del artículo",
-      "description": "Descripción del artículo"
-    }
-  ]
-}
-```
-
-#### **Obtener preguntas frecuentes**
-- **Método:** `GET`
-- **Ruta:** `/api/faqs`
-- **Descripción:** Obtiene la lista de preguntas frecuentes.
-- **Respuesta:**
-```json
-{
-  "data": [
-    {
-      "question": "Pregunta 1",
-      "answer": "Respuesta 1"
-    }
-  ]
-}
-```
-
-## Errores Comunes
+## Errores Comunes y Soluciones
 ### Error: `Route [roles.index] not defined.`
 **Solución:**
 1. Verificar que la ruta existe en `routes/web.php`.
