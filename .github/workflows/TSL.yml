@@ -74,12 +74,14 @@ jobs:
         with:
           host: ${{ secrets.DROPLET_HOST }}
           username: root
-          key: ${{ secrets.DROPLET_SSH_KEY }}
           port: ${{ secrets.DROPLET_PORT }}
           script: |
             echo "Starting deployment..."
-            cd /var/www/html/Terrasol-PT-Backoffice/
-          ssh_private_key: ${{ secrets.DROPLET_SSH_KEY }} 
+            mkdir -p ~/.ssh
+            echo "${{ secrets.DROPLET_SSH_KEY }}" > ~/.ssh/id_rsa
+            chmod 600 ~/.ssh/id_rsa
+            ssh-keyscan ${{ secrets.DROPLET_HOST }} >> ~/.ssh/known_hosts
+            cd /var/www/html/Terrasol-PT-Backoffice/backoffice 
 
       - name: Pull Latest Changes
         uses: appleboy/ssh-action@v0.1.4
