@@ -78,7 +78,8 @@ jobs:
           port: ${{ secrets.DROPLET_PORT }}
           script: |
             echo "Starting deployment..."
-            cd /var/www/html/Terrasol-PT-Backoffice/backoffice
+            cd /var/www/html/Terrasol-PT-Backoffice/
+          ssh_private_key: ${{ secrets.DROPLET_SSH_KEY }} 
 
       - name: Pull Latest Changes
         uses: appleboy/ssh-action@v0.1.4
