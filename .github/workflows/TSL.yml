@@ -72,6 +72,8 @@ jobs:
       - name: SSH into Droplet
         uses: appleboy/ssh-action@v0.1.4
         with:
+          debug: true
+          timeout: 60s
           host: ${{ secrets.DROPLET_HOST }}
           username: root
           port: ${{ secrets.DROPLET_PORT }}
