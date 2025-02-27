@@ -25,11 +25,16 @@ jobs:
         run: |
           cd backoffice
           composer install --no-ansi --no-interaction --no-progress --prefer-dist
-
+      
+      - name: Copy .env.example to .env
+        run: |
+            cd backoffice
+            cp .env.example .env
+  
       - name: Generate Application Key
         run: |
-          cd backoffice
-          php artisan key:generate
+            cd backoffice
+            php artisan key:generate
 
       - name: Set Directory Permissions
         run: |
