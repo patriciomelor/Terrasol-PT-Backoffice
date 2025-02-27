@@ -77,11 +77,12 @@ jobs:
           port: ${{ secrets.DROPLET_PORT }}
           script: |
             echo "Starting deployment..."
-            mkdir -p ~/.ssh
-            echo "${{ secrets.DROPLET_SSH_KEY }}" > ~/.ssh/id_rsa
+            eval "$(ssh-agent -s)"
+            echo "${{ secrets.DROPLET_SSH_KEY }}" | tr -d '\r' > ~/.ssh/id_rsa
             chmod 600 ~/.ssh/id_rsa
+            ssh-add ~/.ssh/id_rsa
             ssh-keyscan ${{ secrets.DROPLET_HOST }} >> ~/.ssh/known_hosts
-            cd /var/www/html/Terrasol-PT-Backoffice/backoffice 
+            cd /var/www/html/Terrasol-PT-Backoffice/backoffice
 
       - name: Pull Latest Changes
         uses: appleboy/ssh-action@v0.1.4
