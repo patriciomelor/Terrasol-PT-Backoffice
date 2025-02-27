@@ -1,4 +1,4 @@
-name: TS-Build
+name: TS-Build-Deploy
 
 on:
   push:
@@ -11,86 +11,132 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v2
+      - name: Checkout Code
+        uses: actions/checkout@v2
 
-    - name: Setup PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: '8.2'
-        extensions: mbstring, pdo_mysql
-        coverage: none
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: mbstring, pdo_mysql
+          coverage: none
 
-    - name: Copy .env
-      run: |
-        cd backoffice
-        php -r "file_exists('.env') || copy('.env.example', '.env');"
+      - name: Install Composer Dependencies
+        run: |
+          cd backoffice
+          composer install --no-ansi --no-interaction --no-progress --prefer-dist
 
-    - name: Install Dependencies
-      run: |
-        cd backoffice
-        composer install --no-ansi --no-interaction --no-progress --prefer-dist
-      
-    - name: Generate Application Key
-      run: |
-        cd backoffice
-        php artisan key:generate
+      - name: Generate Application Key
+        run: |
+          cd backoffice
+          php artisan key:generate
 
-    - name: Set Directory Permissions
-      run: |
-        chmod -R 777 backoffice/storage backoffice/bootstrap/cache
+      - name: Set Directory Permissions
+        run: |
+          chmod -R 777 backoffice/storage backoffice/bootstrap/cache
 
-    - name: Test MySQL connection
-      run: |
-        mysql -h ${{ secrets.DB_HOST }} -P ${{ secrets.DB_PORT }} -u ${{ secrets.DB_USERNAME }} -p${{ secrets.DB_PASSWORD }} -e "SHOW DATABASES;"
+      - name: Test MySQL Connection
+        run: |
+          mysql -h ${{ secrets.DB_HOST }} -P ${{ secrets.DB_PORT }} -u ${{ secrets.DB_USERNAME }} -p${{ secrets.DB_PASSWORD }} -e "SHOW DATABASES;"
 
-    - name: Wait for MySQL to be Ready
-      run: |
-        for i in {1..60}; do
-          mysqladmin ping -h ${{ secrets.DB_HOST }} --silent && break
-          echo "Waiting for MySQL..."
-          sleep 5
-        done
+      - name: Wait for MySQL to be Ready
+        run: |
+          for i in {1..60}; do
+            mysqladmin ping -h ${{ secrets.DB_HOST }} --silent && break
+            echo "Waiting for MySQL..."
+            sleep 5
+          done
 
-    - name: Run Migrations
-      env:
-        DB_CONNECTION: mysql
-        DB_HOST: ${{ secrets.DB_HOST }}
-        DB_PORT: ${{ secrets.DB_PORT }}
-        DB_DATABASE: ${{ secrets.DB_DATABASE }}
-        DB_USERNAME: ${{ secrets.DB_USERNAME }}
-        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-      run: |
-        cd backoffice
-        php artisan migrate
+      - name: Run Migrations
+        env:
+          DB_CONNECTION: mysql
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          DB_DATABASE: ${{ secrets.DB_DATABASE }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        run: |
+          cd backoffice
+          php artisan migrate
 
   deploy:
     runs-on: ubuntu-latest
     needs: build
-    steps:
-    - name: Deploy to DigitalOcean Droplet
-      uses: appleboy/ssh-action@v0.1.4
-      with:
-        host: ${{ secrets.DROPLET_HOST }}
-        username: ${{ secrets.DROPLET_USERNAME }}
-        key: ${{ secrets.DROPLET_SSH_KEY }}
-        port: ${{ secrets.DROPLET_PORT }}
-        script: |
-          cd /var/www/html/terrasol
-          git pull origin main
 
-    - name: Final Step - Install Dependencies and Setup Laravel
-      uses: appleboy/ssh-action@v0.1.4
-      with:
-        host: ${{ secrets.DROPLET_HOST }}
-        username: ${{ secrets.DROPLET_USERNAME }}
-        key: ${{ secrets.DROPLET_SSH_KEY }}
-        port: ${{ secrets.DROPLET_PORT }}
-        script: |
-          cd /var/www/html/terrasol/backoffice
-          composer install --no-ansi --no-interaction --no-progress --prefer-dist
-          php artisan migrate --force
-          php artisan config:cache
-          php artisan route:cache
-          php artisan view:cache
-          sudo service php8.2-fpm restart
+    steps:
+      - name: SSH into Droplet
+        uses: appleboy/ssh-action@v0.1.4
+        with:
+          host: ${{ secrets.DROPLET_HOST }}
+          username: root
+          key: ${{ secrets.DROPLET_SSH_KEY }}
+          port: ${{ secrets.DROPLET_PORT }}
+          script: |
+            echo "Starting deployment..."
+            cd /var/www/html/Terrasol-PT-Backoffice/backoffice
+
+      - name: Pull Latest Changes
+        uses: appleboy/ssh-action@v0.1.4
+        with:
+          host: ${{ secrets.DROPLET_HOST }}
+          username: root
+          key: ${{ secrets.DROPLET_SSH_KEY }}
+          port: ${{ secrets.DROPLET_PORT }}
+          script: |
+            cd /var/www/html/Terrasol-PT-Backoffice/backoffice
+            git pull origin main
+
+      - name: Install Composer Dependencies (Droplet)
+        uses: appleboy/ssh-action@v0.1.4
+        with:
+          host: ${{ secrets.DROPLET_HOST }}
+          username: root
+          key: ${{ secrets.DROPLET_SSH_KEY }}
+          port: ${{ secrets.DROPLET_PORT }}
+          script: |
+            cd /var/www/html/Terrasol-PT-Backoffice/backoffice
+            composer install --no-ansi --no-interaction --no-progress --prefer-dist
+
+      - name: Run Migrations (Droplet)
+        uses: appleboy/ssh-action@v0.1.4
+        with:
+          host: ${{ secrets.DROPLET_HOST }}
+          username: root
+          key: ${{ secrets.DROPLET_SSH_KEY }}
+          port: ${{ secrets.DROPLET_PORT }}
+          script: |
+            cd /var/www/html/Terrasol-PT-Backoffice/backoffice
+            php artisan migrate --force
+
+      - name: Clear Cache
+        uses: appleboy/ssh-action@v0.1.4
+        with:
+          host: ${{ secrets.DROPLET_HOST }}
+          username: root
+          key: ${{ secrets.DROPLET_SSH_KEY }}
+          port: ${{ secrets.DROPLET_PORT }}
+          script: |
+            cd /var/www/html/Terrasol-PT-Backoffice/backoffice
+            php artisan config:cache
+            php artisan route:cache
+            php artisan view:cache
+
+      - name: Restart PHP-FPM
+        uses: appleboy/ssh-action@v0.1.4
+        with:
+          host: ${{ secrets.DROPLET_HOST }}
+          username: root
+          key: ${{ secrets.DROPLET_SSH_KEY }}
+          port: ${{ secrets.DROPLET_PORT }}
+          script: |
+            sudo service php8.3-fpm restart
+
+      - name: Deployment Completed
+        uses: appleboy/ssh-action@v0.1.4
+        with:
+          host: ${{ secrets.DROPLET_HOST }}
+          username: root
+          key: ${{ secrets.DROPLET_SSH_KEY }}
+          port: ${{ secrets.DROPLET_PORT }}
+          script: |
+            echo "Deployment to Droplet complete!"
