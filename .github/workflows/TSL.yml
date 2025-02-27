@@ -62,7 +62,7 @@ jobs:
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
         run: |
           cd backoffice
-          php artisan migrate
+          php artisan migrate --force
 
   deploy:
     runs-on: ubuntu-latest
