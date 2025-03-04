@@ -28,7 +28,10 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
-
+    public function username()
+    {
+        return 'email'; // Or 'user_login' if that's what you're using
+    }
     /**
      * Get the failed login response instance.
      *

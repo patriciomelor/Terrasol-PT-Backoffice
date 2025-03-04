@@ -4,6 +4,8 @@ namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
 use Inertia\Middleware;
+use Illuminate\Support\Facades\Auth; // Add this import
+
 use Closure;
 
 class HandleInertiaRequests extends Middleware
@@ -34,9 +36,12 @@ class HandleInertiaRequests extends Middleware
      *
      * @return array<string, mixed>
      */
-    // public function handle(Request $request, Closure $next)
-    // {
-    //     view()->share('currentUser', auth()->user());
-    //     return $next($request);
-    // }
+    public function handle(Request $request, Closure $next, $guard = null): Response
+    {
+        if (Auth::guard($guard)->check()) {
+            return redirect('/home');
+        }
+
+        return $next($request);
+    }
 }

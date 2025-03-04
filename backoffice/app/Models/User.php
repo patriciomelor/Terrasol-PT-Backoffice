@@ -45,12 +45,6 @@ class User extends Authenticatable implements CanResetPassword
         return $this->belongsTo(Role::class);
     }
 
-   
-    public function setPasswordAttribute($value)
-    {
-        $this->attributes['password'] = Hash::make($value);
-    }
-
     /**
      * Get the attributes that should be cast.
      *
